@@ -1,0 +1,191 @@
+C51 COMPILER V9.51   ADC_DELSIG_1_PM                                                       05/22/2017 14:27:58 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE ADC_DELSIG_1_PM
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\ADC_DelSig_1_PM.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -Generated_Source\PSoC3\ADC_DelSig_1_PM.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(
+                    -2) PR(.\DP8051\DP8051_Keil_951\Debug/ADC_DelSig_1_PM.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\ADC_DelSig_1_PM.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: ADC_DelSig_1_PM.c
+   3          * Version 3.20
+   4          *
+   5          * Description:
+   6          *  This file provides the power manager source code to the API for the
+   7          *  Delta-Sigma ADC Component.
+   8          *
+   9          * Note:
+  10          *
+  11          ********************************************************************************
+  12          * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  13          * You may use this file only in accordance with the license, terms, conditions,
+  14          * disclaimers, and limitations in the end user license agreement accompanying
+  15          * the software package with which this file was provided.
+  16          *******************************************************************************/
+  17          
+  18          #include "ADC_DelSig_1.h"
+  19          
+  20          static ADC_DelSig_1_BACKUP_STRUCT ADC_DelSig_1_backup =
+  21          {
+  22              ADC_DelSig_1_DISABLED,
+  23              ADC_DelSig_1_CFG1_DEC_CR
+  24          };
+  25          
+  26          
+  27          /*******************************************************************************
+  28          * Function Name: ADC_DelSig_1_SaveConfig
+  29          ********************************************************************************
+  30          *
+  31          * Summary:
+  32          *  Save the register configuration which are not retention.
+  33          *
+  34          * Parameters:
+  35          *  None
+  36          *
+  37          * Return:
+  38          *  None
+  39          *
+  40          * Global variables:
+  41          *  ADC_DelSig_1_backup:  This global structure variable is used to store
+  42          *  configuration registers which are non retention whenever user wants to go
+  43          *  sleep mode by calling Sleep() API.
+  44          *
+  45          *******************************************************************************/
+  46          void ADC_DelSig_1_SaveConfig(void) 
+  47          {
+  48   1          ADC_DelSig_1_backup.deccr = ADC_DelSig_1_DEC_CR_REG;
+  49   1      }
+  50          
+  51          
+  52          /*******************************************************************************
+  53          * Function Name: ADC_DelSig_1_RestoreConfig
+C51 COMPILER V9.51   ADC_DELSIG_1_PM                                                       05/22/2017 14:27:58 PAGE 2   
+
+  54          ********************************************************************************
+  55          *
+  56          * Summary:
+  57          *  Restore the register configurations which are not retention.
+  58          *
+  59          * Parameters:
+  60          *  None
+  61          *
+  62          * Return:
+  63          *  None
+  64          *
+  65          * Global variables:
+  66          *  ADC_DelSig_1_backup:  This global structure variable is used to restore
+  67          *  configuration registers which are non retention whenever user wants to switch
+  68          *  to active power mode by calling Wakeup() API.
+  69          *
+  70          *******************************************************************************/
+  71          void ADC_DelSig_1_RestoreConfig(void) 
+  72          {
+  73   1          ADC_DelSig_1_DEC_CR_REG = ADC_DelSig_1_backup.deccr;
+  74   1      }
+  75          
+  76          
+  77          /*******************************************************************************
+  78          * Function Name: ADC_DelSig_1_Sleep
+  79          ********************************************************************************
+  80          *
+  81          * Summary:
+  82          *  Stops the operation of the block and saves the user configuration.
+  83          *
+  84          * Parameters:
+  85          *  None
+  86          *
+  87          * Return:
+  88          *  None
+  89          *
+  90          * Global variables:
+  91          *  ADC_DelSig_1_backup:  The structure field 'enableState' is modified
+  92          *  depending on the enable state of the block before entering to sleep mode.
+  93          *
+  94          *******************************************************************************/
+  95          void ADC_DelSig_1_Sleep(void) 
+  96          {
+  97   1          /* Save ADC enable state */
+  98   1          if((ADC_DelSig_1_ACT_PWR_DEC_EN == (ADC_DelSig_1_PWRMGR_DEC_REG & ADC_DelSig_1_ACT_PWR_DEC_EN)) &&
+  99   1             (ADC_DelSig_1_ACT_PWR_DSM_EN == (ADC_DelSig_1_PWRMGR_DSM_REG & ADC_DelSig_1_ACT_PWR_DSM_EN)))
+ 100   1          {
+ 101   2              /* Component is enabled */
+ 102   2              ADC_DelSig_1_backup.enableState = ADC_DelSig_1_ENABLED;
+ 103   2              if((ADC_DelSig_1_DEC_CR_REG & ADC_DelSig_1_DEC_START_CONV) != 0u)
+ 104   2              {   
+ 105   3                  /* Conversion is started */
+ 106   3                  ADC_DelSig_1_backup.enableState |= ADC_DelSig_1_STARTED;
+ 107   3              }
+ 108   2                      
+ 109   2              /* Stop the configuration */
+ 110   2              ADC_DelSig_1_Stop();
+ 111   2          }
+ 112   1          else
+ 113   1          {
+ 114   2              /* Component is disabled */
+ 115   2              ADC_DelSig_1_backup.enableState = ADC_DelSig_1_DISABLED;
+C51 COMPILER V9.51   ADC_DELSIG_1_PM                                                       05/22/2017 14:27:58 PAGE 3   
+
+ 116   2          }
+ 117   1      
+ 118   1          /* Save the user configuration */
+ 119   1          ADC_DelSig_1_SaveConfig();
+ 120   1      }
+ 121          
+ 122          
+ 123          /*******************************************************************************
+ 124          * Function Name: ADC_DelSig_1_Wakeup
+ 125          ********************************************************************************
+ 126          *
+ 127          * Summary:
+ 128          *  Restores the user configuration and enables the power to the block.
+ 129          *
+ 130          * Parameters:
+ 131          *  None
+ 132          *
+ 133          * Return:
+ 134          *  None
+ 135          *
+ 136          * Global variables:
+ 137          *  ADC_DelSig_1_backup:  The structure field 'enableState' is used to
+ 138          *  restore the enable state of block after wakeup from sleep mode.
+ 139          *
+ 140          *******************************************************************************/
+ 141          void ADC_DelSig_1_Wakeup(void) 
+ 142          {
+ 143   1          /* Restore the configuration */
+ 144   1          ADC_DelSig_1_RestoreConfig();
+ 145   1      
+ 146   1          /* Enables the component operation */
+ 147   1          if(ADC_DelSig_1_backup.enableState != ADC_DelSig_1_DISABLED)
+ 148   1          {
+ 149   2              ADC_DelSig_1_Enable();
+ 150   2              if((ADC_DelSig_1_backup.enableState & ADC_DelSig_1_STARTED) != 0u)
+ 151   2              {
+ 152   3                  ADC_DelSig_1_StartConvert();
+ 153   3              }
+ 154   2          } /* Do nothing if component was disable before */
+ 155   1      }
+ 156          
+ 157          
+ 158          /* [] END OF FILE */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     93    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      2    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

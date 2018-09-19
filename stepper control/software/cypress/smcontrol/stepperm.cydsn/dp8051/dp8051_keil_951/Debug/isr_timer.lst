@@ -1,0 +1,538 @@
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE ISR_TIMER
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\isr_timer.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -Generated_Source\PSoC3\isr_timer.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(2) PR(
+                    -.\DP8051\DP8051_Keil_951\Debug/isr_timer.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\isr_timer.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: isr_timer.c  
+   3          * Version 1.70
+   4          *
+   5          *  Description:
+   6          *   API for controlling the state of an interrupt.
+   7          *
+   8          *
+   9          *  Note:
+  10          *
+  11          ********************************************************************************
+  12          * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  13          * You may use this file only in accordance with the license, terms, conditions, 
+  14          * disclaimers, and limitations in the end user license agreement accompanying 
+  15          * the software package with which this file was provided.
+  16          *******************************************************************************/
+  17          
+  18          
+  19          #include <cydevice_trm.h>
+  20          #include <CyLib.h>
+  21          #include <isr_timer.h>
+  22          
+  23          
+  24          #if !defined(isr_timer__REMOVED) /* Check for removal by optimization */
+  25          
+  26          /*******************************************************************************
+  27          *  Place your includes, defines and code here 
+  28          ********************************************************************************/
+  29          /* `#START isr_timer_intc` */
+  30          #include <device.h>
+  31          #include "Timer_1.h"
+  32          #include "stepper.h"
+  33          #include "UI_paras.h"
+  34          #include "bool.h"
+  35          
+  36          uint8 LineWaitFlag =0;
+  37          extern UI_CMD          UI_Cmd;
+  38          extern UI_DATA         UI_Data;
+  39          extern uint8   CtrlStatus;
+  40          extern uint8   StepEnable;
+  41          extern uint16  SpeedFrq;
+  42          extern uint16  DeltCnt;
+  43          extern uint16  TotalCnt;
+  44          extern uint8   SpeedUpFlag;
+  45          extern uint16  ChangePrdThreshold;
+  46          extern uint8   FastAcc;
+  47          extern uint16  DeltSpeedFrq;
+  48          /* `#END` */
+  49          
+  50          
+  51          /*******************************************************************************
+  52          * Function Name: isr_timer_Start
+  53          ********************************************************************************
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 2   
+
+  54          *
+  55          * Summary:
+  56          *  Set up the interrupt and enable it. This function disables the interrupt, 
+  57          *  sets the default interrupt vector, sets the priority from the value in the
+  58          *  Design Wide Resources Interrupt Editor, then enables the interrupt to the 
+  59          *  interrupt controller.
+  60          *
+  61          * Parameters:  
+  62          *   None
+  63          *
+  64          * Return:
+  65          *   None
+  66          *
+  67          *******************************************************************************/
+  68          void isr_timer_Start(void) 
+  69          {
+  70   1          /* For all we know the interrupt is active. */
+  71   1          isr_timer_Disable();
+  72   1      
+  73   1          /* Set the ISR to point to the isr_timer Interrupt. */
+  74   1          isr_timer_SetVector(&isr_timer_Interrupt);
+  75   1      
+  76   1          /* Set the priority. */
+  77   1          isr_timer_SetPriority((uint8)isr_timer_INTC_PRIOR_NUMBER);
+  78   1      
+  79   1          /* Enable it. */
+  80   1          isr_timer_Enable();
+  81   1      }
+  82          
+  83          
+  84          /*******************************************************************************
+  85          * Function Name: isr_timer_StartEx
+  86          ********************************************************************************
+  87          *
+  88          * Summary:
+  89          *  Sets up the interrupt and enables it. This function disables the interrupt,
+  90          *  sets the interrupt vector based on the address passed in, sets the priority 
+  91          *  from the value in the Design Wide Resources Interrupt Editor, then enables 
+  92          *  the interrupt to the interrupt controller.
+  93          *  
+  94          *  When defining ISR functions, the CY_ISR and CY_ISR_PROTO macros should be 
+  95          *  used to provide consistent definition across compilers:
+  96          *  
+  97          *  Function definition example:
+  98          *   CY_ISR(MyISR)
+  99          *   {
+ 100          *   }
+ 101          *   Function prototype example:
+ 102          *   CY_ISR_PROTO(MyISR);
+ 103          *
+ 104          * Parameters:  
+ 105          *   address: Address of the ISR to set in the interrupt vector table.
+ 106          *
+ 107          * Return:
+ 108          *   None
+ 109          *
+ 110          *******************************************************************************/
+ 111          void isr_timer_StartEx(cyisraddress address) 
+ 112          {
+ 113   1          /* For all we know the interrupt is active. */
+ 114   1          isr_timer_Disable();
+ 115   1      
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 3   
+
+ 116   1          /* Set the ISR to point to the isr_timer Interrupt. */
+ 117   1          isr_timer_SetVector(address);
+ 118   1      
+ 119   1          /* Set the priority. */
+ 120   1          isr_timer_SetPriority((uint8)isr_timer_INTC_PRIOR_NUMBER);
+ 121   1      
+ 122   1          /* Enable it. */
+ 123   1          isr_timer_Enable();
+ 124   1      }
+ 125          
+ 126          
+ 127          /*******************************************************************************
+ 128          * Function Name: isr_timer_Stop
+ 129          ********************************************************************************
+ 130          *
+ 131          * Summary:
+ 132          *   Disables and removes the interrupt.
+ 133          *
+ 134          * Parameters:  
+ 135          *   None
+ 136          *
+ 137          * Return:
+ 138          *   None
+ 139          *
+ 140          *******************************************************************************/
+ 141          void isr_timer_Stop(void) 
+ 142          {
+ 143   1          /* Disable this interrupt. */
+ 144   1          isr_timer_Disable();
+ 145   1      }
+ 146          
+ 147          
+ 148          /*******************************************************************************
+ 149          * Function Name: isr_timer_Interrupt
+ 150          ********************************************************************************
+ 151          *
+ 152          * Summary:
+ 153          *   The default Interrupt Service Routine for isr_timer.
+ 154          *
+ 155          *   Add custom code between the START and END comments to keep the next version
+ 156          *   of this file from over-writing your code.
+ 157          *
+ 158          *   Note You may use either the default ISR by using this API, or you may define
+ 159          *   your own separate ISR through ISR_StartEx().
+ 160          *
+ 161          * Parameters:  
+ 162          *   None
+ 163          *
+ 164          * Return:
+ 165          *   None
+ 166          *
+ 167          *******************************************************************************/
+ 168          CY_ISR(isr_timer_Interrupt)
+ 169          {
+ 170   1          #ifdef isr_timer_INTERRUPT_INTERRUPT_CALLBACK
+                      isr_timer_Interrupt_InterruptCallback();
+                  #endif /* isr_timer_INTERRUPT_INTERRUPT_CALLBACK */
+ 173   1      
+ 174   1          /*  Place your Interrupt code here. */
+ 175   1          /* `#START isr_timer_Interrupt` */
+ 176   1      // uint8 i;   
+ 177   1      /* if Motor Command is "Run"*/ 
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 4   
+
+ 178   1          if(StepEnable)
+ 179   1          {
+ 180   2              Stepping(); /* Go one micro-step*/
+ 181   2              
+ 182   2              if(CtrlStatus== GUI_CONTROL)
+ 183   2              {
+ 184   3                  TotalCnt++; /*count steps of speed up/down */
+ 185   3                  
+ 186   3                   /* Speed up/down Period*/
+ 187   3                  if(!LineWaitFlag) 
+ 188   3                  {   
+ 189   4                      DeltCnt++;
+ 190   4                      /* Fast accerleration*/
+ 191   4                      if(FastAcc)
+ 192   4                      {  
+ 193   5                         /*Speed Up*/
+ 194   5                         if(SpeedUpFlag)
+ 195   5                         {
+ 196   6                           SpeedFrq -= DeltSpeedFrq;
+ 197   6                           if(SpeedFrq<2)
+ 198   6                           SpeedFrq =2;
+ 199   6                         }
+ 200   5                         /*Speed Down*/
+ 201   5                         else
+ 202   5                         {
+ 203   6                           SpeedFrq += DeltSpeedFrq;
+ 204   6                         }
+ 205   5                      }
+ 206   4                      /*Slow accerleration*/
+ 207   4                      else
+ 208   4                      {   
+ 209   5                          /* Change period every n steps, Judge if it's is n now!*/
+ 210   5                          if(DeltCnt >= ChangePrdThreshold)
+ 211   5                          {   
+ 212   6                              if(SpeedUpFlag)
+ 213   6                              {
+ 214   7                                if(SpeedFrq!=UI_Data.LineEnd[UI_Data.LineIndex])
+ 215   7                                SpeedFrq--;/*Speed up*/
+ 216   7                              }
+ 217   6                              else
+ 218   6                              { 
+ 219   7                                 if(SpeedFrq!=UI_Data.LineEnd[UI_Data.LineIndex])
+ 220   7                                 SpeedFrq++;/*Speed down*/
+ 221   7                              }
+ 222   6                              DeltCnt =0;
+ 223   6                          }
+ 224   5                       }   
+ 225   4                      /*Go to constant speed Stage*/
+ 226   4                      if(TotalCnt >= UI_Data.LineCnt[UI_Data.LineIndex])
+ 227   4                      {
+ 228   5                          TotalCnt = 0; 
+ 229   5                          LineWaitFlag = TRUE;
+ 230   5                      } 
+ 231   4                  }
+ 232   3                  /* Judge if constant speed mode is over*/
+ 233   3                  else if(TotalCnt >= UI_Data.LineWaitCnt[UI_Data.LineIndex])
+ 234   3                  {
+ 235   4                      UI_Data.LineIndex++;   /*Point to next line*/
+ 236   4                      TotalCnt = 0;          /*Reset counter*/
+ 237   4                      LineWaitFlag = FALSE;  /*Exit constant speed*/ 
+ 238   4                      SpeedFrq = UI_Data.LineStart[UI_Data.LineIndex];/*Reset start speed for next line*/
+ 239   4                      if(UI_Data.LineIndex>=UI_Data.TotalLineNumber)/*End of lines*/
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 5   
+
+ 240   4                      {
+ 241   5                          UI_Cmd.Run=FALSE; /*Stop the motor*/
+ 242   5                          UI_Data.LineIndex =0;
+ 243   5                      }
+ 244   4                  }
+ 245   3                  
+ 246   3              } /*End of GUI Control*/    
+ 247   2          
+ 248   2           } 
+ 249   1      //    if(SpeedFrq!=0)
+ 250   1      //    {
+ 251   1      //       Timer_1_WritePeriod(SpeedFrq);
+ 252   1      //    }
+ 253   1          Timer_1_ReadStatusRegister();
+ 254   1          /* `#END` */
+ 255   1      
+ 256   1          /* PSoC3 ES1, ES2 RTC ISR PATCH  */ 
+ 257   1          #if(CYDEV_CHIP_FAMILY_USED == CYDEV_CHIP_FAMILY_PSOC3)
+ 258   1              #if((CYDEV_CHIP_REVISION_USED <= CYDEV_CHIP_REVISION_3A_ES2) && (isr_timer__ES2_PATCH ))      
+                          isr_timer_ISR_PATCH();
+                      #endif /* CYDEV_CHIP_REVISION_USED */
+ 261   1          #endif /* (CYDEV_CHIP_FAMILY_USED == CYDEV_CHIP_FAMILY_PSOC3) */
+ 262   1      }
+ 263          
+ 264          
+ 265          /*******************************************************************************
+ 266          * Function Name: isr_timer_SetVector
+ 267          ********************************************************************************
+ 268          *
+ 269          * Summary:
+ 270          *   Change the ISR vector for the Interrupt. Note calling isr_timer_Start
+ 271          *   will override any effect this method would have had. To set the vector 
+ 272          *   before the component has been started use isr_timer_StartEx instead.
+ 273          * 
+ 274          *   When defining ISR functions, the CY_ISR and CY_ISR_PROTO macros should be 
+ 275          *   used to provide consistent definition across compilers:
+ 276          *
+ 277          *   Function definition example:
+ 278          *   CY_ISR(MyISR)
+ 279          *   {
+ 280          *   }
+ 281          *
+ 282          *   Function prototype example:
+ 283          *     CY_ISR_PROTO(MyISR);
+ 284          *
+ 285          * Parameters:
+ 286          *   address: Address of the ISR to set in the interrupt vector table.
+ 287          *
+ 288          * Return:
+ 289          *   None
+ 290          *
+ 291          *******************************************************************************/
+ 292          void isr_timer_SetVector(cyisraddress address) 
+ 293          {
+ 294   1          CY_SET_REG16(isr_timer_INTC_VECTOR, (uint16) address);
+ 295   1      }
+ 296          
+ 297          
+ 298          /*******************************************************************************
+ 299          * Function Name: isr_timer_GetVector
+ 300          ********************************************************************************
+ 301          *
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 6   
+
+ 302          * Summary:
+ 303          *   Gets the "address" of the current ISR vector for the Interrupt.
+ 304          *
+ 305          * Parameters:
+ 306          *   None
+ 307          *
+ 308          * Return:
+ 309          *   Address of the ISR in the interrupt vector table.
+ 310          *
+ 311          *******************************************************************************/
+ 312          cyisraddress isr_timer_GetVector(void) 
+ 313          {
+ 314   1          return (cyisraddress) CY_GET_REG16(isr_timer_INTC_VECTOR);
+ 315   1      }
+ 316          
+ 317          
+ 318          /*******************************************************************************
+ 319          * Function Name: isr_timer_SetPriority
+ 320          ********************************************************************************
+ 321          *
+ 322          * Summary:
+ 323          *   Sets the Priority of the Interrupt. 
+ 324          *
+ 325          *   Note calling isr_timer_Start or isr_timer_StartEx will 
+ 326          *   override any effect this API would have had. This API should only be called
+ 327          *   after isr_timer_Start or isr_timer_StartEx has been called. 
+ 328          *   To set the initial priority for the component, use the Design-Wide Resources
+ 329          *   Interrupt Editor.
+ 330          *
+ 331          *   Note This API has no effect on Non-maskable interrupt NMI).
+ 332          *
+ 333          * Parameters:
+ 334          *   priority: Priority of the interrupt, 0 being the highest priority
+ 335          *             PSoC 3 and PSoC 5LP: Priority is from 0 to 7.
+ 336          *             PSoC 4: Priority is from 0 to 3.
+ 337          *
+ 338          * Return:
+ 339          *   None
+ 340          *
+ 341          *******************************************************************************/
+ 342          void isr_timer_SetPriority(uint8 priority) 
+ 343          {
+ 344   1          *isr_timer_INTC_PRIOR = priority << 5;
+ 345   1      }
+ 346          
+ 347          
+ 348          /*******************************************************************************
+ 349          * Function Name: isr_timer_GetPriority
+ 350          ********************************************************************************
+ 351          *
+ 352          * Summary:
+ 353          *   Gets the Priority of the Interrupt.
+ 354          *
+ 355          * Parameters:
+ 356          *   None
+ 357          *
+ 358          * Return:
+ 359          *   Priority of the interrupt, 0 being the highest priority
+ 360          *    PSoC 3 and PSoC 5LP: Priority is from 0 to 7.
+ 361          *    PSoC 4: Priority is from 0 to 3.
+ 362          *
+ 363          *******************************************************************************/
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 7   
+
+ 364          uint8 isr_timer_GetPriority(void) 
+ 365          {
+ 366   1          uint8 priority;
+ 367   1      
+ 368   1      
+ 369   1          priority = *isr_timer_INTC_PRIOR >> 5;
+ 370   1      
+ 371   1          return priority;
+ 372   1      }
+ 373          
+ 374          
+ 375          /*******************************************************************************
+ 376          * Function Name: isr_timer_Enable
+ 377          ********************************************************************************
+ 378          *
+ 379          * Summary:
+ 380          *   Enables the interrupt to the interrupt controller. Do not call this function
+ 381          *   unless ISR_Start() has been called or the functionality of the ISR_Start() 
+ 382          *   function, which sets the vector and the priority, has been called.
+ 383          *
+ 384          * Parameters:
+ 385          *   None
+ 386          *
+ 387          * Return:
+ 388          *   None
+ 389          *
+ 390          *******************************************************************************/
+ 391          void isr_timer_Enable(void) 
+ 392          {
+ 393   1          /* Enable the general interrupt. */
+ 394   1          *isr_timer_INTC_SET_EN = isr_timer__INTC_MASK;
+ 395   1      }
+ 396          
+ 397          
+ 398          /*******************************************************************************
+ 399          * Function Name: isr_timer_GetState
+ 400          ********************************************************************************
+ 401          *
+ 402          * Summary:
+ 403          *   Gets the state (enabled, disabled) of the Interrupt.
+ 404          *
+ 405          * Parameters:
+ 406          *   None
+ 407          *
+ 408          * Return:
+ 409          *   1 if enabled, 0 if disabled.
+ 410          *
+ 411          *******************************************************************************/
+ 412          uint8 isr_timer_GetState(void) 
+ 413          {
+ 414   1          /* Get the state of the general interrupt. */
+ 415   1          return ((*isr_timer_INTC_SET_EN & (uint8)isr_timer__INTC_MASK) != 0u) ? 1u:0u;
+ 416   1      }
+ 417          
+ 418          
+ 419          /*******************************************************************************
+ 420          * Function Name: isr_timer_Disable
+ 421          ********************************************************************************
+ 422          *
+ 423          * Summary:
+ 424          *   Disables the Interrupt in the interrupt controller.
+ 425          *
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 8   
+
+ 426          * Parameters:
+ 427          *   None
+ 428          *
+ 429          * Return:
+ 430          *   None
+ 431          *
+ 432          *******************************************************************************/
+ 433          void isr_timer_Disable(void) 
+ 434          {
+ 435   1          /* Disable the general interrupt. */
+ 436   1          *isr_timer_INTC_CLR_EN = isr_timer__INTC_MASK;
+ 437   1      }
+ 438          
+ 439          
+ 440          /*******************************************************************************
+ 441          * Function Name: isr_timer_SetPending
+ 442          ********************************************************************************
+ 443          *
+ 444          * Summary:
+ 445          *   Causes the Interrupt to enter the pending state, a software method of
+ 446          *   generating the interrupt.
+ 447          *
+ 448          * Parameters:
+ 449          *   None
+ 450          *
+ 451          * Return:
+ 452          *   None
+ 453          *
+ 454          * Side Effects:
+ 455          *   If interrupts are enabled and the interrupt is set up properly, the ISR is
+ 456          *   entered (depending on the priority of this interrupt and other pending 
+ 457          *   interrupts).
+ 458          *
+ 459          *******************************************************************************/
+ 460          void isr_timer_SetPending(void) 
+ 461          {
+ 462   1          *isr_timer_INTC_SET_PD = isr_timer__INTC_MASK;
+ 463   1      }
+ 464          
+ 465          
+ 466          /*******************************************************************************
+ 467          * Function Name: isr_timer_ClearPending
+ 468          ********************************************************************************
+ 469          *
+ 470          * Summary:
+ 471          *   Clears a pending interrupt in the interrupt controller.
+ 472          *
+ 473          *   Note Some interrupt sources are clear-on-read and require the block 
+ 474          *   interrupt/status register to be read/cleared with the appropriate block API 
+ 475          *   (GPIO, UART, and so on). Otherwise the ISR will continue to remain in 
+ 476          *   pending state even though the interrupt itself is cleared using this API.
+ 477          *
+ 478          * Parameters:
+ 479          *   None
+ 480          *
+ 481          * Return:
+ 482          *   None
+ 483          *
+ 484          *******************************************************************************/
+ 485          void isr_timer_ClearPending(void) 
+ 486          {
+ 487   1          *isr_timer_INTC_CLR_PD = isr_timer__INTC_MASK;
+C51 COMPILER V9.51   ISR_TIMER                                                             05/22/2017 14:28:01 PAGE 9   
+
+ 488   1      }
+ 489          
+ 490          #endif /* End check for removal by optimization */
+ 491          
+ 492          
+ 493          /* [] END OF FILE */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    634    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      1       2
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

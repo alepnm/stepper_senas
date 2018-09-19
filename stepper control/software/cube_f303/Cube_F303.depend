@@ -1,0 +1,1448 @@
+# depslib dependency file v1.0
+1500394904 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\source\templates\system_stm32f3xx.c
+	"stm32f3xx.h"
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f3xx.h
+	"stm32f301x8.h"
+	"stm32f302x8.h"
+	"stm32f302xc.h"
+	"stm32f302xe.h"
+	"stm32f303x8.h"
+	"stm32f303xc.h"
+	"stm32f303xe.h"
+	"stm32f373xc.h"
+	"stm32f334x8.h"
+	"stm32f318xx.h"
+	"stm32f328xx.h"
+	"stm32f358xx.h"
+	"stm32f378xx.h"
+	"stm32f398xx.h"
+	"stm32f3xx_hal.h"
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f301x8.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394908 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\core_cm4.h
+	<stdint.h>
+	"core_cmInstr.h"
+	"core_cmFunc.h"
+	"core_cmSimd.h"
+
+1500394908 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\core_cminstr.h
+	"cmsis_armcc.h"
+	"cmsis_armcc_V6.h"
+	"cmsis_gcc.h"
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+	<cmsis_csm.h>
+
+1500394908 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\cmsis_armcc.h
+
+1500394908 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\cmsis_armcc_v6.h
+
+1500394908 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\cmsis_gcc.h
+
+1500394908 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\core_cmfunc.h
+	"cmsis_armcc.h"
+	"cmsis_armcc_V6.h"
+	"cmsis_gcc.h"
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+	<cmsis_csm.h>
+
+1500394908 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\core_cmsimd.h
+	"cmsis_armcc.h"
+	"cmsis_armcc_V6.h"
+	"cmsis_gcc.h"
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+	<cmsis_csm.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\system_stm32f3xx.h
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f302x8.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f302xc.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f302xe.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f303x8.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f303xc.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f303xe.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f373xc.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f334x8.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f318xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f328xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f358xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f378xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394904 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f398xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal.h
+	"stm32f3xx_hal_conf.h"
+
+1500412237 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\inc\stm32f3xx_hal_conf.h
+	"main.h"
+	"stm32f3xx_hal_rcc.h"
+	"stm32f3xx_hal_gpio.h"
+	"stm32f3xx_hal_dma.h"
+	"stm32f3xx_hal_cortex.h"
+	"stm32f3xx_hal_adc.h"
+	"stm32f3xx_hal_can.h"
+	"stm32f3xx_hal_cec.h"
+	"stm32f3xx_hal_comp.h"
+	"stm32f3xx_hal_crc.h"
+	"stm32f3xx_hal_dac.h"
+	"stm32f3xx_hal_flash.h"
+	"stm32f3xx_hal_sram.h"
+	"stm32f3xx_hal_nor.h"
+	"stm32f3xx_hal_nand.h"
+	"stm32f3xx_hal_pccard.h"
+	"stm32f3xx_hal_hrtim.h"
+	"stm32f3xx_hal_i2c.h"
+	"stm32f3xx_hal_i2s.h"
+	"stm32f3xx_hal_irda.h"
+	"stm32f3xx_hal_iwdg.h"
+	"stm32f3xx_hal_opamp.h"
+	"stm32f3xx_hal_pcd.h"
+	"stm32f3xx_hal_pwr.h"
+	"stm32f3xx_hal_rtc.h"
+	"stm32f3xx_hal_sdadc.h"
+	"stm32f3xx_hal_smartcard.h"
+	"stm32f3xx_hal_smbus.h"
+	"stm32f3xx_hal_spi.h"
+	"stm32f3xx_hal_tim.h"
+	"stm32f3xx_hal_tsc.h"
+	"stm32f3xx_hal_uart.h"
+	"stm32f3xx_hal_usart.h"
+	"stm32f3xx_hal_wwdg.h"
+
+1500412237 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\inc\main.h
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_rcc.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_rcc_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_def.h
+	"stm32f3xx.h"
+	"Legacy/stm32_hal_legacy.h"
+	<stdio.h>
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\legacy\stm32_hal_legacy.h
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_rcc_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_gpio.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_gpio_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_gpio_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_dma.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_dma_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_dma_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_cortex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_adc.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_adc_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_adc_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_can.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_cec.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_comp.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_comp_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_comp_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_crc.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_crc_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_crc_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_dac.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_dac_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_dac_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_flash.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_flash_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_flash_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_sram.h
+	"stm32f3xx_ll_fmc.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_fmc.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_nor.h
+	"stm32f3xx_ll_fmc.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_nand.h
+	"stm32f3xx_ll_fmc.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pccard.h
+	"stm32f3xx_ll_fmc.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_hrtim.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_i2c.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_i2c_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_i2c_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_i2s.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_i2s_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_i2s_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_irda.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_irda_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_irda_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_iwdg.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_opamp.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_opamp_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_opamp_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pcd.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_pcd_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pcd_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pwr.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_pwr_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pwr_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_rtc.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_rtc_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_rtc_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_sdadc.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_smartcard.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_smartcard_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_smartcard_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_smbus.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_spi.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_spi_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_spi_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_tim.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_tim_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_tim_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_tsc.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_uart.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_uart_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_uart_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_usart.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_usart_ex.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_usart_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_wwdg.h
+	"stm32f3xx_hal_def.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_adc.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_adc_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_can.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_cec.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_comp.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_cortex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_crc.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_crc_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_dac.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_dac_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_dma.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_flash.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_flash_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_gpio.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_hrtim.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_i2c.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_i2c_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_i2s.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_i2s_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_irda.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_iwdg.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_nand.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_nor.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_opamp.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_opamp_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pccard.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pcd.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pcd_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pwr.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pwr_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_rcc.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_rcc_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_rtc.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_rtc_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_sdadc.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_smartcard.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_smartcard_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_smbus.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_spi.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_spi_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_sram.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_tim.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_tim_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_tsc.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_uart.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_uart_ex.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_usart.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_wwdg.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_adc.c
+	"stm32f3xx_ll_adc.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_adc.h
+	"stm32f3xx.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_bus.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_comp.c
+	"stm32f3xx_ll_comp.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_comp.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_crc.c
+	"stm32f3xx_ll_crc.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_crc.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_dac.c
+	"stm32f3xx_ll_dac.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_dac.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_dma.c
+	"stm32f3xx_ll_dma.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_dma.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_exti.c
+	"stm32f3xx_ll_exti.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_exti.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_fmc.c
+	"stm32f3xx_hal.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_gpio.c
+	"stm32f3xx_ll_gpio.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_gpio.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_hrtim.c
+	"stm32f3xx_ll_hrtim.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_hrtim.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_i2c.c
+	"stm32f3xx_ll_i2c.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_i2c.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_opamp.c
+	"stm32f3xx_ll_opamp.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_opamp.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_pwr.c
+	"stm32f3xx_ll_pwr.h"
+	"stm32f3xx_ll_bus.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_pwr.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_rcc.c
+	"stm32f3xx_ll_rcc.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_rcc.h
+	"stm32f3xx.h"
+
+1500394916 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_rtc.c
+	"stm32f3xx_ll_rtc.h"
+	"stm32f3xx_ll_cortex.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_rtc.h
+	"stm32f3xx.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_cortex.h
+	"stm32f3xx.h"
+
+1500394917 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_spi.c
+	"stm32f3xx_ll_spi.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32f3xx_ll_rcc.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_spi.h
+	"stm32f3xx.h"
+
+1500394917 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_tim.c
+	"stm32f3xx_ll_tim.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_tim.h
+	"stm32f3xx.h"
+
+1500394917 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_usart.c
+	"stm32f3xx_ll_usart.h"
+	"stm32f3xx_ll_rcc.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_usart.h
+	"stm32f3xx.h"
+
+1500394917 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_utils.c
+	"stm32f3xx_ll_rcc.h"
+	"stm32f3xx_ll_utils.h"
+	"stm32f3xx_ll_system.h"
+	"stm32f3xx_ll_pwr.h"
+	"stm32_assert.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_utils.h
+	"stm32f3xx.h"
+
+1500394910 d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_system.h
+	"stm32f3xx.h"
+
+1500387310 source:d:\alex\sync\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\startup\startup_stm32f30x.s
+
+1500363518 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\source\templates\system_stm32f3xx.c
+	"stm32f3xx.h"
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f3xx.h
+	"stm32f301x8.h"
+	"stm32f302x8.h"
+	"stm32f302xc.h"
+	"stm32f302xe.h"
+	"stm32f303x8.h"
+	"stm32f303xc.h"
+	"stm32f303xe.h"
+	"stm32f373xc.h"
+	"stm32f334x8.h"
+	"stm32f318xx.h"
+	"stm32f328xx.h"
+	"stm32f358xx.h"
+	"stm32f378xx.h"
+	"stm32f398xx.h"
+	"stm32f3xx_hal.h"
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f301x8.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363521 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\core_cm4.h
+	<stdint.h>
+	"core_cmInstr.h"
+	"core_cmFunc.h"
+	"core_cmSimd.h"
+
+1500363521 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\core_cminstr.h
+	"cmsis_armcc.h"
+	"cmsis_armcc_V6.h"
+	"cmsis_gcc.h"
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+	<cmsis_csm.h>
+
+1500363521 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\cmsis_armcc.h
+
+1500363521 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\cmsis_armcc_v6.h
+
+1500363521 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\cmsis_gcc.h
+
+1500363521 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\core_cmfunc.h
+	"cmsis_armcc.h"
+	"cmsis_armcc_V6.h"
+	"cmsis_gcc.h"
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+	<cmsis_csm.h>
+
+1500363521 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\include\core_cmsimd.h
+	"cmsis_armcc.h"
+	"cmsis_armcc_V6.h"
+	"cmsis_gcc.h"
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+	<cmsis_csm.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\system_stm32f3xx.h
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f302x8.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f302xc.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f302xe.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f303x8.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f303xc.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f303xe.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f373xc.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f334x8.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f318xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f328xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f358xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f378xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363518 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\cmsis\device\st\stm32f3xx\include\stm32f398xx.h
+	"core_cm4.h"
+	"system_stm32f3xx.h"
+	<stdint.h>
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal.h
+	"stm32f3xx_hal_conf.h"
+
+1500460640 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\inc\stm32f3xx_hal_conf.h
+	"main.h"
+	"stm32f3xx_hal_rcc.h"
+	"stm32f3xx_hal_gpio.h"
+	"stm32f3xx_hal_dma.h"
+	"stm32f3xx_hal_cortex.h"
+	"stm32f3xx_hal_adc.h"
+	"stm32f3xx_hal_can.h"
+	"stm32f3xx_hal_cec.h"
+	"stm32f3xx_hal_comp.h"
+	"stm32f3xx_hal_crc.h"
+	"stm32f3xx_hal_dac.h"
+	"stm32f3xx_hal_flash.h"
+	"stm32f3xx_hal_sram.h"
+	"stm32f3xx_hal_nor.h"
+	"stm32f3xx_hal_nand.h"
+	"stm32f3xx_hal_pccard.h"
+	"stm32f3xx_hal_hrtim.h"
+	"stm32f3xx_hal_i2c.h"
+	"stm32f3xx_hal_i2s.h"
+	"stm32f3xx_hal_irda.h"
+	"stm32f3xx_hal_iwdg.h"
+	"stm32f3xx_hal_opamp.h"
+	"stm32f3xx_hal_pcd.h"
+	"stm32f3xx_hal_pwr.h"
+	"stm32f3xx_hal_rtc.h"
+	"stm32f3xx_hal_sdadc.h"
+	"stm32f3xx_hal_smartcard.h"
+	"stm32f3xx_hal_smbus.h"
+	"stm32f3xx_hal_spi.h"
+	"stm32f3xx_hal_tim.h"
+	"stm32f3xx_hal_tsc.h"
+	"stm32f3xx_hal_uart.h"
+	"stm32f3xx_hal_usart.h"
+	"stm32f3xx_hal_wwdg.h"
+
+1500460640 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\inc\main.h
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_rcc.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_rcc_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_def.h
+	"stm32f3xx.h"
+	"Legacy/stm32_hal_legacy.h"
+	<stdio.h>
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\legacy\stm32_hal_legacy.h
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_rcc_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_gpio.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_gpio_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_gpio_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_dma.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_dma_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_dma_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_cortex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_adc.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_adc_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_adc_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_can.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_cec.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_comp.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_comp_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_comp_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_crc.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_crc_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_crc_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_dac.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_dac_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_dac_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_flash.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_flash_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_flash_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_sram.h
+	"stm32f3xx_ll_fmc.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_fmc.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_nor.h
+	"stm32f3xx_ll_fmc.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_nand.h
+	"stm32f3xx_ll_fmc.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pccard.h
+	"stm32f3xx_ll_fmc.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_hrtim.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_i2c.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_i2c_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_i2c_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_i2s.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_i2s_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_i2s_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_irda.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_irda_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_irda_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_iwdg.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_opamp.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_opamp_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_opamp_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pcd.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_pcd_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pcd_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pwr.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_pwr_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_pwr_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_rtc.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_rtc_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_rtc_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_sdadc.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_smartcard.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_smartcard_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_smartcard_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_smbus.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_spi.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_spi_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_spi_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_tim.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_tim_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_tim_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_tsc.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_uart.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_uart_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_uart_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_usart.h
+	"stm32f3xx_hal_def.h"
+	"stm32f3xx_hal_usart_ex.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_usart_ex.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_hal_wwdg.h
+	"stm32f3xx_hal_def.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_adc.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_adc_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_can.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_cec.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_comp.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_cortex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_crc.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_crc_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_dac.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_dac_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_dma.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_flash.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_flash_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_gpio.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_hrtim.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_i2c.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_i2c_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_i2s.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_i2s_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_irda.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_iwdg.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_nand.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_nor.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_opamp.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_opamp_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pccard.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pcd.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pcd_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pwr.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_pwr_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_rcc.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_rcc_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_rtc.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_rtc_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_sdadc.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_smartcard.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_smartcard_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_smbus.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_spi.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_spi_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_sram.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_tim.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_tim_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_tsc.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_uart.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_uart_ex.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_usart.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_hal_wwdg.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_adc.c
+	"stm32f3xx_ll_adc.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_adc.h
+	"stm32f3xx.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_bus.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_comp.c
+	"stm32f3xx_ll_comp.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_comp.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_crc.c
+	"stm32f3xx_ll_crc.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_crc.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_dac.c
+	"stm32f3xx_ll_dac.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_dac.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_dma.c
+	"stm32f3xx_ll_dma.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_dma.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_exti.c
+	"stm32f3xx_ll_exti.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_exti.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_fmc.c
+	"stm32f3xx_hal.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_gpio.c
+	"stm32f3xx_ll_gpio.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_gpio.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_hrtim.c
+	"stm32f3xx_ll_hrtim.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_hrtim.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_i2c.c
+	"stm32f3xx_ll_i2c.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_i2c.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_opamp.c
+	"stm32f3xx_ll_opamp.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_opamp.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_pwr.c
+	"stm32f3xx_ll_pwr.h"
+	"stm32f3xx_ll_bus.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_pwr.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_rcc.c
+	"stm32f3xx_ll_rcc.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_rcc.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_rtc.c
+	"stm32f3xx_ll_rtc.h"
+	"stm32f3xx_ll_cortex.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_rtc.h
+	"stm32f3xx.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_cortex.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_spi.c
+	"stm32f3xx_ll_spi.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32f3xx_ll_rcc.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_spi.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_tim.c
+	"stm32f3xx_ll_tim.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_tim.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_usart.c
+	"stm32f3xx_ll_usart.h"
+	"stm32f3xx_ll_rcc.h"
+	"stm32f3xx_ll_bus.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_usart.h
+	"stm32f3xx.h"
+
+1500363522 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\src\stm32f3xx_ll_utils.c
+	"stm32f3xx_ll_rcc.h"
+	"stm32f3xx_ll_utils.h"
+	"stm32f3xx_ll_system.h"
+	"stm32f3xx_ll_pwr.h"
+	"stm32_assert.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_utils.h
+	"stm32f3xx.h"
+
+1500363522 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\drivers\stm32f3xx_hal_driver\inc\stm32f3xx_ll_system.h
+	"stm32f3xx.h"
+
+1500387310 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\startup\startup_stm32f30x.s
+
+1500458557 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\src\main.c
+	"main.h"
+	"stm32f3xx_hal.h"
+
+1500460640 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\src\stm32f3xx_hal_msp.c
+	"stm32f3xx_hal.h"
+
+1500460640 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\src\stm32f3xx_it.c
+	"stm32f3xx_hal.h"
+	"stm32f3xx.h"
+	"stm32f3xx_it.h"
+
+1500460640 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\inc\stm32f3xx_it.h
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\functions\mbfuncdiag.c
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\ascii\mbascii.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbconfig.h"
+	"mbascii.h"
+	"mbframe.h"
+	"mbcrc.h"
+	"mbport.h"
+
+1500460660 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\port\port.h
+	<stdint.h>
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\include\mb.h
+	"port.h"
+	"mbport.h"
+	"mbproto.h"
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\include\mbport.h
+	"port.h"
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\include\mbproto.h
+	"mb.h"
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\include\mbconfig.h
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\ascii\mbascii.h
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\include\mbframe.h
+	"mb.h"
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\rtu\mbcrc.h
+	"port.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\functions\mbfunccoils.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbframe.h"
+	"mbproto.h"
+	"mbconfig.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\functions\mbfuncdisc.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbframe.h"
+	"mbproto.h"
+	"mbconfig.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\functions\mbfuncholding.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbframe.h"
+	"mbproto.h"
+	"mbconfig.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\functions\mbfuncinput.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbframe.h"
+	"mbproto.h"
+	"mbconfig.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\functions\mbfuncother.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbframe.h"
+	"mbproto.h"
+	"mbconfig.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\functions\mbutils.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbproto.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\mb.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbconfig.h"
+	"mbframe.h"
+	"mbproto.h"
+	"mbfunc.h"
+	"mbport.h"
+	"mbrtu.h"
+	"mbascii.h"
+	"mbtcp.h"
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\include\mbfunc.h
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\rtu\mbrtu.h
+	"mb.h"
+
+1495729385 e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\tcp\mbtcp.h
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\rtu\mbcrc.c
+	"port.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\modbus\tcp\mbtcp.c
+	"stdlib.h"
+	"string.h"
+	"port.h"
+	"mb.h"
+	"mbconfig.h"
+	"mbtcp.h"
+	"mbframe.h"
+	"mbport.h"
+
+1495729385 source:e:\alex\dropbox\projects\ventmatika\stepper\stepper control\software\cube_f303\libs\freemodbus\port\portevent.c
+	"mb.h"
+	"mbport.h"
+

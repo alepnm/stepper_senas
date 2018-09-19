@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Project>
+  <Desktop>
+    <Static>
+      <Debug-Log>
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1861</ColumnWidth1></Debug-Log>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>220</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Disassembly>
+        <col-names>
+          
+          
+        <item>Disassembly</item><item>_I0</item></col-names>
+        <col-widths>
+          
+          
+        <item>500</item><item>20</item></col-widths>
+        <DisasmHistory/>
+        
+        
+      <ShowCodeCoverage>0</ShowCodeCoverage><ShowInstrProfiling>0</ShowInstrProfiling></Disassembly>
+    <WATCH_1><expressions><item>usSRegHoldBuf</item><item>usSRegInBuf</item><item>delay</item><item>dir</item><item>BaseClock</item><item>x</item><item>rpm150</item><item>rpm200</item><item>f</item><item>BaseClock</item><item>delay</item><item>mbaddr</item><item>qqq</item><item>MotorControl</item><item>adc</item><item/></expressions><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>231</item><item>197</item><item>145</item><item>178</item></col-widths></WATCH_1><Memory><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><FindDirection>1</FindDirection><FindAsHex>0</FindAsHex></Memory></Static>
+    <Windows>
+      
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-13673-18582</Identity>
+            <TabName>Debug Log</TabName>
+            <Factory>Debug-Log</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-13150-18592</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-20594-48</Identity><TabName>Memory</TabName><Factory>Memory</Factory><Session><ZoneNumber>2</ZoneNumber><SelectionAnchor>128</SelectionAnchor><SelectionEnd>128</SelectionEnd><UnitsPerGroup>1</UnitsPerGroup><EndianMode>0</EndianMode><DataCovEnabled>0</DataCovEnabled><DataCovShown>0</DataCovShown><AutoRefresh>0</AutoRefresh><HScroll>0</HScroll><VScroll>0</VScroll></Session></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd3>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-24422-18586</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>Stepper_Control</ExpandedNode><ExpandedNode>Stepper_Control/Output</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd3><Wnd4>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-2402-18589</Identity>
+            <TabName>Disassembly</TabName>
+            <Factory>Disassembly</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-14891-21792</Identity><TabName>Watch 1</TabName><Factory>WATCH_1</Factory></Tab></Tabs>
+        
+      <SelectedTab>1</SelectedTab></Wnd4></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\FREEMODBUS\MODBUS\mb.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>3954</SelStart><SelEnd>3954</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\stepper.h</Filename><XPos>0</XPos><YPos>66</YPos><SelStart>1245</SelStart><SelEnd>1245</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\FREEMODBUS\MODBUS\INCLUDE\mb.h</Filename><XPos>0</XPos><YPos>42</YPos><SelStart>2836</SelStart><SelEnd>2836</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\FREEMODBUS\PORT\port.h</Filename><XPos>0</XPos><YPos>33</YPos><SelStart>1977</SelStart><SelEnd>1977</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\stepper.c</Filename><XPos>0</XPos><YPos>264</YPos><SelStart>10202</SelStart><SelEnd>10202</SelEnd></Tab><ActiveTab>4</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\stepper_port.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>740</SelStart><SelEnd>740</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\eeprom.c</Filename><XPos>0</XPos><YPos>162</YPos><SelStart>7296</SelStart><SelEnd>7296</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\func.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>502</SelStart><SelEnd>502</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\eeprom.h</Filename><XPos>0</XPos><YPos>6</YPos><SelStart>43</SelStart><SelEnd>43</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\systick.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>2122</SelStart><SelEnd>2122</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\systick.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>493</SelStart><SelEnd>493</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\bendra.h</Filename><XPos>0</XPos><YPos>12</YPos><SelStart>943</SelStart><SelEnd>943</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\ATMEGA328\LIST\Stepper_Control.map</Filename><XPos>0</XPos><YPos>3573</YPos><SelStart>187414</SelStart><SelEnd>187414</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\main.c</Filename><XPos>0</XPos><YPos>46</YPos><SelStart>1755</SelStart><SelEnd>1755</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STEPPER\SOFTWARE\IAR\keywords.txt</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>103</SelStart><SelEnd>103</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\DROPBOX\PROJECTS\VENTMATIKA\STENDAS\2.0\MBMODULE\SOFTWARE\MBMODULE\ocr_skaiciavimai.c</Filename><XPos>0</XPos><YPos>39</YPos><SelStart>975</SelStart><SelEnd>975</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-01348940><key>iaridepm.enu1</key></Toolbar-01348940></Sizes></Row0><Row1><Sizes><Toolbar-09841ee8><key>debuggergui.enu1</key></Toolbar-09841ee8></Sizes></Row1></Top><Left><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>699</Bottom><Right>294</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>199</yscreen><sizeHorzCX>104167</sizeHorzCX><sizeHorzCY>198207</sizeHorzCY><sizeVertCX>154167</sizeVertCX><sizeVertCY>698207</sizeVertCY></Rect></Wnd3></Sizes></Row0></Left><Right><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>699</Bottom><Right>675</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>199</yscreen><sizeHorzCX>104167</sizeHorzCX><sizeHorzCY>198207</sizeHorzCY><sizeVertCX>352604</sizeVertCX><sizeVertCY>698207</sizeVertCY></Rect></Wnd4></Sizes></Row0></Right><Bottom><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>237</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>239</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>238048</sizeHorzCY><sizeVertCX>104167</sizeVertCX><sizeVertCY>198207</sizeVertCY></Rect></Wnd0></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Project>
+
+

@@ -1,0 +1,319 @@
+C51 COMPILER V9.51   PGA_1                                                                 05/22/2017 14:28:01 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE PGA_1
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\PGA_1.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -Generated_Source\PSoC3\PGA_1.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(2) PR(.\DP
+                    -8051\DP8051_Keil_951\Debug/PGA_1.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\PGA_1.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: PGA_1.c  
+   3          * Version 2.0
+   4          *
+   5          * Description:
+   6          *  This file provides the source code to the API for the PGA 
+   7          *  User Module.
+   8          *
+   9          * Note:
+  10          *
+  11          ********************************************************************************
+  12          * Copyright 2008-2012, Cypress Semiconductor Corporation.  All rights reserved.
+  13          * You may use this file only in accordance with the license, terms, conditions, 
+  14          * disclaimers, and limitations in the end user license agreement accompanying 
+  15          * the software package with which this file was provided.
+  16          *******************************************************************************/
+  17          
+  18          #include "PGA_1.h"
+  19          
+  20          #if (!CY_PSOC5A)
+  21              #if (CYDEV_VARIABLE_VDDA == 1u)
+                      #include "CyScBoostClk.h"
+                  #endif /* (CYDEV_VARIABLE_VDDA == 1u) */
+  24          #endif /* (!CY_PSOC5A) */
+  25          
+  26          #if (CY_PSOC5A)
+                  static PGA_1_BACKUP_STRUCT  PGA_1_P5backup;
+              #endif /* (CY_ PSOC5A) */
+  29          
+  30          uint8 PGA_1_initVar = 0u;
+  31          
+  32          
+  33          /*******************************************************************************   
+  34          * Function Name: PGA_1_Init
+  35          ********************************************************************************
+  36          *
+  37          * Summary:
+  38          *  Initialize component's parameters to the parameters set by user in the 
+  39          *  customizer of the component placed onto schematic. Usually called in 
+  40          *  PGA_1_Start().
+  41          *
+  42          * Parameters:
+  43          *  void
+  44          *
+  45          * Return:
+  46          *  void
+  47          *
+  48          *******************************************************************************/
+  49          void PGA_1_Init(void) 
+  50          {
+  51   1          /* Set PGA mode */
+  52   1          PGA_1_CR0_REG = PGA_1_MODE_PGA;      
+  53   1          /* Set non-inverting PGA mode and reference mode */
+C51 COMPILER V9.51   PGA_1                                                                 05/22/2017 14:28:01 PAGE 2   
+
+  54   1          PGA_1_CR1_REG |= PGA_1_PGA_NINV;  
+  55   1          /* Set default gain and ref mode */
+  56   1          PGA_1_CR2_REG = PGA_1_VREF_MODE;
+  57   1          /* Set gain and compensation */
+  58   1          PGA_1_SetGain(PGA_1_DEFAULT_GAIN);
+  59   1          /* Set power */
+  60   1          PGA_1_SetPower(PGA_1_DEFAULT_POWER);
+  61   1      }
+  62          
+  63          
+  64          /*******************************************************************************   
+  65          * Function Name: PGA_1_Enable
+  66          ********************************************************************************
+  67          *
+  68          * Summary:
+  69          *  Enables the PGA block operation.
+  70          *
+  71          * Parameters:
+  72          *  void
+  73          *
+  74          * Return:
+  75          *  void
+  76          *
+  77          *******************************************************************************/
+  78          void PGA_1_Enable(void) 
+  79          {
+  80   1          /* This is to restore the value of register CR1 and CR2 which is saved 
+  81   1            in prior to the modifications in stop() API */
+  82   1          #if (CY_PSOC5A)
+                      if(PGA_1_P5backup.enableState == 1u)
+                      {
+                          PGA_1_CR1_REG = PGA_1_P5backup.scCR1Reg;
+                          PGA_1_CR2_REG = PGA_1_P5backup.scCR2Reg;
+                          PGA_1_P5backup.enableState = 0u;
+                      }
+                  #endif /* CY_PSOC5A */   
+  90   1      
+  91   1          /* Enable power to the Amp in Active mode*/
+  92   1          PGA_1_PM_ACT_CFG_REG |= PGA_1_ACT_PWR_EN;
+  93   1      
+  94   1          /* Enable power to the Amp in Alternative Active mode*/
+  95   1          PGA_1_PM_STBY_CFG_REG |= PGA_1_STBY_PWR_EN;
+  96   1          
+  97   1          PGA_1_PUMP_CR1_REG |= PGA_1_PUMP_CR1_SC_CLKSEL;
+  98   1          
+  99   1          #if (!CY_PSOC5A)
+ 100   1              #if (CYDEV_VARIABLE_VDDA == 1u)
+                          if(CyScPumpEnabled == 1u)
+                          {
+                              PGA_1_BSTCLK_REG &= (uint8)(~PGA_1_BST_CLK_INDEX_MASK);
+                              PGA_1_BSTCLK_REG |= PGA_1_BST_CLK_EN | CyScBoostClk__INDEX;
+                              PGA_1_SC_MISC_REG |= PGA_1_PUMP_FORCE;
+                              CyScBoostClk_Start();
+                          }
+                          else
+                          {
+                              PGA_1_BSTCLK_REG &= (uint8)(~PGA_1_BST_CLK_EN);
+                              PGA_1_SC_MISC_REG &= (uint8)(~PGA_1_PUMP_FORCE);
+                          }
+                      #endif /* (CYDEV_VARIABLE_VDDA == 1u) */
+ 114   1          #endif /* (!CY_PSOC5A) */
+ 115   1      }
+C51 COMPILER V9.51   PGA_1                                                                 05/22/2017 14:28:01 PAGE 3   
+
+ 116          
+ 117          
+ 118          /*******************************************************************************
+ 119          * Function Name: PGA_1_Start
+ 120          ********************************************************************************
+ 121          *
+ 122          * Summary:
+ 123          *  The start function initializes the PGA with the default values and sets
+ 124          *  the power to the given level. A power level of 0, is same as executing
+ 125          *  the stop function.
+ 126          *
+ 127          * Parameters:
+ 128          *  void
+ 129          *
+ 130          * Return:
+ 131          *  void
+ 132          *
+ 133          *******************************************************************************/
+ 134          void PGA_1_Start(void) 
+ 135          {
+ 136   1      
+ 137   1          /* This is to restore the value of register CR1 and CR2 which is saved 
+ 138   1            in prior to the modification in stop() API */
+ 139   1      
+ 140   1          if(PGA_1_initVar == 0u)
+ 141   1          {
+ 142   2              PGA_1_Init();
+ 143   2              PGA_1_initVar = 1u;
+ 144   2          }
+ 145   1      
+ 146   1          PGA_1_Enable();
+ 147   1      }
+ 148          
+ 149          
+ 150          /*******************************************************************************
+ 151          * Function Name: PGA_1_Stop
+ 152          ********************************************************************************
+ 153          *
+ 154          * Summary:
+ 155          *  Powers down amplifier to lowest power state.
+ 156          *
+ 157          * Parameters:
+ 158          *  void
+ 159          *
+ 160          * Return:
+ 161          *  void
+ 162          *
+ 163          *******************************************************************************/
+ 164          void PGA_1_Stop(void) 
+ 165          { 
+ 166   1          /* Disble power to the Amp in Active mode template */
+ 167   1          PGA_1_PM_ACT_CFG_REG &= (uint8)(~PGA_1_ACT_PWR_EN);
+ 168   1      
+ 169   1          /* Disble power to the Amp in Alternative Active mode template */
+ 170   1          PGA_1_PM_STBY_CFG_REG &= (uint8)(~PGA_1_STBY_PWR_EN);
+ 171   1      
+ 172   1          #if (!CY_PSOC5A)
+ 173   1              #if (CYDEV_VARIABLE_VDDA == 1u)
+                          PGA_1_BSTCLK_REG &= (uint8)(~PGA_1_BST_CLK_EN);
+                          /* Disable pumps only if there aren't any SC block in use */
+                          if ((PGA_1_PM_ACT_CFG_REG & PGA_1_PM_ACT_CFG_MASK) == 0u)
+                          {
+C51 COMPILER V9.51   PGA_1                                                                 05/22/2017 14:28:01 PAGE 4   
+
+                              PGA_1_SC_MISC_REG &= (uint8)(~PGA_1_PUMP_FORCE);
+                              PGA_1_PUMP_CR1_REG &= (uint8)(~PGA_1_PUMP_CR1_SC_CLKSEL);
+                              CyScBoostClk_Stop();
+                          }
+                      #endif /* CYDEV_VARIABLE_VDDA == 1u */
+ 183   1          #endif /* (CY_PSOC3 || CY_PSOC5LP) */
+ 184   1      
+ 185   1          /* This sets PGA in zero current mode and output routes are valid */
+ 186   1          #if (CY_PSOC5A)
+                      PGA_1_P5backup.scCR1Reg = PGA_1_CR1_REG;
+                      PGA_1_P5backup.scCR2Reg = PGA_1_CR2_REG;
+                      PGA_1_CR1_REG = 0x00u;
+                      PGA_1_CR2_REG = 0x00u;
+                      PGA_1_P5backup.enableState = 1u;
+                  #endif /* CY_PSOC5A */
+ 193   1      }
+ 194          
+ 195          
+ 196          /*******************************************************************************
+ 197          * Function Name: PGA_1_SetPower
+ 198          ********************************************************************************
+ 199          *
+ 200          * Summary:
+ 201          *  Set the power of the PGA.
+ 202          *
+ 203          * Parameters:
+ 204          *  power: Sets power level between (0) and (3) high power
+ 205          *
+ 206          * Return:
+ 207          *  void
+ 208          *
+ 209          *******************************************************************************/
+ 210          void PGA_1_SetPower(uint8 power) 
+ 211          {
+ 212   1          uint8 tmpCR;
+ 213   1      
+ 214   1          tmpCR = PGA_1_CR1_REG & (uint8)(~PGA_1_DRIVE_MASK);
+ 215   1          tmpCR |= (power & PGA_1_DRIVE_MASK);
+ 216   1          PGA_1_CR1_REG = tmpCR;  
+ 217   1      }
+ 218          
+ 219          
+ 220          /*******************************************************************************
+ 221          * Function Name: PGA_1_SetGain
+ 222          ********************************************************************************
+ 223          *
+ 224          * Summary:
+ 225          *  This function sets values of the input and feedback resistors to set a 
+ 226          *  specific gain of the amplifier.
+ 227          *
+ 228          * Parameters:
+ 229          *  gain: Gain value of PGA (See header file for gain values.)
+ 230          *
+ 231          * Return:
+ 232          *  void 
+ 233          *
+ 234          *******************************************************************************/
+ 235          void PGA_1_SetGain(uint8 gain) 
+ 236          {
+ 237   1          /* Constant array for gain settings */
+ 238   1          const uint8 PGA_1_GainArray[9] = { 
+ 239   1              (PGA_1_RVAL_0K   | PGA_1_R20_40B_40K | PGA_1_BIAS_LOW), /* G=1  */
+C51 COMPILER V9.51   PGA_1                                                                 05/22/2017 14:28:01 PAGE 5   
+
+ 240   1              (PGA_1_RVAL_40K  | PGA_1_R20_40B_40K | PGA_1_BIAS_LOW), /* G=2  */
+ 241   1              (PGA_1_RVAL_120K | PGA_1_R20_40B_40K | PGA_1_BIAS_LOW), /* G=4  */
+ 242   1              (PGA_1_RVAL_280K | PGA_1_R20_40B_40K | PGA_1_BIAS_LOW), /* G=8  */
+ 243   1              (PGA_1_RVAL_600K | PGA_1_R20_40B_40K | PGA_1_BIAS_LOW), /* G=16 */
+ 244   1              (PGA_1_RVAL_460K | PGA_1_R20_40B_40K | PGA_1_BIAS_LOW), /* G=24, Sets Rin as 20k */
+ 245   1              (PGA_1_RVAL_620K | PGA_1_R20_40B_20K | PGA_1_BIAS_LOW), /* G=32 */
+ 246   1              (PGA_1_RVAL_470K | PGA_1_R20_40B_20K | PGA_1_BIAS_LOW), /* G=48, Sets Rin as 10k */
+ 247   1              (PGA_1_RVAL_490K | PGA_1_R20_40B_20K | PGA_1_BIAS_LOW)  /* G=50, Sets Rin as 10k */
+ 248   1          };
+ 249   1          
+ 250   1          /* Constant array for gain compenstion settings */
+ 251   1          const uint8 PGA_1_GainComp[9] = { 
+ 252   1              ( PGA_1_COMP_4P35PF  | (uint8)( PGA_1_REDC_00 >> 2 )), /* G=1  */
+ 253   1              ( PGA_1_COMP_4P35PF  | (uint8)( PGA_1_REDC_01 >> 2 )), /* G=2  */
+ 254   1              ( PGA_1_COMP_3P0PF   | (uint8)( PGA_1_REDC_01 >> 2 )), /* G=4  */
+ 255   1              ( PGA_1_COMP_3P0PF   | (uint8)( PGA_1_REDC_01 >> 2 )), /* G=8  */
+ 256   1              ( PGA_1_COMP_3P6PF   | (uint8)( PGA_1_REDC_01 >> 2 )), /* G=16 */
+ 257   1              ( PGA_1_COMP_3P6PF   | (uint8)( PGA_1_REDC_11 >> 2 )), /* G=24 */
+ 258   1              ( PGA_1_COMP_3P6PF   | (uint8)( PGA_1_REDC_11 >> 2 )), /* G=32 */
+ 259   1              ( PGA_1_COMP_3P6PF   | (uint8)( PGA_1_REDC_00 >> 2 )), /* G=48 */
+ 260   1              ( PGA_1_COMP_3P6PF   | (uint8)( PGA_1_REDC_00 >> 2 ))  /* G=50 */
+ 261   1          };
+ 262   1          
+ 263   1          /* Only set new gain if it is a valid gain */
+ 264   1          if( gain <= PGA_1_GAIN_MAX)
+ 265   1          {
+ 266   2              /* Clear resistors, redc, and bias */
+ 267   2              PGA_1_CR2_REG &= (uint8)(~(PGA_1_RVAL_MASK | PGA_1_R20_40B_MASK | 
+ 268   2                                      PGA_1_REDC_MASK | PGA_1_BIAS_MASK ));
+ 269   2      
+ 270   2              /* Set gain value resistors, redc comp, and bias */
+ 271   2              PGA_1_CR2_REG |= (PGA_1_GainArray[gain] |
+ 272   2                                      ((uint8)(PGA_1_GainComp[gain] << 2 ) & PGA_1_REDC_MASK));
+ 273   2      
+ 274   2              /* Clear sc_comp  */
+ 275   2              PGA_1_CR1_REG &= (uint8)(~PGA_1_COMP_MASK);
+ 276   2              /* Set sc_comp  */
+ 277   2              PGA_1_CR1_REG |= ( PGA_1_GainComp[gain] | PGA_1_COMP_MASK );
+ 278   2          }
+ 279   1      }
+ 280          
+ 281          
+ 282          /* [] END OF FILE */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    221    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =      1      19
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,53 @@
+[Stack]
+FillEnabled=0
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnLogOnly=1
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[DebugChecksum]
+Checksum=874132432
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[struct_types]
+Fmt0=STEPPER_CLOCK_T-Prescaler	3	0
+Fmt1=STEPPER_CLOCK_T-PrescalerMask	3	0
+[array_types]
+Fmt0=uint8_t [100]	3	0
+[watch_formats]
+Fmt0={W}0:id	3	0
+Fmt1={W}0:idx	3	0
+Fmt2={W}0:qqq	4	0
+Fmt3={W}0:rpm	3	0
+Fmt4={W}0:rpm150	3	0
+Fmt5={W}0:rpm200	3	0
+Fmt6={W}0:x	3	0
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=1
+Graph=0
+Symbiont=0
+Exclusions=
+[Breakpoints]
+Count=0
+[Aliases]
+A0=_ "D:\Alex\sync\Dropbox\Projects\Ventmatika\Stepper\software\IAR\FREEMODBUS\user_mb_app.c" ""
+Count=1
+SuppressDialog=0
+[Trace1]
+Enabled=0
+ShowSource=1

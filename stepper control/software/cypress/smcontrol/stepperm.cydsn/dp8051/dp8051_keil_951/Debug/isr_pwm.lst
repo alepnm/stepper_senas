@@ -1,0 +1,442 @@
+C51 COMPILER V9.51   ISR_PWM                                                               05/22/2017 14:28:00 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE ISR_PWM
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\isr_pwm.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -Generated_Source\PSoC3\isr_pwm.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(2) PR(.\
+                    -DP8051\DP8051_Keil_951\Debug/isr_pwm.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\isr_pwm.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: isr_pwm.c  
+   3          * Version 1.70
+   4          *
+   5          *  Description:
+   6          *   API for controlling the state of an interrupt.
+   7          *
+   8          *
+   9          *  Note:
+  10          *
+  11          ********************************************************************************
+  12          * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  13          * You may use this file only in accordance with the license, terms, conditions, 
+  14          * disclaimers, and limitations in the end user license agreement accompanying 
+  15          * the software package with which this file was provided.
+  16          *******************************************************************************/
+  17          
+  18          
+  19          #include <cydevice_trm.h>
+  20          #include <CyLib.h>
+  21          #include <isr_pwm.h>
+  22          
+  23          
+  24          #if !defined(isr_pwm__REMOVED) /* Check for removal by optimization */
+  25          
+  26          /*******************************************************************************
+  27          *  Place your includes, defines and code here 
+  28          ********************************************************************************/
+  29          /* `#START isr_pwm_intc` */
+  30          #include <PWM_A.H>
+  31          extern  uint16 PWMCnt;
+  32          /* `#END` */
+  33          
+  34          
+  35          /*******************************************************************************
+  36          * Function Name: isr_pwm_Start
+  37          ********************************************************************************
+  38          *
+  39          * Summary:
+  40          *  Set up the interrupt and enable it. This function disables the interrupt, 
+  41          *  sets the default interrupt vector, sets the priority from the value in the
+  42          *  Design Wide Resources Interrupt Editor, then enables the interrupt to the 
+  43          *  interrupt controller.
+  44          *
+  45          * Parameters:  
+  46          *   None
+  47          *
+  48          * Return:
+  49          *   None
+  50          *
+  51          *******************************************************************************/
+  52          void isr_pwm_Start(void) 
+  53          {
+C51 COMPILER V9.51   ISR_PWM                                                               05/22/2017 14:28:00 PAGE 2   
+
+  54   1          /* For all we know the interrupt is active. */
+  55   1          isr_pwm_Disable();
+  56   1      
+  57   1          /* Set the ISR to point to the isr_pwm Interrupt. */
+  58   1          isr_pwm_SetVector(&isr_pwm_Interrupt);
+  59   1      
+  60   1          /* Set the priority. */
+  61   1          isr_pwm_SetPriority((uint8)isr_pwm_INTC_PRIOR_NUMBER);
+  62   1      
+  63   1          /* Enable it. */
+  64   1          isr_pwm_Enable();
+  65   1      }
+  66          
+  67          
+  68          /*******************************************************************************
+  69          * Function Name: isr_pwm_StartEx
+  70          ********************************************************************************
+  71          *
+  72          * Summary:
+  73          *  Sets up the interrupt and enables it. This function disables the interrupt,
+  74          *  sets the interrupt vector based on the address passed in, sets the priority 
+  75          *  from the value in the Design Wide Resources Interrupt Editor, then enables 
+  76          *  the interrupt to the interrupt controller.
+  77          *  
+  78          *  When defining ISR functions, the CY_ISR and CY_ISR_PROTO macros should be 
+  79          *  used to provide consistent definition across compilers:
+  80          *  
+  81          *  Function definition example:
+  82          *   CY_ISR(MyISR)
+  83          *   {
+  84          *   }
+  85          *   Function prototype example:
+  86          *   CY_ISR_PROTO(MyISR);
+  87          *
+  88          * Parameters:  
+  89          *   address: Address of the ISR to set in the interrupt vector table.
+  90          *
+  91          * Return:
+  92          *   None
+  93          *
+  94          *******************************************************************************/
+  95          void isr_pwm_StartEx(cyisraddress address) 
+  96          {
+  97   1          /* For all we know the interrupt is active. */
+  98   1          isr_pwm_Disable();
+  99   1      
+ 100   1          /* Set the ISR to point to the isr_pwm Interrupt. */
+ 101   1          isr_pwm_SetVector(address);
+ 102   1      
+ 103   1          /* Set the priority. */
+ 104   1          isr_pwm_SetPriority((uint8)isr_pwm_INTC_PRIOR_NUMBER);
+ 105   1      
+ 106   1          /* Enable it. */
+ 107   1          isr_pwm_Enable();
+ 108   1      }
+ 109          
+ 110          
+ 111          /*******************************************************************************
+ 112          * Function Name: isr_pwm_Stop
+ 113          ********************************************************************************
+ 114          *
+ 115          * Summary:
+C51 COMPILER V9.51   ISR_PWM                                                               05/22/2017 14:28:00 PAGE 3   
+
+ 116          *   Disables and removes the interrupt.
+ 117          *
+ 118          * Parameters:  
+ 119          *   None
+ 120          *
+ 121          * Return:
+ 122          *   None
+ 123          *
+ 124          *******************************************************************************/
+ 125          void isr_pwm_Stop(void) 
+ 126          {
+ 127   1          /* Disable this interrupt. */
+ 128   1          isr_pwm_Disable();
+ 129   1      }
+ 130          
+ 131          
+ 132          /*******************************************************************************
+ 133          * Function Name: isr_pwm_Interrupt
+ 134          ********************************************************************************
+ 135          *
+ 136          * Summary:
+ 137          *   The default Interrupt Service Routine for isr_pwm.
+ 138          *
+ 139          *   Add custom code between the START and END comments to keep the next version
+ 140          *   of this file from over-writing your code.
+ 141          *
+ 142          *   Note You may use either the default ISR by using this API, or you may define
+ 143          *   your own separate ISR through ISR_StartEx().
+ 144          *
+ 145          * Parameters:  
+ 146          *   None
+ 147          *
+ 148          * Return:
+ 149          *   None
+ 150          *
+ 151          *******************************************************************************/
+ 152          CY_ISR(isr_pwm_Interrupt)
+ 153          {
+ 154   1          #ifdef isr_pwm_INTERRUPT_INTERRUPT_CALLBACK
+                      isr_pwm_Interrupt_InterruptCallback();
+                  #endif /* isr_pwm_INTERRUPT_INTERRUPT_CALLBACK */
+ 157   1      
+ 158   1          /*  Place your Interrupt code here. */
+ 159   1          /* `#START isr_pwm_Interrupt` */
+ 160   1          PWMCnt++;
+ 161   1          PWM_A_ReadStatusRegister();
+ 162   1          /* `#END` */
+ 163   1      
+ 164   1          /* PSoC3 ES1, ES2 RTC ISR PATCH  */ 
+ 165   1          #if(CYDEV_CHIP_FAMILY_USED == CYDEV_CHIP_FAMILY_PSOC3)
+ 166   1              #if((CYDEV_CHIP_REVISION_USED <= CYDEV_CHIP_REVISION_3A_ES2) && (isr_pwm__ES2_PATCH ))      
+                          isr_pwm_ISR_PATCH();
+                      #endif /* CYDEV_CHIP_REVISION_USED */
+ 169   1          #endif /* (CYDEV_CHIP_FAMILY_USED == CYDEV_CHIP_FAMILY_PSOC3) */
+ 170   1      }
+ 171          
+ 172          
+ 173          /*******************************************************************************
+ 174          * Function Name: isr_pwm_SetVector
+ 175          ********************************************************************************
+ 176          *
+ 177          * Summary:
+C51 COMPILER V9.51   ISR_PWM                                                               05/22/2017 14:28:00 PAGE 4   
+
+ 178          *   Change the ISR vector for the Interrupt. Note calling isr_pwm_Start
+ 179          *   will override any effect this method would have had. To set the vector 
+ 180          *   before the component has been started use isr_pwm_StartEx instead.
+ 181          * 
+ 182          *   When defining ISR functions, the CY_ISR and CY_ISR_PROTO macros should be 
+ 183          *   used to provide consistent definition across compilers:
+ 184          *
+ 185          *   Function definition example:
+ 186          *   CY_ISR(MyISR)
+ 187          *   {
+ 188          *   }
+ 189          *
+ 190          *   Function prototype example:
+ 191          *     CY_ISR_PROTO(MyISR);
+ 192          *
+ 193          * Parameters:
+ 194          *   address: Address of the ISR to set in the interrupt vector table.
+ 195          *
+ 196          * Return:
+ 197          *   None
+ 198          *
+ 199          *******************************************************************************/
+ 200          void isr_pwm_SetVector(cyisraddress address) 
+ 201          {
+ 202   1          CY_SET_REG16(isr_pwm_INTC_VECTOR, (uint16) address);
+ 203   1      }
+ 204          
+ 205          
+ 206          /*******************************************************************************
+ 207          * Function Name: isr_pwm_GetVector
+ 208          ********************************************************************************
+ 209          *
+ 210          * Summary:
+ 211          *   Gets the "address" of the current ISR vector for the Interrupt.
+ 212          *
+ 213          * Parameters:
+ 214          *   None
+ 215          *
+ 216          * Return:
+ 217          *   Address of the ISR in the interrupt vector table.
+ 218          *
+ 219          *******************************************************************************/
+ 220          cyisraddress isr_pwm_GetVector(void) 
+ 221          {
+ 222   1          return (cyisraddress) CY_GET_REG16(isr_pwm_INTC_VECTOR);
+ 223   1      }
+ 224          
+ 225          
+ 226          /*******************************************************************************
+ 227          * Function Name: isr_pwm_SetPriority
+ 228          ********************************************************************************
+ 229          *
+ 230          * Summary:
+ 231          *   Sets the Priority of the Interrupt. 
+ 232          *
+ 233          *   Note calling isr_pwm_Start or isr_pwm_StartEx will 
+ 234          *   override any effect this API would have had. This API should only be called
+ 235          *   after isr_pwm_Start or isr_pwm_StartEx has been called. 
+ 236          *   To set the initial priority for the component, use the Design-Wide Resources
+ 237          *   Interrupt Editor.
+ 238          *
+ 239          *   Note This API has no effect on Non-maskable interrupt NMI).
+C51 COMPILER V9.51   ISR_PWM                                                               05/22/2017 14:28:00 PAGE 5   
+
+ 240          *
+ 241          * Parameters:
+ 242          *   priority: Priority of the interrupt, 0 being the highest priority
+ 243          *             PSoC 3 and PSoC 5LP: Priority is from 0 to 7.
+ 244          *             PSoC 4: Priority is from 0 to 3.
+ 245          *
+ 246          * Return:
+ 247          *   None
+ 248          *
+ 249          *******************************************************************************/
+ 250          void isr_pwm_SetPriority(uint8 priority) 
+ 251          {
+ 252   1          *isr_pwm_INTC_PRIOR = priority << 5;
+ 253   1      }
+ 254          
+ 255          
+ 256          /*******************************************************************************
+ 257          * Function Name: isr_pwm_GetPriority
+ 258          ********************************************************************************
+ 259          *
+ 260          * Summary:
+ 261          *   Gets the Priority of the Interrupt.
+ 262          *
+ 263          * Parameters:
+ 264          *   None
+ 265          *
+ 266          * Return:
+ 267          *   Priority of the interrupt, 0 being the highest priority
+ 268          *    PSoC 3 and PSoC 5LP: Priority is from 0 to 7.
+ 269          *    PSoC 4: Priority is from 0 to 3.
+ 270          *
+ 271          *******************************************************************************/
+ 272          uint8 isr_pwm_GetPriority(void) 
+ 273          {
+ 274   1          uint8 priority;
+ 275   1      
+ 276   1      
+ 277   1          priority = *isr_pwm_INTC_PRIOR >> 5;
+ 278   1      
+ 279   1          return priority;
+ 280   1      }
+ 281          
+ 282          
+ 283          /*******************************************************************************
+ 284          * Function Name: isr_pwm_Enable
+ 285          ********************************************************************************
+ 286          *
+ 287          * Summary:
+ 288          *   Enables the interrupt to the interrupt controller. Do not call this function
+ 289          *   unless ISR_Start() has been called or the functionality of the ISR_Start() 
+ 290          *   function, which sets the vector and the priority, has been called.
+ 291          *
+ 292          * Parameters:
+ 293          *   None
+ 294          *
+ 295          * Return:
+ 296          *   None
+ 297          *
+ 298          *******************************************************************************/
+ 299          void isr_pwm_Enable(void) 
+ 300          {
+ 301   1          /* Enable the general interrupt. */
+C51 COMPILER V9.51   ISR_PWM                                                               05/22/2017 14:28:00 PAGE 6   
+
+ 302   1          *isr_pwm_INTC_SET_EN = isr_pwm__INTC_MASK;
+ 303   1      }
+ 304          
+ 305          
+ 306          /*******************************************************************************
+ 307          * Function Name: isr_pwm_GetState
+ 308          ********************************************************************************
+ 309          *
+ 310          * Summary:
+ 311          *   Gets the state (enabled, disabled) of the Interrupt.
+ 312          *
+ 313          * Parameters:
+ 314          *   None
+ 315          *
+ 316          * Return:
+ 317          *   1 if enabled, 0 if disabled.
+ 318          *
+ 319          *******************************************************************************/
+ 320          uint8 isr_pwm_GetState(void) 
+ 321          {
+ 322   1          /* Get the state of the general interrupt. */
+ 323   1          return ((*isr_pwm_INTC_SET_EN & (uint8)isr_pwm__INTC_MASK) != 0u) ? 1u:0u;
+ 324   1      }
+ 325          
+ 326          
+ 327          /*******************************************************************************
+ 328          * Function Name: isr_pwm_Disable
+ 329          ********************************************************************************
+ 330          *
+ 331          * Summary:
+ 332          *   Disables the Interrupt in the interrupt controller.
+ 333          *
+ 334          * Parameters:
+ 335          *   None
+ 336          *
+ 337          * Return:
+ 338          *   None
+ 339          *
+ 340          *******************************************************************************/
+ 341          void isr_pwm_Disable(void) 
+ 342          {
+ 343   1          /* Disable the general interrupt. */
+ 344   1          *isr_pwm_INTC_CLR_EN = isr_pwm__INTC_MASK;
+ 345   1      }
+ 346          
+ 347          
+ 348          /*******************************************************************************
+ 349          * Function Name: isr_pwm_SetPending
+ 350          ********************************************************************************
+ 351          *
+ 352          * Summary:
+ 353          *   Causes the Interrupt to enter the pending state, a software method of
+ 354          *   generating the interrupt.
+ 355          *
+ 356          * Parameters:
+ 357          *   None
+ 358          *
+ 359          * Return:
+ 360          *   None
+ 361          *
+ 362          * Side Effects:
+ 363          *   If interrupts are enabled and the interrupt is set up properly, the ISR is
+C51 COMPILER V9.51   ISR_PWM                                                               05/22/2017 14:28:00 PAGE 7   
+
+ 364          *   entered (depending on the priority of this interrupt and other pending 
+ 365          *   interrupts).
+ 366          *
+ 367          *******************************************************************************/
+ 368          void isr_pwm_SetPending(void) 
+ 369          {
+ 370   1          *isr_pwm_INTC_SET_PD = isr_pwm__INTC_MASK;
+ 371   1      }
+ 372          
+ 373          
+ 374          /*******************************************************************************
+ 375          * Function Name: isr_pwm_ClearPending
+ 376          ********************************************************************************
+ 377          *
+ 378          * Summary:
+ 379          *   Clears a pending interrupt in the interrupt controller.
+ 380          *
+ 381          *   Note Some interrupt sources are clear-on-read and require the block 
+ 382          *   interrupt/status register to be read/cleared with the appropriate block API 
+ 383          *   (GPIO, UART, and so on). Otherwise the ISR will continue to remain in 
+ 384          *   pending state even though the interrupt itself is cleared using this API.
+ 385          *
+ 386          * Parameters:
+ 387          *   None
+ 388          *
+ 389          * Return:
+ 390          *   None
+ 391          *
+ 392          *******************************************************************************/
+ 393          void isr_pwm_ClearPending(void) 
+ 394          {
+ 395   1          *isr_pwm_INTC_CLR_PD = isr_pwm__INTC_MASK;
+ 396   1      }
+ 397          
+ 398          #endif /* End check for removal by optimization */
+ 399          
+ 400          
+ 401          /* [] END OF FILE */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    236    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       2
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

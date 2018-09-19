@@ -1,0 +1,754 @@
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\LCD.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -Generated_Source\PSoC3\LCD.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(2) PR(.\DP80
+                    -51\DP8051_Keil_951\Debug/LCD.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\LCD.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: LCD.c
+   3          * Version 2.20
+   4          *
+   5          * Description:
+   6          *  This file provides source code for the Character LCD component's API.
+   7          *
+   8          * Note:
+   9          *
+  10          ********************************************************************************
+  11          * Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
+  12          * You may use this file only in accordance with the license, terms, conditions,
+  13          * disclaimers, and limitations in the end user license agreement accompanying
+  14          * the software package with which this file was provided.
+  15          *******************************************************************************/
+  16          
+  17          #include "CyLib.h"
+  18          #include "LCD.h"
+  19          
+  20          
+  21          static void LCD_WrDatNib(uint8 nibble) ;
+  22          static void LCD_WrCntrlNib(uint8 nibble) ;
+  23          
+  24          /* Stores state of component. Indicates whether component is or not
+  25          * in enable state.
+  26          */
+  27          uint8 LCD_enableState = 0u;
+  28          
+  29          uint8 LCD_initVar = 0u;
+  30          
+  31          
+  32          /*******************************************************************************
+  33          * Function Name: LCD_Init
+  34          ********************************************************************************
+  35          *
+  36          * Summary:
+  37          *  Performs initialization required for the components normal work.
+  38          *  This function initializes the LCD hardware module as follows:
+  39          *        Enables a 4-bit interface
+  40          *        Clears the display
+  41          *        Enables the auto cursor increment
+  42          *        Resets the cursor to start position
+  43          *  Also, it loads a custom character set to the LCD if it was defined in the customizer.
+  44          *
+  45          * Parameters:
+  46          *  None.
+  47          *
+  48          * Return:
+  49          *  None.
+  50          *
+  51          * Reentrant:
+  52          *  No.
+  53          *
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 2   
+
+  54          *******************************************************************************/
+  55          void LCD_Init(void) 
+  56          {
+  57   1          /* INIT CODE */
+  58   1          CyDelay(40u);                                                        /* Delay 40 ms */
+  59   1          LCD_WrCntrlNib(LCD_DISPLAY_8_BIT_INIT);    /* Selects 8-bit mode */
+  60   1          CyDelay(5u);                                                         /* Delay 5 ms */
+  61   1          LCD_WrCntrlNib(LCD_DISPLAY_8_BIT_INIT);    /* Selects 8-bit mode */
+  62   1          CyDelay(15u);                                                        /* Delay 15 ms */
+  63   1          LCD_WrCntrlNib(LCD_DISPLAY_8_BIT_INIT);    /* Selects 8-bit mode */
+  64   1          CyDelay(1u);                                                         /* Delay 1 ms */
+  65   1          LCD_WrCntrlNib(LCD_DISPLAY_4_BIT_INIT);    /* Selects 4-bit mode */
+  66   1          CyDelay(5u);                                                         /* Delay 5 ms */
+  67   1      
+  68   1          LCD_WriteControl(LCD_CURSOR_AUTO_INCR_ON);    /* Incr Cursor After Writes */
+  69   1          LCD_WriteControl(LCD_DISPLAY_CURSOR_ON);      /* Turn Display, Cursor ON */
+  70   1          LCD_WriteControl(LCD_DISPLAY_2_LINES_5x10);   /* 2 Lines by 5x10 Characters */
+  71   1          LCD_WriteControl(LCD_DISPLAY_CURSOR_OFF);     /* Turn Display, Cursor OFF */
+  72   1          LCD_WriteControl(LCD_CLEAR_DISPLAY);          /* Clear LCD Screen */
+  73   1          LCD_WriteControl(LCD_DISPLAY_ON_CURSOR_OFF);  /* Turn Display ON, Cursor OFF */
+  74   1          LCD_WriteControl(LCD_RESET_CURSOR_POSITION);  /* Set Cursor to 0,0 */
+  75   1          CyDelay(5u);
+  76   1      
+  77   1          #if(LCD_CUSTOM_CHAR_SET != LCD_NONE)
+                      LCD_LoadCustomFonts(LCD_customFonts);
+                  #endif /* LCD_CUSTOM_CHAR_SET != LCD_NONE */
+  80   1      }
+  81          
+  82          
+  83          /*******************************************************************************
+  84          * Function Name: LCD_Enable
+  85          ********************************************************************************
+  86          *
+  87          * Summary:
+  88          *  Turns on the display.
+  89          *
+  90          * Parameters:
+  91          *  None.
+  92          *
+  93          * Return:
+  94          *  None.
+  95          *
+  96          * Reentrant:
+  97          *  No.
+  98          *
+  99          * Theory:
+ 100          *  This function has no effect when it is called the first time as
+ 101          *  LCD_Init() turns on the LCD.
+ 102          *
+ 103          *******************************************************************************/
+ 104          void LCD_Enable(void) 
+ 105          {
+ 106   1          LCD_DisplayOn();
+ 107   1          LCD_enableState = 1u;
+ 108   1      }
+ 109          
+ 110          
+ 111          /*******************************************************************************
+ 112          * Function Name: LCD_Start
+ 113          ********************************************************************************
+ 114          *
+ 115          * Summary:
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 3   
+
+ 116          *  Performs initialization required for the components normal work.
+ 117          *  This function initializes the LCD hardware module as follows:
+ 118          *        Enables 4-bit interface
+ 119          *        Clears the display
+ 120          *        Enables auto cursor increment
+ 121          *        Resets the cursor to start position
+ 122          *  Also, it loads a custom character set to the LCD if it was defined in the customizer.
+ 123          *  If it was not the first call in this project, then it just turns on the
+ 124          *  display
+ 125          *
+ 126          *
+ 127          * Parameters:
+ 128          *  LCD_initVar - global variable.
+ 129          *
+ 130          * Return:
+ 131          *  LCD_initVar - global variable.
+ 132          *
+ 133          * Reentrant:
+ 134          *  No.
+ 135          *
+ 136          *******************************************************************************/
+ 137          void LCD_Start(void) 
+ 138          {
+ 139   1          /* If not initialized, perform initialization */
+ 140   1          if(LCD_initVar == 0u)
+ 141   1          {
+ 142   2              LCD_Init();
+ 143   2              LCD_initVar = 1u;
+ 144   2          }
+ 145   1      
+ 146   1          /* Turn on the LCD */
+ 147   1          LCD_Enable();
+ 148   1      }
+ 149          
+ 150          
+ 151          /*******************************************************************************
+ 152          * Function Name: LCD_Stop
+ 153          ********************************************************************************
+ 154          *
+ 155          * Summary:
+ 156          *  Turns off the display of the LCD screen.
+ 157          *
+ 158          * Parameters:
+ 159          *  None.
+ 160          *
+ 161          * Return:
+ 162          *  None.
+ 163          *
+ 164          * Reentrant:
+ 165          *  No.
+ 166          *
+ 167          *******************************************************************************/
+ 168          void LCD_Stop(void) 
+ 169          {
+ 170   1          /* Calls LCD Off Macro */
+ 171   1          LCD_DisplayOff();
+ 172   1          LCD_enableState = 0u;
+ 173   1      }
+ 174          
+ 175          
+ 176          /*******************************************************************************
+ 177          *  Function Name: LCD_Position
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 4   
+
+ 178          ********************************************************************************
+ 179          *
+ 180          * Summary:
+ 181          *  Moves the active cursor location to a point specified by the input arguments
+ 182          *
+ 183          * Parameters:
+ 184          *  row:    Specific row of LCD module to be written
+ 185          *  column: Column of LCD module to be written
+ 186          *
+ 187          * Return:
+ 188          *  None.
+ 189          *
+ 190          * Note:
+ 191          *  This only applies for LCD displays that use the 2X40 address mode.
+ 192          *  In this case Row 2 starts with a 0x28 offset from Row 1.
+ 193          *  When there are more than 2 rows, each row must be fewer than 20 characters.
+ 194          *
+ 195          *******************************************************************************/
+ 196          void LCD_Position(uint8 row, uint8 column) 
+ 197          {
+ 198   1          switch (row)
+ 199   1          {
+ 200   2              case (uint8)0:
+ 201   2                  LCD_WriteControl(LCD_ROW_0_START + column);
+ 202   2                  break;
+ 203   2              case (uint8) 1:
+ 204   2                  LCD_WriteControl(LCD_ROW_1_START + column);
+ 205   2                  break;
+ 206   2              case (uint8) 2:
+ 207   2                  LCD_WriteControl(LCD_ROW_2_START + column);
+ 208   2                  break;
+ 209   2              case (uint8) 3:
+ 210   2                  LCD_WriteControl(LCD_ROW_3_START + column);
+ 211   2                  break;
+ 212   2              default:
+ 213   2                  /* if default case is hit, invalid row argument was passed.*/
+ 214   2                  break;
+ 215   2          }
+ 216   1      }
+ 217          
+ 218          
+ 219          /*******************************************************************************
+ 220          * Function Name: LCD_PrintString
+ 221          ********************************************************************************
+ 222          *
+ 223          * Summary:
+ 224          *  Writes a zero terminated string to the LCD.
+ 225          *
+ 226          * Parameters:
+ 227          *  string: Pointer to head of char8 array to be written to the LCD module
+ 228          *
+ 229          * Return:
+ 230          *  None.
+ 231          *
+ 232          *******************************************************************************/
+ 233          void LCD_PrintString(char8 const string[]) 
+ 234          {
+ 235   1          uint8 indexU8 = 1u;
+ 236   1          char8 current = *string;
+ 237   1      
+ 238   1          /* Until null is reached, print next character */
+ 239   1          while((char8) '\0' != current)
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 5   
+
+ 240   1          {
+ 241   2              LCD_WriteData((uint8)current);
+ 242   2              current = string[indexU8];
+ 243   2              indexU8++;
+ 244   2          }
+ 245   1      }
+ 246          
+ 247          
+ 248          /*******************************************************************************
+ 249          *  Function Name: LCD_PutChar
+ 250          ********************************************************************************
+ 251          *
+ 252          * Summary:
+ 253          *  Writes a single character to the current cursor position of the LCD module.
+ 254          *  Custom character names (_CUSTOM_0 through
+ 255          *  _CUSTOM_7) are acceptable as inputs.
+ 256          *
+ 257          * Parameters:
+ 258          *  character: Character to be written to LCD
+ 259          *
+ 260          * Return:
+ 261          *  None.
+ 262          *
+ 263          *******************************************************************************/
+ 264          void LCD_PutChar(char8 character) 
+ 265          {
+ 266   1          LCD_WriteData((uint8)character);
+ 267   1      }
+ 268          
+ 269          
+ 270          /*******************************************************************************
+ 271          *  Function Name: LCD_WriteData
+ 272          ********************************************************************************
+ 273          *
+ 274          * Summary:
+ 275          *  Writes a data byte to the LCD module's Data Display RAM.
+ 276          *
+ 277          * Parameters:
+ 278          *  dByte: Byte to be written to the LCD module
+ 279          *
+ 280          * Return:
+ 281          *  None.
+ 282          *
+ 283          *******************************************************************************/
+ 284          void LCD_WriteData(uint8 dByte) 
+ 285          {
+ 286   1          uint8 nibble;
+ 287   1      
+ 288   1          LCD_IsReady();
+ 289   1          nibble = dByte >> LCD_NIBBLE_SHIFT;
+ 290   1      
+ 291   1          /* Write high nibble */
+ 292   1          LCD_WrDatNib(nibble);
+ 293   1      
+ 294   1          nibble = dByte & LCD_NIBBLE_MASK;
+ 295   1          /* Write low nibble */
+ 296   1          LCD_WrDatNib(nibble);
+ 297   1      }
+ 298          
+ 299          
+ 300          /*******************************************************************************
+ 301          *  Function Name: LCD_WriteControl
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 6   
+
+ 302          ********************************************************************************
+ 303          *
+ 304          * Summary:
+ 305          *  Writes a command byte to the LCD module.
+ 306          *
+ 307          * Parameters:
+ 308          *  cByte:  The byte to be written to theLCD module
+ 309          * 
+ 310          * Return:
+ 311          *  None.
+ 312          *
+ 313          *******************************************************************************/
+ 314          void LCD_WriteControl(uint8 cByte) 
+ 315          {
+ 316   1          uint8 nibble;
+ 317   1      
+ 318   1          LCD_IsReady();
+ 319   1      
+ 320   1          nibble = cByte >> LCD_NIBBLE_SHIFT;
+ 321   1          
+ 322   1          /* WrCntrlNib(High Nibble) */
+ 323   1          LCD_WrCntrlNib(nibble);
+ 324   1          nibble = cByte & LCD_NIBBLE_MASK;
+ 325   1      
+ 326   1          /* WrCntrlNib(Low Nibble) */
+ 327   1          LCD_WrCntrlNib(nibble);
+ 328   1      }
+ 329          
+ 330          
+ 331          /*******************************************************************************
+ 332          * Function Name: LCD_IsReady
+ 333          ********************************************************************************
+ 334          *
+ 335          * Summary:
+ 336          *  Polls the LCD until the ready bit is set or a timeout occurs.
+ 337          *
+ 338          * Parameters:
+ 339          *  None.
+ 340          *
+ 341          * Return:
+ 342          *  None.
+ 343          *
+ 344          * Note:
+ 345          *  Changes the pins to High-Z.
+ 346          *
+ 347          *******************************************************************************/
+ 348          void LCD_IsReady(void) 
+ 349          {
+ 350   1          uint8 value;
+ 351   1          uint32 timeout;
+ 352   1          timeout = LCD_READY_DELAY;
+ 353   1      
+ 354   1          /* Clear LCD port*/
+ 355   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_PORT_MASK));
+ 356   1      
+ 357   1          /* PSoC4 has a little different from PSoC3/5 port/pin organization for setting Drive Modes.
+ 358   1        
+ 359   1          */
+ 360   1          #if (CY_PSOC4)
+                      
+                      /* Mask off data pins to clear old values out */
+                      value = LCD_PORT_PC_REG & ((uint32) (~ LCD_DM_DATA_MASK));
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 7   
+
+                      /* Load in high Z values for data pins, others unchanged */
+                      LCD_PORT_PC_REG = value | LCD_HIGH_Z_DATA_DM;
+              
+                  #else
+ 368   1          
+ 369   1              /* Change Port to High-Z Status on data pins */
+ 370   1      
+ 371   1              /* Mask off data pins to clear old values out */
+ 372   1              value = LCD_PORT_DM0_REG & ((uint8)(~LCD_DATA_MASK));
+ 373   1              /* Load in high Z values for data pins, others unchanged */
+ 374   1              LCD_PORT_DM0_REG = value | (LCD_HIGH_Z_DM0 & LCD_DATA_MASK);
+ 375   1      
+ 376   1              /* Mask off data pins to clear old values out */
+ 377   1              value = LCD_PORT_DM1_REG & ((uint8)(~LCD_DATA_MASK));
+ 378   1              /* Load in high Z values for data pins, others unchanged */
+ 379   1              LCD_PORT_DM1_REG = value;
+ 380   1      
+ 381   1              /* Mask off data pins to clear old values out */
+ 382   1              value = LCD_PORT_DM2_REG & ((uint8)(~LCD_DATA_MASK));
+ 383   1              /* Load in high Z values for data pins, others unchanged */
+ 384   1              LCD_PORT_DM2_REG = value;
+ 385   1          
+ 386   1          #endif /* CY_PSOC4 */
+ 387   1          
+ 388   1          /* Make sure RS is low */
+ 389   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_RS));
+ 390   1      
+ 391   1          /* Set R/W high to read */
+ 392   1          LCD_PORT_DR_REG |= LCD_RW;
+ 393   1      
+ 394   1          do
+ 395   1          {
+ 396   2              /* 40 ns delay required before rising Enable and 500ns between neighbour Enables */
+ 397   2              CyDelayUs(0u);
+ 398   2      
+ 399   2              /* Set E high */
+ 400   2              LCD_PORT_DR_REG |= LCD_E;
+ 401   2      
+ 402   2              /* 360 ns delay setup time for data pins */
+ 403   2              CyDelayUs(1u);
+ 404   2      
+ 405   2              /* Get port state */
+ 406   2              value = LCD_PORT_PS_REG;
+ 407   2      
+ 408   2              /* Set enable low */
+ 409   2              LCD_PORT_DR_REG &= ((uint8)(~LCD_E));
+ 410   2      
+ 411   2              /* This gives true delay between disabling Enable bit and polling Ready bit */
+ 412   2              CyDelayUs(0u);
+ 413   2      
+ 414   2              /* Extract ready bit */
+ 415   2              value &= LCD_READY_BIT;
+ 416   2      
+ 417   2              /* Set E high as we in 4-bit interface we need extra operation */
+ 418   2              LCD_PORT_DR_REG |= LCD_E;
+ 419   2      
+ 420   2              /* 360 ns delay setup time for data pins */
+ 421   2              CyDelayUs(1u);
+ 422   2      
+ 423   2              /* Set enable low */
+ 424   2              LCD_PORT_DR_REG &= ((uint8)(~LCD_E));
+ 425   2      
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 8   
+
+ 426   2              /* If LCD is not ready make a delay */
+ 427   2              if (value == 0u)
+ 428   2              {
+ 429   3                  CyDelayUs(10u);
+ 430   3              }
+ 431   2      
+ 432   2              /* Repeat until bit 4 is not zero or until timeout. */
+ 433   2              timeout--;
+ 434   2      
+ 435   2          } while ((value != 0u) && (timeout > 0u));
+ 436   1      
+ 437   1          /* Set R/W low to write */
+ 438   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_RW));
+ 439   1      
+ 440   1          /* Clear LCD port*/
+ 441   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_PORT_MASK));
+ 442   1      
+ 443   1          #if (CY_PSOC4)
+                      
+                      /* Mask off data pins to clear old values out */
+                      value = LCD_PORT_PC_REG & ((uint32)(~ LCD_DM_DATA_MASK));
+                      /* Load in high Z values for data pins, others unchanged */
+                      LCD_PORT_PC_REG = value | LCD_STRONG_DATA_DM;
+              
+                  #else
+ 451   1      
+ 452   1              /* Change Port to Output (Strong) on data pins */
+ 453   1              /* Mask off data pins to clear high z values out. Configure data pins 
+ 454   1              * to Strong Drive, others unchanged.
+ 455   1              */
+ 456   1              LCD_PORT_DM0_REG &= ((uint8)(~LCD_DATA_MASK));
+ 457   1              /* Mask off data pins to clear high z values out */
+ 458   1              value = LCD_PORT_DM1_REG & ((uint8)(~LCD_DATA_MASK));
+ 459   1              /* Configure data pins to Strong Drive, others unchanged */
+ 460   1              LCD_PORT_DM1_REG = value | (LCD_STRONG_DM1 & LCD_DATA_MASK);
+ 461   1      
+ 462   1              /* Mask off data pins to clear high z values out */
+ 463   1              value = LCD_PORT_DM2_REG & ((uint8)(~LCD_DATA_MASK));
+ 464   1              /* Configure data pins to Strong Drive, others unchanged */
+ 465   1              LCD_PORT_DM2_REG = value | (LCD_STRONG_DM2 & LCD_DATA_MASK);
+ 466   1          
+ 467   1          #endif /* CY_PSOC4 */
+ 468   1      }
+ 469          
+ 470          
+ 471          /*******************************************************************************
+ 472          *  Function Name: LCD_WrDatNib
+ 473          ********************************************************************************
+ 474          *
+ 475          * Summary:
+ 476          *  Writes a data nibble to the LCD module.
+ 477          *
+ 478          * Parameters:
+ 479          *  nibble:  Byte containing nibble in the least significant nibble to be
+ 480          *           written to the LCD module.
+ 481          *
+ 482          * Return:
+ 483          *  None.
+ 484          *
+ 485          *******************************************************************************/
+ 486          static void LCD_WrDatNib(uint8 nibble) 
+ 487          {
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 9   
+
+ 488   1          /* RS should be low to select data register */
+ 489   1          LCD_PORT_DR_REG |= LCD_RS;
+ 490   1          /* Reset RW for write operation */
+ 491   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_RW));
+ 492   1      
+ 493   1          /* Guaranteed delay between Setting RS and RW and setting E bits */
+ 494   1          CyDelayUs(0u);
+ 495   1          
+ 496   1          /* Clear data pins */
+ 497   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_DATA_MASK));
+ 498   1      
+ 499   1          /* Write data, bring E high */
+ 500   1          #if(0u != LCD_PORT_SHIFT) /* MISRA forbids shift by 0 so need to handle that */
+                      LCD_PORT_DR_REG |= 
+                          (LCD_E | ((uint8)(((uint8) nibble) << LCD_PORT_SHIFT)));
+                  #else
+ 504   1              LCD_PORT_DR_REG |= (LCD_E | nibble);
+ 505   1          #endif /* (0u != LCD_PORT_SHIFT) */
+ 506   1      
+ 507   1          /* Minimum of 230 ns delay */
+ 508   1          CyDelayUs(1u);
+ 509   1      
+ 510   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_E));
+ 511   1      }
+ 512          
+ 513          
+ 514          /*******************************************************************************
+ 515          *  Function Name: LCD_WrCntrlNib
+ 516          ********************************************************************************
+ 517          *
+ 518          * Summary:
+ 519          *  Writes a control nibble to the LCD module.
+ 520          *
+ 521          * Parameters:
+ 522          *  nibble: The byte containing a nibble in the four least significant bits.????
+ 523          *
+ 524          * Return:
+ 525          *  None.
+ 526          *
+ 527          *******************************************************************************/
+ 528          static void LCD_WrCntrlNib(uint8 nibble) 
+ 529          {
+ 530   1          /* RS and RW should be low to select instruction register and  write operation respectively */
+ 531   1          LCD_PORT_DR_REG &= ((uint8)(~(LCD_RS | LCD_RW)));
+ 532   1      
+ 533   1          /* Two following lines of code will give 40ns delay */
+ 534   1          /* Clear data pins */
+ 535   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_DATA_MASK));
+ 536   1      
+ 537   1          /* Write control data and set enable signal */
+ 538   1          #if(0u != LCD_PORT_SHIFT) /* MISRA forbids shift by 0 so need to handle that */
+                      LCD_PORT_DR_REG |= 
+                          (LCD_E | ((uint8)(((uint8) nibble) << LCD_PORT_SHIFT)));
+                  #else
+ 542   1              LCD_PORT_DR_REG |= (LCD_E | nibble);
+ 543   1          #endif /* (0u != LCD_PORT_SHIFT) */
+ 544   1      
+ 545   1          /* Minimum of 230 ns delay */
+ 546   1          CyDelayUs(1u);
+ 547   1      
+ 548   1          LCD_PORT_DR_REG &= ((uint8)(~LCD_E));
+ 549   1      }
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 10  
+
+ 550          
+ 551          
+ 552          #if(LCD_CONVERSION_ROUTINES == 1u)
+ 553          
+ 554              /*******************************************************************************
+ 555              *  Function Name: LCD_PrintInt8
+ 556              ********************************************************************************
+ 557              *
+ 558              * Summary:
+ 559              *  Print a byte as two ASCII characters.
+ 560              *
+ 561              * Parameters:
+ 562              *  value: The byte to be printed out as ASCII characters.
+ 563              *
+ 564              * Return:
+ 565              *  None.
+ 566              *
+ 567              *******************************************************************************/
+ 568              void LCD_PrintInt8(uint8 value) 
+ 569              {
+ 570   1              static char8 const CYCODE LCD_hex[16u] = "0123456789ABCDEF";
+ 571   1              
+ 572   1              LCD_PutChar((char8) LCD_hex[value >> LCD_BYTE_UPPER_NIBBLE_SHIFT]);
+ 573   1              LCD_PutChar((char8) LCD_hex[value & LCD_BYTE_LOWER_NIBBLE_MASK]);
+ 574   1          }
+ 575          
+ 576          
+ 577              /*******************************************************************************
+ 578              *  Function Name: LCD_PrintInt16
+ 579              ********************************************************************************
+ 580              *
+ 581              * Summary:
+ 582              *  Print a uint16 as four ASCII characters.
+ 583              *
+ 584              * Parameters:
+ 585              *  value: The uint16 to be printed out as ASCII characters.
+ 586              *
+ 587              * Return:
+ 588              *  None.
+ 589              *
+ 590              *******************************************************************************/
+ 591              void LCD_PrintInt16(uint16 value) 
+ 592              {
+ 593   1              LCD_PrintInt8((uint8)(value >> LCD_U16_UPPER_BYTE_SHIFT));
+ 594   1              LCD_PrintInt8((uint8)(value & LCD_U16_LOWER_BYTE_MASK));
+ 595   1          }
+ 596          
+ 597              
+ 598              /*******************************************************************************
+ 599              *  Function Name: LCD_PrintInt32
+ 600              ********************************************************************************
+ 601              *
+ 602              * Summary:
+ 603              *  Print a uint32 hexadecimal number as eight ASCII characters.
+ 604              *
+ 605              * Parameters:
+ 606              *  value: The uint32 to be printed out as ASCII characters.
+ 607              *
+ 608              * Return:
+ 609              *  None.
+ 610              *
+ 611              *******************************************************************************/
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 11  
+
+ 612              void LCD_PrintInt32(uint32 value) 
+ 613              {
+ 614   1              uint8 shift = LCD_32_BIT_SHIFT;
+ 615   1              
+ 616   1              while (shift != 0u)
+ 617   1              {
+ 618   2                  /* "shift" var is to be subtracted by 8 prior shifting. This implements 
+ 619   2                  * shifting by 24, 16, 8 and 0u. 
+ 620   2                  */
+ 621   2                  shift -= LCD_8_BIT_SHIFT;
+ 622   2                  
+ 623   2                  /* Print 8 bits of uint32 hex number */
+ 624   2                  LCD_PrintInt8((uint8) ((uint32) (value >> shift)));
+ 625   2              }
+ 626   1          }
+ 627              
+ 628              
+ 629              /*******************************************************************************
+ 630              *  Function Name: LCD_PrintNumber
+ 631              ********************************************************************************
+ 632              *
+ 633              * Summary:
+ 634              *  Print an uint16 value as a left-justified decimal value.
+ 635              *
+ 636              * Parameters:
+ 637              *  value: A 16-bit value to be printed in ASCII characters as a decimal number
+ 638              *
+ 639              * Return:
+ 640              *  None.
+ 641              *
+ 642              * Note:
+ 643              *  This function is implemented as a macro.
+ 644              *
+ 645              *******************************************************************************/
+ 646          
+ 647              
+ 648              /*******************************************************************************
+ 649              *  Function Name: LCD_PrintU32Number
+ 650              ********************************************************************************
+ 651              *
+ 652              * Summary:
+ 653              *  Print an uint32 value as a left-justified decimal value.
+ 654              *
+ 655              * Parameters:
+ 656              *  value: A 32-bit value to be printed in ASCII characters as a decimal number
+ 657              *
+ 658              * Return:
+ 659              *  None.
+ 660              *
+ 661              *******************************************************************************/
+ 662              void LCD_PrintU32Number(uint32 value) 
+ 663              {
+ 664   1              uint8 tmpDigit;
+ 665   1              char8 number[LCD_NUMBER_OF_REMAINDERS_U32 + 1u];
+ 666   1              uint8 digIndex = LCD_NUMBER_OF_REMAINDERS_U32;
+ 667   1              
+ 668   1              /* This API will output a decimal number as a string and that string will be 
+ 669   1              * filled from end to start. Set Null termination character first.
+ 670   1              */
+ 671   1              number[digIndex] = (char8) '\0';
+ 672   1              digIndex--;
+ 673   1              
+C51 COMPILER V9.51   LCD                                                                   05/22/2017 14:28:01 PAGE 12  
+
+ 674   1              /* Load these in reverse order */
+ 675   1              while(value >= LCD_TEN)
+ 676   1              {
+ 677   2                  /* Extract decimal digit, indexed by 'digIndex', from 'value' and
+ 678   2                  * convert it to ASCII character.
+ 679   2                  */
+ 680   2                  tmpDigit = (uint8) (((uint8) (value % LCD_TEN)) + (uint8) LCD_ZERO_CHAR_ASCII);
+ 681   2                  
+ 682   2                  /* Temporary variable 'tmpDigit' is used to avoid Violation of MISRA rule 
+ 683   2                  * #10.3.
+ 684   2                  */
+ 685   2                  number[digIndex] = (char8) tmpDigit;
+ 686   2                  value /= LCD_TEN;
+ 687   2                  digIndex--;
+ 688   2              }
+ 689   1              
+ 690   1              /* Extract last decimal digit 'digIndex', from the 'value' and convert it
+ 691   1              * to ASCII character.
+ 692   1              */
+ 693   1              tmpDigit = (uint8) (((uint8)(value % LCD_TEN)) + (uint8) LCD_ZERO_CHAR_ASCII);
+ 694   1              number[digIndex] = (char8) tmpDigit;
+ 695   1      
+ 696   1              /* Print out number */
+ 697   1              LCD_PrintString(&number[digIndex]);
+ 698   1          }
+ 699              
+ 700          #endif /* LCD_CONVERSION_ROUTINES == 1u */
+ 701          
+ 702          
+ 703          /* [] END OF FILE */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1024    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =      2      41
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

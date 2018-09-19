@@ -1,0 +1,642 @@
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE COMP_A
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\Comp_A.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -Generated_Source\PSoC3\Comp_A.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(2) PR(.\D
+                    -P8051\DP8051_Keil_951\Debug/Comp_A.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\Comp_A.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: Comp_A.c
+   3          * Version 2.0
+   4          *
+   5          * Description:
+   6          *  This file provides the source code to the API for the Comparator component
+   7          *
+   8          * Note:
+   9          *  None
+  10          *
+  11          ********************************************************************************
+  12          * Copyright 2008-2012, Cypress Semiconductor Corporation.  All rights reserved.
+  13          * You may use this file only in accordance with the license, terms, conditions, 
+  14          * disclaimers, and limitations in the end user license agreement accompanying 
+  15          * the software package with which this file was provided.
+  16          *******************************************************************************/
+  17          
+  18          #include "Comp_A.h"
+  19          
+  20          uint8 Comp_A_initVar = 0u;
+  21          
+  22          /* Internal functions definitoin */
+  23          static void Comp_A_trimAdjust(uint8 nibble) ;
+  24          
+  25          /* static Comp_A_backupStruct  Comp_A_backup; */
+  26          #if (CY_PSOC5A)
+                  static Comp_A_LOWPOWER_BACKUP_STRUCT  Comp_A_lowPowerBackup;
+              #endif /* CY_PSOC5A */
+  29          
+  30          /* variable to decide whether or not to restore the control register in 
+  31             Enable() API for PSoC5A only */
+  32          #if (CY_PSOC5A)
+                  static uint8 Comp_A_restoreReg = 0u;
+              #endif /* CY_PSOC5A */
+  35          
+  36          
+  37          /*******************************************************************************
+  38          * Function Name: Comp_A_Init
+  39          ********************************************************************************
+  40          *
+  41          * Summary:
+  42          *  Initialize to the schematic state
+  43          * 
+  44          * Parameters:
+  45          *  void
+  46          *
+  47          * Return:
+  48          *  void
+  49          *
+  50          *******************************************************************************/
+  51          void Comp_A_Init(void) 
+  52          {
+  53   1          /* Set default speed/power */
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 2   
+
+  54   1          Comp_A_SetSpeed(Comp_A_DEFAULT_SPEED);
+  55   1      
+  56   1          /* Set default Hysteresis */
+  57   1          #if ( Comp_A_DEFAULT_HYSTERESIS == 0u )
+  58   1              Comp_A_CR |= Comp_A_HYST_OFF;
+  59   1          #else
+                      Comp_A_CR &= (uint8)(~Comp_A_HYST_OFF);
+                  #endif /* Comp_A_DEFAULT_HYSTERESIS == 0u */
+  62   1          /* Power down override feature is not supported for PSoC5A. */
+  63   1          #if (CY_PSOC3 || CY_PSOC5LP)
+  64   1              /* Set default Power Down Override */
+  65   1              #if ( Comp_A_DEFAULT_PWRDWN_OVRD == 0u )
+  66   1                  Comp_A_CR &= (uint8)(~Comp_A_PWRDWN_OVRD);
+  67   1              #else 
+                          Comp_A_CR |= Comp_A_PWRDWN_OVRD;
+                      #endif /* Comp_A_DEFAULT_PWRDWN_OVRD == 0u */
+  70   1          #endif /* CY_PSOC3 || CY_PSOC5LP */
+  71   1          
+  72   1          /* Set mux always on logic */
+  73   1          Comp_A_CR |= Comp_A_MX_AO;
+  74   1      
+  75   1          /* Set default sync */
+  76   1          Comp_A_CLK &= (uint8)(~Comp_A_SYNCCLK_MASK);
+  77   1          #if ( Comp_A_DEFAULT_BYPASS_SYNC == 0u )
+                      Comp_A_CLK |= Comp_A_SYNC_CLK_EN;
+                  #else
+  80   1              Comp_A_CLK |= Comp_A_BYPASS_SYNC;
+  81   1          #endif /* Comp_A_DEFAULT_BYPASS_SYNC == 0u */
+  82   1      }
+  83          
+  84          
+  85          /*******************************************************************************
+  86          * Function Name: Comp_A_Enable
+  87          ********************************************************************************
+  88          *
+  89          * Summary:
+  90          *  Enable the Comparator
+  91          * 
+  92          * Parameters:
+  93          *  void
+  94          *
+  95          * Return:
+  96          *  void
+  97          *
+  98          *******************************************************************************/
+  99          void Comp_A_Enable(void) 
+ 100          {
+ 101   1          Comp_A_PWRMGR |= Comp_A_ACT_PWR_EN;
+ 102   1          Comp_A_STBY_PWRMGR |= Comp_A_STBY_PWR_EN;
+ 103   1           
+ 104   1           /* This is to restore the value of register CR which is saved 
+ 105   1          in prior to the modification in stop() API */
+ 106   1          #if (CY_PSOC5A)
+                      if(Comp_A_restoreReg == 1u)
+                      {
+                          Comp_A_CR = Comp_A_lowPowerBackup.compCRReg;
+              
+                          /* Clear the flag */
+                          Comp_A_restoreReg = 0u;
+                      }
+                  #endif /* CY_PSOC5A */
+ 115   1      }
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 3   
+
+ 116          
+ 117          
+ 118          /*******************************************************************************
+ 119          * Function Name: Comp_A_Start
+ 120          ********************************************************************************
+ 121          *
+ 122          * Summary:
+ 123          *  The start function initializes the Analog Comparator with the default values.
+ 124          *
+ 125          * Parameters:
+ 126          *  void
+ 127          *
+ 128          * Return:
+ 129          *  void 
+ 130          *
+ 131          * Global variables:
+ 132          *  Comp_A_initVar: Is modified when this function is called for the 
+ 133          *   first time. Is used to ensure that initialization happens only once.
+ 134          *  
+ 135          *******************************************************************************/
+ 136          void Comp_A_Start(void) 
+ 137          {
+ 138   1      
+ 139   1          if ( Comp_A_initVar == 0u )
+ 140   1          {
+ 141   2              Comp_A_Init();
+ 142   2              
+ 143   2              Comp_A_initVar = 1u;
+ 144   2          }   
+ 145   1      
+ 146   1          /* Enable power to comparator */
+ 147   1          Comp_A_Enable();    
+ 148   1      }
+ 149          
+ 150          
+ 151          /*******************************************************************************
+ 152          * Function Name: Comp_A_Stop
+ 153          ********************************************************************************
+ 154          *
+ 155          * Summary:
+ 156          *  Powers down amplifier to lowest power state.
+ 157          *
+ 158          * Parameters:
+ 159          *  void
+ 160          *
+ 161          * Return:
+ 162          *  void
+ 163          *
+ 164          *******************************************************************************/
+ 165          void Comp_A_Stop(void) 
+ 166          {
+ 167   1          /* Disable power to comparator */
+ 168   1          Comp_A_PWRMGR &= (uint8)(~Comp_A_ACT_PWR_EN);
+ 169   1          Comp_A_STBY_PWRMGR &= (uint8)(~Comp_A_STBY_PWR_EN);
+ 170   1          
+ 171   1          #if (CY_PSOC5A)
+                      /* Enable the variable */
+                      Comp_A_restoreReg = 1u;
+              
+                      /* Save the control register before clearing it */
+                      Comp_A_lowPowerBackup.compCRReg = Comp_A_CR;
+                      Comp_A_CR = Comp_A_COMP_REG_CLR;
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 4   
+
+                  #endif /* CY_PSOC5A */
+ 179   1      }
+ 180          
+ 181          
+ 182          /*******************************************************************************
+ 183          * Function Name: Comp_A_SetSpeed
+ 184          ********************************************************************************
+ 185          *
+ 186          * Summary:
+ 187          *  This function sets the speed of the Analog Comparator. The faster the speed
+ 188          *  the more power that is used.
+ 189          *
+ 190          * Parameters:
+ 191          *  speed: (uint8) Sets operation mode of Comparator
+ 192          *
+ 193          * Return:
+ 194          *  void
+ 195          *
+ 196          *******************************************************************************/
+ 197          void Comp_A_SetSpeed(uint8 speed) 
+ 198          {
+ 199   1          /* Clear and Set power level */    
+ 200   1          Comp_A_CR = (Comp_A_CR & (uint8)(~Comp_A_PWR_MODE_MASK)) |
+ 201   1                                 (speed & Comp_A_PWR_MODE_MASK);
+ 202   1      
+ 203   1          /* Set trim value for high speed comparator */
+ 204   1          if(speed == Comp_A_HIGHSPEED)
+ 205   1          {
+ 206   2              /* PSoC5A */
+ 207   2              #if (CY_PSOC5A)
+                          Comp_A_TR = Comp_A_HS_TRIM_TR0;
+                      #endif /* CY_PSOC5A */
+ 210   2              
+ 211   2              /* PSoC3, PSoC5LP or later */
+ 212   2              #if (CY_PSOC3 || CY_PSOC5LP) 
+ 213   2                  Comp_A_TR0 = Comp_A_HS_TRIM_TR0;
+ 214   2                  Comp_A_TR1 = Comp_A_HS_TRIM_TR1;
+ 215   2              #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 216   2          }
+ 217   1          else
+ 218   1          {
+ 219   2          /* PSoC5A */
+ 220   2              #if (CY_PSOC5A)
+                          Comp_A_TR = Comp_A_LS_TRIM_TR0;
+                      #endif /* CY_PSOC5A */
+ 223   2              
+ 224   2              /* PSoC3, PSoC5LP or later */
+ 225   2              #if (CY_PSOC3 || CY_PSOC5LP) 
+ 226   2                  Comp_A_TR0 = Comp_A_LS_TRIM_TR0;
+ 227   2                  Comp_A_TR1 = Comp_A_LS_TRIM_TR1;
+ 228   2              #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 229   2          }
+ 230   1      
+ 231   1      }
+ 232          
+ 233          
+ 234          /*******************************************************************************
+ 235          * Function Name: Comp_A_GetCompare
+ 236          ********************************************************************************
+ 237          *
+ 238          * Summary:
+ 239          *  This function returns the comparator output value.
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 5   
+
+ 240          *  This value is not affected by the Polarity parameter.
+ 241          *  This valuea lways reflects a noninverted state.
+ 242          *
+ 243          * Parameters:
+ 244          *   None
+ 245          *
+ 246          * Return:
+ 247          *  (uint8)  0     - if Pos_Input less than Neg_input
+ 248          *           non 0 - if Pos_Input greater than Neg_input.
+ 249          *
+ 250          *******************************************************************************/
+ 251          uint8 Comp_A_GetCompare(void) 
+ 252          {
+ 253   1          return( Comp_A_WRK & Comp_A_CMP_OUT_MASK);
+ 254   1      }
+ 255          
+ 256          
+ 257          /*******************************************************************************
+ 258          * Function Name: Comp_A_trimAdjust
+ 259          ********************************************************************************
+ 260          *
+ 261          * Summary:
+ 262          *  This function adjusts the value in the low nibble/high nibble of the Analog 
+ 263          *  Comparator trim register
+ 264          *
+ 265          * Parameters:  
+ 266          *  nibble:
+ 267          *      0 -- adjusts the value in the low nibble
+ 268          *      1 -- adjusts the value in the high nibble
+ 269          *
+ 270          * Return:
+ 271          *  None
+ 272          *
+ 273          * Theory: 
+ 274          *  Function assumes comparator block is setup for trim adjust.
+ 275          *  Intended to be called from Comp_ZeroCal()
+ 276          * 
+ 277          * Side Effects:
+ 278          *  Routine uses a course 1ms delay following each trim adjustment to allow 
+ 279          *  the comparator output to respond.
+ 280          *
+ 281          *******************************************************************************/
+ 282          static void Comp_A_trimAdjust(uint8 nibble) 
+ 283          {
+ 284   1          uint8 trimCnt, trimCntMax;
+ 285   1          uint8 cmpState;   
+ 286   1      
+ 287   1          /* get current state of comparator output */
+ 288   1          cmpState = Comp_A_WRK & Comp_A_CMP_OUT_MASK;
+ 289   1          
+ 290   1          if (nibble == 0u)
+ 291   1          {    
+ 292   2              /* if comparator output is high, negative offset adjust is required */
+ 293   2              if ( cmpState != 0u )
+ 294   2              {
+ 295   3                  /* PSoC5A */
+ 296   3                  #if (CY_PSOC5A)
+                              Comp_A_TR |= Comp_A_CMP_TRIM1_DIR;
+                          #endif /* CY_PSOC5A */
+ 299   3                  
+ 300   3                  /* PSoC3, PSoC5LP or later */
+ 301   3                  #if (CY_PSOC3 || CY_PSOC5LP)
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 6   
+
+ 302   3                      Comp_A_TR0 |= Comp_A_CMP_TR0_DIR;
+ 303   3                  #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 304   3              }
+ 305   2          }
+ 306   1          else
+ 307   1          {
+ 308   2              /* if comparator output is low, positive offset adjust is required */
+ 309   2              if ( cmpState == 0u )
+ 310   2              {
+ 311   3                  /* PSoC5A */
+ 312   3                  #if (CY_PSOC5A)
+                              Comp_A_TR |= Comp_A_CMP_TRIM2_DIR; 
+                          #endif /* CY_PSOC5A */
+ 315   3                  
+ 316   3                  /* PSoC3, PSoC5LP or later */
+ 317   3                  #if (CY_PSOC3 || CY_PSOC5LP)
+ 318   3                      Comp_A_TR1 |= Comp_A_CMP_TR1_DIR;
+ 319   3                  #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 320   3              }
+ 321   2          }
+ 322   1      
+ 323   1          /* Increment trim value until compare output changes state */
+ 324   1              
+ 325   1          /* PSoC5A */
+ 326   1              #if (CY_PSOC5A)
+                          trimCntMax = 7u;
+                  #endif
+ 329   1              
+ 330   1              /* PSoC3, PSoC5LP or later */
+ 331   1              #if (CY_PSOC3 || CY_PSOC5LP)
+ 332   1              if(nibble == 0u)
+ 333   1              {
+ 334   2                      trimCntMax = 15u;
+ 335   2              }
+ 336   1              else
+ 337   1              {
+ 338   2                      trimCntMax = 7u;
+ 339   2              }
+ 340   1              #endif
+ 341   1              
+ 342   1          for ( trimCnt = 0u; trimCnt < trimCntMax; trimCnt++ )
+ 343   1              {
+ 344   2              if (nibble == 0u)
+ 345   2              {
+ 346   3                  /* PSoC5A */
+ 347   3                  #if (CY_PSOC5A)
+                              Comp_A_TR += 1u;
+                          #endif /* CY_PSOC5A */
+ 350   3                  
+ 351   3                  /* PSoC3, PSoC5LP or later */
+ 352   3                  #if (CY_PSOC3 || CY_PSOC5LP)
+ 353   3                      Comp_A_TR0 += 1u;
+ 354   3                  #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 355   3              }
+ 356   2              else
+ 357   2              {
+ 358   3                  /* PSoC5A */
+ 359   3                  #if (CY_PSOC5A)
+                              Comp_A_TR += 0x10u;
+                          #endif /* CY_PSOC5A */
+ 362   3                  
+ 363   3                  /* PSoC3, PSoC5LP or later */
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 7   
+
+ 364   3                  #if (CY_PSOC3 || CY_PSOC5LP)
+ 365   3                      Comp_A_TR1 += 1u;
+ 366   3                  #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 367   3              }
+ 368   2              
+ 369   2              CyDelayUs(10u);
+ 370   2              
+ 371   2              /* Check for change in comparator output */
+ 372   2              if ((Comp_A_WRK & Comp_A_CMP_OUT_MASK) != cmpState)
+ 373   2              {
+ 374   3                  break;      /* output changed state, trim phase is complete */
+ 375   3              }        
+ 376   2          }    
+ 377   1      }
+ 378          
+ 379          
+ 380          /*******************************************************************************
+ 381          * Function Name: Comp_A_ZeroCal
+ 382          ********************************************************************************
+ 383          *
+ 384          * Summary:
+ 385          *  This function calibrates the offset of the Analog Comparator.
+ 386          *
+ 387          * Parameters:
+ 388          *  None
+ 389          *
+ 390          * Return:
+ 391          *  (uint16)  value written in trim register when calibration complete.
+ 392          *
+ 393          * Theory: 
+ 394          *  This function is used to optimize the calibration for user specific voltage
+ 395          *  range.  The comparator trim is adjusted to counter transistor offsets
+ 396          *   - offset is defined as positive if the output transitions to high before inP
+ 397          *     is greater than inN
+ 398          *   - offset is defined as negative if the output transitions to high after inP
+ 399          *     is greater than inP
+ 400          *
+ 401          *  PSoC5A
+ 402          *  The Analog Comparator provides 1 byte for offset trim.  The byte contains two
+ 403          *  4 bit trim fields - one is a course trim and the other allows smaller
+ 404          *  offset adjustments only for slow modes.
+ 405          *  - low nibble - fine trim
+ 406          *  - high nibble - course trim
+ 407          *  PSoC3, PSoC5LP or later
+ 408          *  The Analog Comparator provides 2 bytes for offset trim.  The bytes contain two
+ 409          *  5 bit trim fields - one is a course trim and the other allows smaller
+ 410          *  offset adjustments only for slow modes.
+ 411          *  - TR0 - fine trim
+ 412          *  - TR1 - course trim
+ 413          *
+ 414          *  Trim algorithm is a two phase process
+ 415          *  The first phase performs course offset adjustment
+ 416          *  The second phase serves one of two purposes depending on the outcome of the
+ 417          *  first phase
+ 418          *  - if the first trim value was maxed out without a comparator output 
+ 419          *    transition, more offset will be added by adjusting the second trim value.
+ 420          *  - if the first trim phase resulted in a comparator output transition, the
+ 421          *    second trim value will serve as fine trim (in the opposite direction)to
+ 422          *    ensure the offset is < 1 mV.
+ 423          *
+ 424          * Trim Process:   
+ 425          *  1) User applies a voltage to the negative input.  Voltage should be in the
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 8   
+
+ 426          *     comparator operating range or an average of the operating voltage range.
+ 427          *  2) Clear registers associated with analog routing to the positive input.
+ 428          *  3) Disable Hysteresis
+ 429          *  4) Set the calibration bit to short the negative and positive inputs to
+ 430          *     the users calibration voltage.
+ 431          *  5) Clear the TR register  ( TR = 0x00 )
+ 432          *  ** LOW MODES
+ 433          *  6) Check if compare output is high, if so, set the MSb of course trim field 
+ 434          *     to a 1.
+ 435          *  7) Increment the course trim field until the compare output changes
+ 436          *  8) Check if compare output is low, if so, set the MSb of fine trim field
+ 437          *     to a 1.
+ 438          *  9) Increment the fine trim field until the compare output changes
+ 439          *  ** FAST MODE - skip the steps 8,9
+ 440          *
+ 441          * Side Effects:
+ 442          *  Routine clears analog routing associated with the comparator positive input.  
+ 443          *  This may affect routing of signals from other components that are connected
+ 444          *  to the positive input of the comparator.
+ 445          *
+ 446          *******************************************************************************/
+ 447          uint16 Comp_A_ZeroCal(void) 
+ 448          {
+ 449   1          uint8 tmpSW0;
+ 450   1          uint8 tmpSW2;
+ 451   1          uint8 tmpSW3;
+ 452   1          uint8 tmpCR;
+ 453   1      
+ 454   1          /* Save a copy of routing registers associated with inP */
+ 455   1          tmpSW0 = Comp_A_SW0;
+ 456   1          tmpSW2 = Comp_A_SW2;
+ 457   1          tmpSW3 = Comp_A_SW3;
+ 458   1      
+ 459   1           /* Clear routing for inP, retain routing for inN */
+ 460   1          Comp_A_SW0 = 0x00u;
+ 461   1          Comp_A_SW2 = 0x00u;
+ 462   1          Comp_A_SW3 = tmpSW3 & (uint8)(~Comp_A_CMP_SW3_INPCTL_MASK);
+ 463   1      
+ 464   1          /* Preserve original configuration
+ 465   1           * - turn off Hysteresis
+ 466   1           * - set calibration bit - shorts inN to inP
+ 467   1          */
+ 468   1          tmpCR = Comp_A_CR;
+ 469   1          Comp_A_CR |= (Comp_A_CAL_ON | Comp_A_HYST_OFF);
+ 470   1          
+ 471   1          /* Write default low values to trim register - no offset adjust */
+ 472   1          /* PSoC5A */
+ 473   1          #if (CY_PSOC5A)
+                      Comp_A_TR = Comp_A_DEFAULT_CMP_TRIM;
+                  #endif /* CY_PSOC5A */
+ 476   1          
+ 477   1          /* PSoC3, PSoC5LP or later */
+ 478   1          #if (CY_PSOC3 || CY_PSOC5LP)
+ 479   1              Comp_A_TR0 = Comp_A_DEFAULT_CMP_TRIM;
+ 480   1              Comp_A_TR1 = Comp_A_DEFAULT_CMP_TRIM;
+ 481   1          #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 482   1              
+ 483   1              /* Two phase trim - slow modes, one phase trim - for fast */ 
+ 484   1          if ( (Comp_A_CR & Comp_A_PWR_MODE_MASK) == Comp_A_PWR_MODE_FAST)
+ 485   1          {
+ 486   2              Comp_A_trimAdjust(0u);
+ 487   2          }
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 9   
+
+ 488   1          else /* default to trim for fast modes */
+ 489   1          {
+ 490   2              Comp_A_trimAdjust(1u);
+ 491   2                      Comp_A_trimAdjust(0u);
+ 492   2          }
+ 493   1         
+ 494   1          /* Restore Config Register */
+ 495   1          Comp_A_CR = tmpCR;
+ 496   1          
+ 497   1          /* Restore routing registers for inP */
+ 498   1          Comp_A_SW0 = tmpSW0;
+ 499   1          Comp_A_SW2 = tmpSW2;
+ 500   1          Comp_A_SW3 = tmpSW3;
+ 501   1          
+ 502   1          /* PSoC5A */
+ 503   1          #if (CY_PSOC5A)
+                      return (uint16) Comp_A_TR;
+                  #endif /* CY_PSOC5A */
+ 506   1          
+ 507   1          /* PSoC3, PSoC5LP or later */
+ 508   1          #if (CY_PSOC3 || CY_PSOC5LP)
+ 509   1              return ((uint16)((uint16)Comp_A_TR1 << 8u) | (Comp_A_TR0));        
+ 510   1          #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 511   1      }
+ 512          
+ 513          
+ 514          /*******************************************************************************
+ 515          * Function Name: Comp_A_LoadTrim
+ 516          ********************************************************************************
+ 517          *
+ 518          * Summary:
+ 519          *  This function stores a value in the Analog Comparator trim register.
+ 520          *
+ 521          * Parameters:  
+ 522          *  uint8 trimVal - trim value.  This value is the same format as the value 
+ 523          *  returned by the _ZeroCal routine.
+ 524          *
+ 525          * Return:
+ 526          *  None
+ 527          *
+ 528          *******************************************************************************/
+ 529          void Comp_A_LoadTrim(uint16 trimVal) 
+ 530          {
+ 531   1          /* Stores value in the Analog Comparator trim register */
+ 532   1          /* PSoC5A */
+ 533   1          #if (CY_PSOC5A)
+                      Comp_A_TR = (uint8) trimVal;
+                  #endif /* CY_PSOC5A */
+ 536   1          
+ 537   1          /* PSoC3, PSoC5LP or later */
+ 538   1          #if (CY_PSOC3 || CY_PSOC5LP)
+ 539   1              /* Stores value in the Analog Comparator trim register for P-type load */
+ 540   1              Comp_A_TR0 = (uint8) trimVal;
+ 541   1              
+ 542   1              /* Stores value in the Analog Comparator trim register for N-type load */
+ 543   1              Comp_A_TR1 = (uint8) (trimVal >> 8); 
+ 544   1          #endif /* CY_PSOC3 || CY_PSOC5LP */
+ 545   1      }
+ 546          
+ 547          
+ 548          #if (CY_PSOC3 || CY_PSOC5LP)
+ 549          
+C51 COMPILER V9.51   COMP_A                                                                05/22/2017 14:27:58 PAGE 10  
+
+ 550              /*******************************************************************************
+ 551              * Function Name: Comp_A_PwrDwnOverrideEnable
+ 552              ********************************************************************************
+ 553              *
+ 554              * Summary:
+ 555              *  This is the power down over-ride feature. This function ignores sleep 
+ 556              *  parameter and allows the component to stay active during sleep mode.
+ 557              *
+ 558              * Parameters:
+ 559              *  None
+ 560              *
+ 561              * Return:
+ 562              *  None
+ 563              *
+ 564              *******************************************************************************/
+ 565              void Comp_A_PwrDwnOverrideEnable(void) 
+ 566              {
+ 567   1              /* Set the pd_override bit in CMP_CR register */
+ 568   1              Comp_A_CR |= Comp_A_PWRDWN_OVRD;
+ 569   1          }
+ 570          
+ 571          
+ 572              /*******************************************************************************
+ 573              * Function Name: Comp_A_PwrDwnOverrideDisable
+ 574              ********************************************************************************
+ 575              *
+ 576              * Summary:
+ 577              *  This is the power down over-ride feature. This allows the component to stay
+ 578              *  inactive during sleep.
+ 579              *
+ 580              * Parameters:
+ 581              *  None
+ 582              *
+ 583              * Return:
+ 584              *  None
+ 585              *
+ 586              *******************************************************************************/
+ 587              void Comp_A_PwrDwnOverrideDisable(void) 
+ 588              {
+ 589   1              /* Reset the pd_override bit in CMP_CR register */
+ 590   1              Comp_A_CR &= (uint8)(~Comp_A_PWRDWN_OVRD);
+ 591   1          }
+ 592          #endif /* (CY_PSOC3 || CY_PSOC5LP) */
+ 593          
+ 594          
+ 595          /* [] END OF FILE */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    461    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      1       8
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,5 @@
+Error[e16]: Segment CODE (size: 0x1f82 align: 0x1) is too long for segment definition. At least 0x2ba more bytes needed. The problem occurred while processing the segment placement command "-Z(CODE)CODE=26-1FFF", where at the moment of placement the available memory ranges were "CODE:338-1fff"
+   Reserved ranges relevant to this placement:
+   CODE:26-32b          NEAR_F
+   CODE:32c-337         INITTAB
+   CODE:338-1fff        CODE

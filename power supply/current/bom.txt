@@ -1,0 +1,89 @@
+Partlist exported from Z:/Dropbox/Projects/Ventmatika/Stepper/Power Supply/current/stepper_power.sch at 2017.04.03 10:07:45
+
+Qty Value           Device                 Package        Parts                                                       Description                                                             
+1                   750841630              750841630      M5:T2                                                                                                                               
+1                   JUMPER-3PTH            1X03           JP1                                                                                                                                 
+1                   NTC640                 P640           R23                                                         PHILIPS NTC                                                             
+4                   R-US_R0805             R0805          M3:R1, M3:R2, M3:R3, M3:R4                                  RESISTOR, American symbol                                               
+1                   SPECIAL_PADSD1.0       LP_D1.0        P1                                                                                                                                  
+1                   STEPPER_POWER_SUPPLY_1 ETD-39-K-H-16P T1                                                                                                                                  
+1   *               ZENER-DIODESOD80C      SOD80C         D5                                                          Z-Diode                                                                 
+1   0.01x630V       C-EU102-043X133        C102-043X133   M5:C1                                                       CAPACITOR, European symbol                                              
+2   0.1             C-EU075-042X103        C075-042X103   C14, C17                                                    CAPACITOR, European symbol                                              
+5   0.1             C-EUC0805              C0805          C6, C13, C16, M2:C6, M5:C2                                  CAPACITOR, European symbol                                              
+1   0.1             R-US_0411/15           0411/15        R7                                                          RESISTOR, American symbol                                               
+2   0.1/400V        C-EU102-043X133        C102-043X133   C1, C5                                                      CAPACITOR, European symbol                                              
+2   1,0uFx400V      C-EU225-108X268        C225-108X268   C3, C4                                                      CAPACITOR, European symbol                                              
+1   10.0x400V       CPOL-EUE5-10.5         E5-10,5        M5:C5                                                       POLARIZED CAPACITOR, European symbol                                    
+1   100             R-US_0207/7            0207/7         M5:R1                                                       RESISTOR, American symbol                                               
+1   100             R-US_0817/22           P0817/22       R15                                                         RESISTOR, American symbol                                               
+1   100             R-US_R0805             R0805          R21                                                         RESISTOR, American symbol                                               
+2   1000uH          INDUCTOR               PLOKSCIAS      M5:L1, M5:L3                                                                                                                        
+3   100k            R-US_R0805             R0805          M1:R5, M1:R9, R24                                           RESISTOR, American symbol                                               
+2   100x16V         CPOL-EUE3.5-8          E3,5-8         M5:C4, M5:C7                                                POLARIZED CAPACITOR, European symbol                                    
+1   100x35V         CPOL-EUE3.5-8          E3,5-8         M1:C2                                                       POLARIZED CAPACITOR, European symbol                                    
+2   10MQ100         DIODE-DO214AA          DO214AA        D2, D3                                                      DIODE                                                                   
+1   10MQ100         DIODE-DO214AC          DO214AC        M5:D4                                                       DIODE                                                                   
+1   10k             R-US_0204/7            0204/7         R22                                                         RESISTOR, American symbol                                               
+1   10k             R-US_R0805             R0805          M2:R6                                                       RESISTOR, American symbol                                               
+4   10n             C-EUC0805              C0805          C9, C11, M2:C1, M2:C2                                       CAPACITOR, European symbol                                              
+1   10x25V          CPOL-EUE2-5            E2-5           M2:C4                                                       POLARIZED CAPACITOR, European symbol                                    
+1   120             R-US_R1206             R1206          M1:R10                                                      RESISTOR, American symbol                                               
+1   12V             LEDCHIPLED_0805        CHIPLED_0805   LED2                                                        LED                                                                     
+1   12k             R-US_R0805             R0805          R18                                                         RESISTOR, American symbol                                               
+1   16V             ZENER-DIODESOD80C      SOD80C         M1:DZ1                                                      Z-Diode                                                                 
+1   1M              R-US_R0805             R0805          M2:R2                                                       RESISTOR, American symbol                                               
+1   1k              R-US_0207/7            0207/7         M5:R2                                                       RESISTOR, American symbol                                               
+5   1k              R-US_R0805             R0805          M1:R8, M5:R6, R4, R5, R14                                   RESISTOR, American symbol                                               
+2   1k              R-US_R1206             R1206          M5:R3, M5:R4                                                RESISTOR, American symbol                                               
+1   1k*             R-US_R0805             R0805          M2:R7                                                       RESISTOR, American symbol                                               
+1   1n              C-EU075-042X103        C075-042X103   C7                                                          CAPACITOR, European symbol                                              
+3   1uF             C-EUC1206              C1206          M2:C5, M2:C7, M2:C8                                         CAPACITOR, European symbol                                              
+4   20k             R-US_R0805             R0805          M2:R4, M2:R5, M2:R9, M2:R10                                 RESISTOR, American symbol                                               
+2   2200/3kV        C-EU075-042X103        C075-042X103   C2, C10                                                     CAPACITOR, European symbol                                              
+1   2200x3kV        C-EU075-042X103        C075-042X103   M5:C6                                                       CAPACITOR, European symbol                                              
+1   2k              R-US_R1206             R1206          R6                                                          RESISTOR, American symbol                                               
+2   30              R-US_R0805             R0805          R2, R3                                                      RESISTOR, American symbol                                               
+2   33              PTC-TABL_10            TABLETE_10     RV1, RV2                                                    Positive Temperature Coefficient Resistor (PTC) termistor               
+1   330,0x450V      CPOL-EUE10-25H         EB25H          C8                                                          POLARIZED CAPACITOR, European symbol                                    
+3   33k             R-US_R0805             R0805          M2:R1, M2:R3, R16                                           RESISTOR, American symbol                                               
+1   4.1k            R-US_R0805             R0805          M2:R8                                                       RESISTOR, American symbol                                               
+2   4.7k            R-US_R0805             R0805          M5:R5, R17                                                  RESISTOR, American symbol                                               
+1   47              R-US_0309/12           0309/12        M5:R7                                                       RESISTOR, American symbol                                               
+1   4700            C-EUC0805              C0805          M2:C3                                                       CAPACITOR, European symbol                                              
+1   470k            R-US_R0805             R0805          M1:R6                                                       RESISTOR, American symbol                                               
+2   470x50V         CPOL-EUE7.5-16         E7,5-16        C12, C18                                                    POLARIZED CAPACITOR, European symbol                                    
+11  47k             R-US_R0805             R0805          M1:R1, M1:R2, M1:R3, M1:R4, R8, R9, R10, R11, R12, R13, R19 RESISTOR, American symbol                                               
+1   47x16V          CPOL-EUE2,5-6E         E2,5-6E        C15                                                         POLARIZED CAPACITOR, European symbol                                    
+1   5A              SH22,5A                SH22,5A        F1                                                          FUSE HOLDER grid 22,5mm, isolated cap OGN0031 8201, Schurter (Buerklin) 
+1   5V              LEDCHIPLED_0805        CHIPLED_0805   LED3                                                        LED                                                                     
+1   5V1             ZENER-DIODESOD80C      SOD80C         M5:D5                                                       Z-Diode                                                                 
+1   7.5k            R-US_R0805             R0805          M1:R7                                                       RESISTOR, American symbol                                               
+1   8.2k            R-US_R0805             R0805          R20                                                         RESISTOR, American symbol                                               
+1   82721K          82721K                 82721K         L3                                                          FILTER                                                                  
+1   BAS32           DIODE-MINIMELF         MINIMELF       D4                                                          DIODE                                                                   
+1   BC807           BC807-16SMD            SOT23-BEC      M1:Q4                                                       PNP Transistror                                                         
+2   BC817           BC817-16SMD            SOT23-BEC      M1:Q3, Q3                                                   NPN Transistor                                                          
+1   BC847           BC847ASMD              SOT23          M3:Q1                                                       NPN Transistor                                                          
+1   BCP52           BCP52                  SOT223         M3:Q2                                                                                                                               
+1   COOLER          2PIN_NS25-W2P          6410-02        X4                                                                                                                                  
+1   GBU8K           GBU4                   GBU4S          B1                                                          GENERAL INSTRUMENT RECTIFIER                                            
+1   IR2113S         IR2113S                SO16L          M2:DA2                                                                                                                              
+2   IRF740          IRF740V                TO220BV        Q1, Q2                                                      N-CHANNEL MOS FET                                                       
+1   LL4007          DIODE-MELF-MLL41       MELF-MLL41     M5:D2                                                       DIODE                                                                   
+1   MAIN            MSTBA3                 MSTBA3         X1                                                          PHOENIX                                                                 
+1   MFE             MFE                    MFE            L1                                                          FILTER                                                                  
+1   MSTBA2          MSTBA2                 MSTBA2         X2                                                          PHOENIX                                                                 
+1   MUR1620CTG      DIODE-2AC|CATO220V     TO220ABS       D6                                                          Dual DIODE Anode-Cathode|Cathode-Anode                                  
+1   P600K           DIODE-P6-15-1          P6-15-1        D1                                                          DIODE                                                                   
+1   P6KE150         P6KEXX                 DO41-10        M5:D1                                                       DIODE                                                                   
+2   PC817           PC817                  DIL04          M5:OK1, OK1                                                 SHARP OPTO COUPLER                                                      
+1   POWER           LEDB155                Q62902-B155    LED1                                                        LED                                                                     
+1   S05K275         S05K275                S05K275        R1                                                          VARISTOR                                                                
+3   STTH108         DIODE-DO214AA          DO214AA        M1:D1, M1:D7, M1:D8                                         DIODE                                                                   
+1   Stepper Control 5PIN_NS25-W5P          6410-05        X3                                                                                                                                  
+1   TL431           TL431D                 SO-08          VR1                                                         VOLTAGE REGULATOR                                                       
+1   TL494CD         TL494CD                SO16           M2:DA1                                                      SWITCHMODE Pulse Width Modulation Control Circuit                       
+1   TNY278G         TNY278                 DIP8_1         M5:DA1                                                                                                                              
+1   UF4007          DIODE-DO41-10          DO41-10        M2:VD1                                                      DIODE                                                                   
+1   VSK-S1-5V       VSK-S1                 VSK-S1         M5:CV1                                                                                                                              

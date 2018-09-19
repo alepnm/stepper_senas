@@ -1,0 +1,3589 @@
+################################################################################
+#                                                                              #
+#      IAR Universal Linker V5.3.2.26                                          #
+#                                                                              #
+#           Link time     =  27/Jan/2017  15:13:13                             #
+#           Target CPU    =  A90                                               #
+#           List file     =  Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\List\Stepper_Control.map              #
+#           Output file 1 =  Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Exe\Stepper_Control.flash.hex         #
+#                            Format: intel-standard, variant: -y(CODE)         #
+#           Output file 2 =  Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Exe\Stepper_Control.eeprom.hex        #
+#                            Format: intel-standard, variant: -y(XDATA)        #
+#           Output file 3 =  Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Exe\Stepper_Control.d90               #
+#                            Format: debug                                     #
+#                            UBROF version 10.0.6                              #
+#                            Using library modules for C-SPY (-rt)             #
+#           Command line  =  -Ointel-standard,(CODE)=.flash.hex                #
+#                            -Ointel-standard,(XDATA)=.eeprom.hex              #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\eeprom.r90                        #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\func.r90                          #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\interrupts.r90                    #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\main.r90                          #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mb.r90                            #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbcrc.r90                         #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbfunccoils.r90                   #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbfuncdiag.r90                    #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbfuncdisc.r90                    #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbfuncholding.r90                 #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbfuncinput.r90                   #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbfuncother.r90                   #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbrtu.r90                         #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\mbutils.r90                       #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\portevent.r90                     #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\portserial.r90                    #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\porttimer.r90                     #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\stepper.r90                       #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\systick.r90                       #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\temp_conv.r90                     #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Obj\user_mb_app.r90                   #
+#                            -o                                                #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\Exe\Stepper_Control.d90               #
+#                            -l                                                #
+#                            Z:\Dropbox\Projects\Ventmatika\Stepper\software\I #
+#                            AR\ATMEGA16\List\Stepper_Control.map              #
+#                            -xmsn                                             #
+#                            "-IC:\Program Files\IAR Systems\Embedded Workbenc #
+#                            h 6.0\avr\LIB\"                                   #
+#                            -f                                                #
+#                            "C:\Program Files\IAR Systems\Embedded Workbench  #
+#                            6.0\avr\config\lnkm16s.xcl"                       #
+#                            (-D_..X_CSTACK_SIZE=100 -D_..X_RSTACK_SIZE=40     #
+#                            -D_..X_HEAP_SIZE=80 -D_..X_NEAR_HEAP_SIZE=80      #
+#                            -ca90 -Z(CODE)INTVEC=0-53 -H1895 -h(CODE)0-53     #
+#                            -Z(CODE)TINY_F=54-FF                              #
+#                            -Z(CODE)NEAR_F,SWITCH,INITTAB,DIFUNCT=54-3FFF     #
+#                            -Z(CODE)CODE=54-3FFF                              #
+#                            -Z(CODE)TINY_ID,NEAR_ID=54-3FFF                   #
+#                            -Z(CODE)CHECKSUM#3FFF                             #
+#                            -Z(DATA)TINY_I,TINY_Z,TINY_N=60-FF                #
+#                            -Z(DATA)NEAR_I,NEAR_Z=60-45F                      #
+#                            -Z(DATA)RSTACK+_..X_RSTACK_SIZE=60-45F            #
+#                            -Z(DATA)CSTACK+_..X_CSTACK_SIZE=60-45F            #
+#                            -Z(DATA)HEAP+_..X_HEAP_SIZE=60-45F                #
+#                            -Z(DATA)IOSTREAM_N#60-45F                         #
+#                            -Z(DATA)NEAR_HEAP+_..X_NEAR_HEAP_SIZE=60-45F      #
+#                            -Z(XDATA)EEPROM_I,EEPROM_N=0-1FF -w29) -rt -s     #
+#                            __program_start                                   #
+#                            "C:\Program Files\IAR Systems\Embedded Workbench  #
+#                            6.0\avr\LIB\CLIB\cl3s-ec_mul-sf.r90"              #
+#                                                                              #
+#                           Copyright (C) 1987-2012 IAR Systems AB.            #
+################################################################################
+
+
+
+
+
+                ****************************************
+                *                                      *
+                *           CROSS REFERENCE            *
+                *                                      *
+                ****************************************
+
+       Program entry at : CODE      00000000  Relocatable, from module : ?RESET
+
+
+
+
+                ****************************************
+                *                                      *
+                *            RUNTIME MODEL             *
+                *                                      *
+                ****************************************
+
+  R10             = REG
+  R4              = REG
+  R5              = REG
+  R6              = REG
+  R7              = REG
+  R8              = REG
+  __64bit_doubles = disabled
+  __SystemLibrary = CLib
+  __cpu           = 3
+  __cpu_name      = ATmega16
+  __enhanced_core = enabled
+  __has_elpm      = false
+  __memory_model  = 2
+  __rt_version    = 3
+  __tiny_avr      = false
+
+                ****************************************
+                *                                      *
+                *    AUTOMATIC SYMBOL REDIRECTIONS     *
+                *                                      *
+                ****************************************
+
+                  There are no automatic symbol redirections.
+
+
+
+                ****************************************
+                *                                      *
+                *              MODULE MAP              *
+                *                                      *
+                ****************************************
+
+
+  DEFINED ABSOLUTE ENTRIES
+  PROGRAM MODULE, NAME : ?ABS_ENTRY_MOD
+
+Absolute parts
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _..X_NEAR_HEAP_SIZE     00000080 
+           _..X_HEAP_SIZE          00000080 
+           _..X_RSTACK_SIZE        00000040 
+           _..X_CSTACK_SIZE        00000100 
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\eeprom.r90
+  PROGRAM MODULE, NAME : eeprom
+
+  SEGMENTS IN THE MODULE
+  ======================
+ABSOLUTE
+  Relative segment, address: DATA 0000005F - 0000005F (0x1 bytes), align: 0
+  Segment part 1. ROOT.       Intra module refs:   SecureEeGet
+                                                   SecureEePut
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_SREG                 0000005F 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           SREG                    0000005F 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000057 - 00000057 (0x1 bytes), align: 0
+  Segment part 2. ROOT.       Intra module refs:   SecureEePut
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_SPMCR                00000057 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           SPMCR                   00000057 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000003E - 0000003F (0x2 bytes), align: 0
+  Segment part 3. ROOT.       Intra module refs:   EEPROM_GetChar
+                                                   EEPROM_PutChar
+                                                   SecureEeGet
+                                                   SecureEePut
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_EEAR                 0000003E 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           EEAR                    0000003E 
+           EEARH                   0000003F 
+           EEARL                   0000003E 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000003D - 0000003D (0x1 bytes), align: 0
+  Segment part 4. ROOT.       Intra module refs:   EEPROM_GetChar
+                                                   EEPROM_PutChar
+                                                   SecureEeGet
+                                                   SecureEePut
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_EEDR                 0000003D 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           EEDR                    0000003D 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000003C - 0000003C (0x1 bytes), align: 0
+  Segment part 5. ROOT.       Intra module refs:   EEPROM_GetChar
+                                                   EEPROM_PutChar
+                                                   SecureEeGet
+                                                   SecureEePut
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_EECR                 0000003C 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           EECR                    0000003C 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 000000E5 - 000000E5 (0x1 bytes), align: 0
+  Segment part 12.            Intra module refs:   ?Subroutine8
+                                                   SecureEePut
+                                                   Segment part 37
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           EeResult                000000E5 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000366 - 00000373 (0xe bytes), align: 1
+  Segment part 14.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           EEPROM_GetChar          00000366        Segment part 41 (stepper)
+                                                   Segment part 54 (main)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000374 - 0000037F (0xc bytes), align: 1
+  Segment part 15.            Intra module refs:   EEPROM_GetChar
+                                                   EEPROM_PutChar
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            00000374 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000380 - 000003B9 (0x3a bytes), align: 1
+  Segment part 16.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           EEPROM_PutChar          00000380        ?Subroutine25 (main)
+                                                   HandleModbusCommands (main)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000003BA - 000003C1 (0x8 bytes), align: 1
+  Segment part 17.            Intra module refs:   EEPROM_PutChar
+                                                   SecureEePut
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine8            000003BA 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000003C2 - 000003D5 (0x14 bytes), align: 1
+  Segment part 18.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           EEPROM_GetWord          000003C2        ?Subroutine1 (stepper)
+                                                   ?Subroutine14 (main)
+                                                   ?Subroutine5 (stepper)
+               calls direct
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000003D6 - 000003DB (0x6 bytes), align: 1
+  Segment part 19.            Intra module refs:   EEPROM_GetWord
+                                                   EEPROM_PutWord
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine10           000003D6 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000003DC - 000003EF (0x14 bytes), align: 1
+  Segment part 20.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           EEPROM_PutWord          000003DC        ?Subroutine22 (main)
+               calls direct
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000003F0 - 0000040F (0x20 bytes), align: 1
+  Segment part 21.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           EEPROM_GetDWord         000003F0        ?Subroutine4 (main)
+               calls direct
+               CSTACK = 00000000 ( 00000006 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000410 - 00000415 (0x6 bytes), align: 1
+  Segment part 22.            Intra module refs:   EEPROM_GetDWord
+                                                   EEPROM_PutDWord
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine11           00000410 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000416 - 00000417 (0x2 bytes), align: 1
+  Segment part 23.            Intra module refs:   EEPROM_GetDWord
+                                                   EEPROM_GetWord
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine4            00000416 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000418 - 00000423 (0xc bytes), align: 1
+  Segment part 24.            Intra module refs:   EEPROM_GetDWord
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00000418 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000424 - 00000445 (0x22 bytes), align: 1
+  Segment part 25.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           EEPROM_PutDWord         00000424        ?Subroutine5 (main)
+               calls direct
+               CSTACK = 00000000 ( 00000006 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000446 - 00000447 (0x2 bytes), align: 1
+  Segment part 26.            Intra module refs:   EEPROM_PutDWord
+                                                   EEPROM_PutWord
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine5            00000446 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000448 - 0000044D (0x6 bytes), align: 1
+  Segment part 27.            Intra module refs:   EEPROM_GetDWord
+                                                   EEPROM_PutDWord
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine3            00000448 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000044E - 0000044F (0x2 bytes), align: 1
+  Segment part 28.            Intra module refs:   EEPROM_PutDWord
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            0000044E 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000450 - 00000459 (0xa bytes), align: 1
+  Segment part 29.            Intra module refs:   ?Subroutine1
+                                                   ?Subroutine3
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine7            00000450 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000045A - 00000483 (0x2a bytes), align: 1
+  Segment part 33.            Intra module refs:   ?Subroutine1
+                                                   ?Subroutine5
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           SecureEePut             0000045A 
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000484 - 00000487 (0x4 bytes), align: 1
+  Segment part 34.            Intra module refs:   SecureEeGet
+                                                   SecureEePut
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine9            00000484 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000488 - 000004A9 (0x22 bytes), align: 1
+  Segment part 35.            Intra module refs:   ?Subroutine0
+                                                   ?Subroutine4
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           SecureEeGet             00000488 
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000004AA - 000004AB (0x2 bytes), align: 1
+  Segment part 36.            Intra module refs:   EEPROM_GetChar
+                                                   SecureEeGet
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine6            000004AA 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000004AC - 000004B1 (0x6 bytes), align: 1
+  Segment part 37.            Intra module refs:   ?Subroutine6
+                                                   EEPROM_GetChar
+                                                   SecureEeGet
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000001C, align: 0
+  Segment part 6. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __?EECR                 0000001C 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000001D, align: 0
+  Segment part 7. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __?EEDR                 0000001D 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000001E, align: 0
+  Segment part 8. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __?EEARL                0000001E 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000001F, align: 0
+  Segment part 9. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __?EEARH                0000001F 
+    -------------------------------------------------------------------------
+INITTAB
+  Relative segment, address: CODE 0000035A - 0000035F (0x6 bytes), align: 0
+  Segment part 13.            Intra module refs:   EeResult
+                                                   Segment part 10 (user_mb_app)
+                                                   Segment part 7 (user_mb_app)
+                                                   Segment part 9 (user_mb_app)
+                                                   TMR_OVF_Handler::_A_delay (systick)
+                                                   eQueuedEvent (portevent)
+                                                   eRcvState (mbrtu)
+                                                   main::delay (main)
+                                                   qqq (main)
+                                                   ucMBSlaveID (mbfuncother)
+                                                   ucRTUBuf (mbrtu)
+                                                   usSRegHoldBuf (user_mb_app)
+                                                   usSRegHoldStart (user_mb_app)
+                                                   usTimerOCRDelta (porttimer)
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?<Segment init: NEAR_Z>
+                                   0000035A 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\func.r90
+  PROGRAM MODULE, NAME : func
+
+  SEGMENTS IN THE MODULE
+  ======================
+ABSOLUTE
+  Relative segment, address: DATA 00000041 - 00000041 (0x1 bytes), align: 0
+  Segment part 1. ROOT.       Intra module refs:   WDT_on
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_WDTCR                00000041 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           WDTCR                   00000041 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000027 - 00000027 (0x1 bytes), align: 0
+  Segment part 2. ROOT.       Intra module refs:   ReadADC
+                                                   ReadAnalogPins (stepper)
+                                                   StepperInit (stepper)
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_ADMUX                00000027 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ADMUX                   00000027 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000026 - 00000026 (0x1 bytes), align: 0
+  Segment part 3. ROOT.       Intra module refs:   ReadADC
+                                                   StepperInit (stepper)
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_ADCSRA               00000026 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ADCSRA                  00000026 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000024 - 00000025 (0x2 bytes), align: 0
+  Segment part 4. ROOT.       Intra module refs:   ReadADC
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_ADC                  00000024 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ADC                     00000024 
+           ADCH                    00000025 
+           ADCL                    00000024 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000004B2 - 000004C3 (0x12 bytes), align: 1
+  Segment part 11.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           WDT_on                  000004B2        MCU_Init (main)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000004C4 - 000004D7 (0x14 bytes), align: 1
+  Segment part 13.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ReadADC                 000004C4        ?Subroutine4 (stepper)
+                                                   Segment part 36 (stepper)
+               RSTACK = 00000000 ( 00000002 )
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\interrupts.r90
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\main.r90
+  PROGRAM MODULE, NAME : main
+
+  SEGMENTS IN THE MODULE
+  ======================
+ABSOLUTE
+  Relative segment, address: DATA 00000059 - 00000059 (0x1 bytes), align: 0
+  Segment part 1. ROOT.       Intra module refs:   MCU_Init
+                                                   MotorStart (stepper)
+                                                   StepperInit (stepper)
+                                                   StopClockTimer (stepper)
+                                                   SysTickInit (systick)
+                                                   vMBPortTimersDisable (porttimer)
+                                                   vMBPortTimersEnable (porttimer)
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TIMSK                00000059 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TIMSK                   00000059 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000055 - 00000055 (0x1 bytes), align: 0
+  Segment part 2. ROOT.       Intra module refs:   MCU_Init
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_MCUCR                00000055 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           MCUCR                   00000055 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000038 - 00000038 (0x1 bytes), align: 0
+  Segment part 3. ROOT.       Intra module refs:   MCU_Init
+                                                   TMR_COMPA_Handler (stepper)
+                                                   USART_TXC_Handler (portserial)
+                                                   main
+                                                   vMBPortSerialEnable (portserial)
+                                                   xMBPortSerialInit (portserial)
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PORTB                00000038 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           PORTB                   00000038 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000037 - 00000037 (0x1 bytes), align: 0
+  Segment part 4. ROOT.       Intra module refs:   MCU_Init
+                                                   xMBPortSerialInit (portserial)
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_DDRB                 00000037 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           DDRB                    00000037 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000035 - 00000035 (0x1 bytes), align: 0
+  Segment part 5. ROOT.       Intra module refs:   HallSensorHandle (stepper)
+                                                   LedsHandle (stepper)
+                                                   MCU_Init
+                                                   StepperInit (stepper)
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PORTC                00000035 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           PORTC                   00000035 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000034 - 00000034 (0x1 bytes), align: 0
+  Segment part 6. ROOT.       Intra module refs:   MCU_Init
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_DDRC                 00000034 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           DDRC                    00000034 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000033 - 00000033 (0x1 bytes), align: 0
+  Segment part 7. ROOT.       Intra module refs:   DipSwitchHandle (stepper)
+                                                   HandleManualControl
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PINC                 00000033 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           PINC                    00000033 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000032 - 00000032 (0x1 bytes), align: 0
+  Segment part 8. ROOT.       Intra module refs:   HandleManualControl
+                                                   HandleModbusCommands
+                                                   LedsHandle (stepper)
+                                                   MCU_Init
+                                                   MotorStart (stepper)
+                                                   MotorStop (stepper)
+                                                   ScrollingHandle (stepper)
+                                                   StepperInit (stepper)
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PORTD                00000032 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           PORTD                   00000032 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000031 - 00000031 (0x1 bytes), align: 0
+  Segment part 9. ROOT.       Intra module refs:   MCU_Init
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_DDRD                 00000031 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           DDRD                    00000031 
+    -------------------------------------------------------------------------
+NEAR_I
+  Relative segment, address: DATA 00000060 - 00000077 (0x18 bytes), align: 0
+  Segment part 16. ROOT.      Intra module refs:   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ucID_buf                00000060 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000004D8 - 000006AF (0x1d8 bytes), align: 1
+  Segment part 22.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           main                    000004D8        ?cstartup_call_main (?C_STARTUP)
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000006B0 - 000006B1 (0x2 bytes), align: 1
+  Segment part 23.            Intra module refs:   ?Subroutine8
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine23           000006B0 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000006B2 - 000006B5 (0x4 bytes), align: 1
+  Segment part 24.            Intra module refs:   ?Subroutine23
+                                                   EE_DataInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine25           000006B2 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000006B6 - 000006B9 (0x4 bytes), align: 1
+  Segment part 25.            Intra module refs:   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine7            000006B6 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000006BA - 000006C1 (0x8 bytes), align: 1
+  Segment part 26.            Intra module refs:   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            000006BA 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000006C2 - 000006D1 (0x10 bytes), align: 1
+  Segment part 27.            Intra module refs:   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            000006C2 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000006D2 - 000006DB (0xa bytes), align: 1
+  Segment part 28.            Intra module refs:   ?Subroutine1
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine20           000006D2 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 000000E6 - 000000EA (0x5 bytes), align: 0
+  Segment part 19.            Intra module refs:   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           main::delay             000000E6 
+           MbInitOk                000000EA 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 000000EB - 000000EE (0x4 bytes), align: 0
+  Segment part 21. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           qqq                     000000EB 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000006DC - 00000791 (0xb6 bytes), align: 1
+  Segment part 29.            Intra module refs:   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           HandleModbusCommands    000006DC 
+               calls direct and indirect
+               CSTACK = 00000000 ( 00000002 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000792 - 000007A5 (0x14 bytes), align: 1
+  Segment part 30.            Intra module refs:   HandleModbusCommands
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine15           00000792 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000007A6 - 000007AB (0x6 bytes), align: 1
+  Segment part 31.            Intra module refs:   HandleModbusCommands
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine11           000007A6 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000007AC - 000007B1 (0x6 bytes), align: 1
+  Segment part 32.            Intra module refs:   ?Subroutine11
+                                                   HandleModbusCommands
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine19           000007AC 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000007B2 - 000007B5 (0x4 bytes), align: 1
+  Segment part 33.            Intra module refs:   ?Subroutine18
+                                                   ?Subroutine19
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine26           000007B2 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000007B6 - 000007BF (0xa bytes), align: 1
+  Segment part 34.            Intra module refs:   HandleModbusCommands
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine6            000007B6 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000007C0 - 000007C5 (0x6 bytes), align: 1
+  Segment part 35.            Intra module refs:   HandleManualControl
+                                                   HandleModbusCommands
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine3            000007C0 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000007C6 - 00000841 (0x7c bytes), align: 1
+  Segment part 36.            Intra module refs:   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           HandleManualControl     000007C6 
+               calls direct
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000842 - 00000851 (0x10 bytes), align: 1
+  Segment part 37.            Intra module refs:   HandleManualControl
+                                                   HandleModbusCommands
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine17           00000842 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000852 - 00000855 (0x4 bytes), align: 1
+  Segment part 38.            Intra module refs:   HandleManualControl
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine16           00000852 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000856 - 00000857 (0x2 bytes), align: 1
+  Segment part 39.            Intra module refs:   HandleManualControl
+                                                   HandleModbusCommands
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine12           00000856 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000858 - 0000085F (0x8 bytes), align: 1
+  Segment part 40.            Intra module refs:   ?Subroutine12
+                                                   HandleModbusCommands
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine21           00000858 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000860 - 00000869 (0xa bytes), align: 1
+  Segment part 41.            Intra module refs:   HandleManualControl
+                                                   HandleModbusCommands
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine10           00000860 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000086A - 00000871 (0x8 bytes), align: 1
+  Segment part 42.            Intra module refs:   ?Subroutine10
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine18           0000086A 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000872 - 000008A5 (0x34 bytes), align: 1
+  Segment part 43.            Intra module refs:   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           MCU_Init                00000872 
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000008A6 - 00000951 (0xac bytes), align: 1
+  Segment part 44.            Intra module refs:   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           EE_DataInit             000008A6 
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000952 - 00000959 (0x8 bytes), align: 1
+  Segment part 45.            Intra module refs:   EE_DataInit
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine14           00000952 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000095A - 0000095D (0x4 bytes), align: 1
+  Segment part 46.            Intra module refs:   EE_DataInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine9            0000095A 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000095E - 00000963 (0x6 bytes), align: 1
+  Segment part 47.            Intra module refs:   ?Subroutine9
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine22           0000095E 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000964 - 00000965 (0x2 bytes), align: 1
+  Segment part 48.            Intra module refs:   EE_DataInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine8            00000964 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000966 - 00000975 (0x10 bytes), align: 1
+  Segment part 49.            Intra module refs:   ?Subroutine8
+                                                   ?Subroutine9
+                                                   EE_DataInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine24           00000966 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000976 - 0000097D (0x8 bytes), align: 1
+  Segment part 50.            Intra module refs:   EE_DataInit
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine5            00000976 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000097E - 00000985 (0x8 bytes), align: 1
+  Segment part 51.            Intra module refs:   EE_DataInit
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine4            0000097E 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000986 - 00000987 (0x2 bytes), align: 1
+  Segment part 52.            Intra module refs:   EE_DataInit
+                                                   main
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00000986 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000988 - 00000989 (0x2 bytes), align: 1
+  Segment part 53.            Intra module refs:   ?Subroutine0
+                                                   EE_DataInit
+                                                   main
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000098A - 0000098D (0x4 bytes), align: 1
+  Segment part 54.            Intra module refs:   Segment part 53
+                                                   main
+    -------------------------------------------------------------------------
+NEAR_ID
+  Relative segment, address: CODE 00002416 - 0000242D (0x18 bytes), align: 0
+  Segment part 17. ROOT.      Intra module refs:   ucID_buf
+    -------------------------------------------------------------------------
+INITTAB
+  Relative segment, address: CODE 00000360 - 00000365 (0x6 bytes), align: 0
+  Segment part 18.            Intra module refs:   ReadAnalogPins::channel (stepper)
+                                                   Segment part 21 (stepper)
+                                                   Segment part 7 (mb)
+                                                   pMotorControl (stepper)
+                                                   ucID_buf
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?<Segment init: NEAR_I>
+                                   00000360 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mb.r90
+  PROGRAM MODULE, NAME : mb
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 0000098E - 00000A13 (0x86 bytes), align: 1
+  Segment part 13.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBInit                 0000098E        main (main)
+               calls direct
+               CSTACK = 00000000 ( 00000001 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000A14 - 00000A19 (0x6 bytes), align: 1
+  Segment part 14.            Intra module refs:   eMBClose
+                                                   eMBInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            00000A14 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000A1A - 00000A3B (0x22 bytes), align: 1
+  Segment part 15.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBClose                00000A1A        main (main)
+               calls indirect
+               CSTACK = 00000000 ( 00000001 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000A3C - 00000A4F (0x14 bytes), align: 1
+  Segment part 16.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBEnable               00000A3C        main (main)
+               calls indirect
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000A50 - 00000A57 (0x8 bytes), align: 1
+  Segment part 17.            Intra module refs:   eMBDisable
+                                                   eMBEnable
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine3            00000A50 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000A58 - 00000A73 (0x1c bytes), align: 1
+  Segment part 18.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBDisable              00000A58        main (main)
+               calls indirect
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000A74 - 00000A7F (0xc bytes), align: 1
+  Segment part 19.            Intra module refs:   eMBDisable
+                                                   eMBEnable
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            00000A74 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000A80 - 00000A85 (0x6 bytes), align: 1
+  Segment part 20.            Intra module refs:   eMBDisable
+                                                   eMBEnable
+                                                   eMBPoll
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00000A80 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000A86 - 00000B79 (0xf4 bytes), align: 1
+  Segment part 21.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBPoll                 00000A86        main (main)
+               calls direct and indirect
+               CSTACK = 00000000 ( 00000003 )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+NEAR_I
+  Relative segment, address: DATA 00000078 - 000000B6 (0x3f bytes), align: 0
+  Segment part 7.             Intra module refs:   ?Subroutine1
+                                                   eMBClose
+                                                   eMBDisable
+                                                   eMBEnable
+                                                   eMBInit
+                                                   eMBPoll
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           NewMbEvent              000000B3        HandleModbusCommands (main)
+           pxMBFrameCBByteReceived
+                                   000000A6        USART_Rec_Handler (portserial)
+           pxMBFrameCBTransmitterEmpty
+                                   000000A8        USART_RXC_Handler (portserial)
+           pxMBPortCBTimerExpired
+                                   000000AA        TMR2_COMP_Handler (porttimer)
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           eMBPoll::eException     000000B6 
+           eMBPoll::ucFunctionCode
+                                   000000B5 
+           eMBPoll::ucMBFrame      000000AC 
+           eMBPoll::ucRcvAddress   000000B4 
+           eMBPoll::usLength       000000AE 
+           eMBCurrentMode          000000B1 
+           eMBState                000000B2 
+           peMBFrameReceiveCur     000000A2 
+           peMBFrameSendCur        0000009C 
+           pvMBFrameCloseCur       000000A4 
+           pvMBFrameStartCur       0000009E 
+           pvMBFrameStopCur        000000A0 
+           ucMBAddress             000000B0 
+           xFuncHandlers           00000078 
+    -------------------------------------------------------------------------
+NEAR_ID
+  Relative segment, address: CODE 0000242E - 0000246C (0x3f bytes), align: 0
+  Segment part 8.             Intra module refs:   Segment part 7
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbcrc.r90
+  PROGRAM MODULE, NAME : mbcrc
+
+  SEGMENTS IN THE MODULE
+  ======================
+NEAR_F
+  Relative segment, address: CODE 00000054 - 00000253 (0x200 bytes), align: 0
+  Segment part 7.             Intra module refs:   usMBCRC16
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           aucCRCHi                00000054 
+           aucCRCLo                00000154 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000B7A - 00000BB5 (0x3c bytes), align: 1
+  Segment part 8.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           usMBCRC16               00000B7A        eMBRTUReceive (mbrtu)
+                                                   eMBRTUSend (mbrtu)
+               RSTACK = 00000000 ( 00000002 )
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbfunccoils.r90
+  PROGRAM MODULE, NAME : mbfunccoils
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00000BB6 - 00000C31 (0x7c bytes), align: 1
+  Segment part 7.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBFuncReadCoils        00000BB6        Segment part 8 (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000006 )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000C32 - 00000C3F (0xe bytes), align: 1
+  Segment part 8.             Intra module refs:   eMBFuncReadCoils
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00000C32 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000C40 - 00000C9B (0x5c bytes), align: 1
+  Segment part 9.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBFuncWriteCoil        00000C40        Segment part 8 (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000006 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000C9C - 00000CA5 (0xa bytes), align: 1
+  Segment part 10.            Intra module refs:   eMBFuncReadCoils
+                                                   eMBFuncWriteCoil
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            00000C9C 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbfuncdiag.r90
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbfuncdisc.r90
+  PROGRAM MODULE, NAME : mbfuncdisc
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00000CA6 - 00000D23 (0x7e bytes), align: 1
+  Segment part 7.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBFuncReadDiscreteInputs
+                                   00000CA6        Segment part 8 (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000006 )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000D24 - 00000D31 (0xe bytes), align: 1
+  Segment part 8.             Intra module refs:   eMBFuncReadDiscreteInputs
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00000D24 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbfuncholding.r90
+  PROGRAM MODULE, NAME : mbfuncholding
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00000D32 - 00000D6D (0x3c bytes), align: 1
+  Segment part 7.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBFuncWriteHoldingRegister
+                                   00000D32        Segment part 8 (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000001 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000D6E - 00000DDB (0x6e bytes), align: 1
+  Segment part 8.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBFuncReadHoldingRegister
+                                   00000D6E        Segment part 8 (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000005 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000DDC - 00000DEB (0x10 bytes), align: 1
+  Segment part 9.             Intra module refs:   eMBFuncReadHoldingRegister
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00000DDC 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbfuncinput.r90
+  PROGRAM MODULE, NAME : mbfuncinput
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00000DEC - 00000E59 (0x6e bytes), align: 1
+  Segment part 7.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBFuncReadInputRegister
+                                   00000DEC        Segment part 8 (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000005 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000E5A - 00000E69 (0x10 bytes), align: 1
+  Segment part 8.             Intra module refs:   eMBFuncReadInputRegister
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00000E5A 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbfuncother.r90
+  PROGRAM MODULE, NAME : mbfuncother
+
+  SEGMENTS IN THE MODULE
+  ======================
+NEAR_Z
+  Relative segment, address: DATA 000000EF - 00000110 (0x22 bytes), align: 0
+  Segment part 7.             Intra module refs:   eMBFuncReportSlaveID
+                                                   eMBSetSlaveID
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ucMBSlaveID             000000EF 
+           usMBSlaveIDLen          0000010F 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000E6A - 00000ECB (0x62 bytes), align: 1
+  Segment part 9.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBSetSlaveID           00000E6A        main (main)
+               calls direct
+               CSTACK = 00000000 ( 00000006 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000ECC - 00000EF5 (0x2a bytes), align: 1
+  Segment part 10.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBFuncReportSlaveID    00000ECC        Segment part 8 (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbrtu.r90
+  PROGRAM MODULE, NAME : mbrtu
+
+  SEGMENTS IN THE MODULE
+  ======================
+NEAR_Z
+  Relative segment, address: DATA 00000111 - 00000118 (0x8 bytes), align: 0
+  Segment part 7.             Intra module refs:   ?Subroutine3
+                                                   eMBRTUSend
+                                                   eMBRTUStart
+                                                   xMBRTUReceiveFSM
+                                                   xMBRTUTimerT35Expired
+                                                   xMBRTUTransmitFSM
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           eRcvState               00000118 
+           eSndState               00000117 
+           pucSndBufferCur         00000111 
+           usRcvBufferPos          00000115 
+           usSndBufferCount        00000113 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 00000119 - 00000218 (0x100 bytes), align: 0
+  Segment part 9.             Intra module refs:   ?Subroutine5
+                                                   eMBRTUReceive
+                                                   xMBRTUReceiveFSM
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ucRTUBuf                00000119 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000EF6 - 00000F4D (0x58 bytes), align: 1
+  Segment part 10.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRTUInit              00000EF6        eMBInit (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000005 )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000F4E - 00000F5B (0xe bytes), align: 1
+  Segment part 11.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRTUStart             00000F4E        eMBInit (mb)
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000F5C - 00000F5F (0x4 bytes), align: 1
+  Segment part 12.            Intra module refs:   eMBRTUStart
+                                                   eMBRTUStop
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine7            00000F5C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000F60 - 00000F6B (0xc bytes), align: 1
+  Segment part 13.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRTUStop              00000F60        eMBInit (mb)
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000F6C - 00000FBB (0x50 bytes), align: 1
+  Segment part 14.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRTUReceive           00000F6C        eMBInit (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000008 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000FBC - 00000FC5 (0xa bytes), align: 1
+  Segment part 15.            Intra module refs:   eMBRTUReceive
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine3            00000FBC 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00000FC6 - 00001023 (0x5e bytes), align: 1
+  Segment part 16.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRTUSend              00000FC6        eMBInit (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001024 - 00001025 (0x2 bytes), align: 1
+  Segment part 17.            Intra module refs:   eMBRTUSend
+                                                   xMBRTUTransmitFSM
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine8            00001024 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001026 - 0000102B (0x6 bytes), align: 1
+  Segment part 18.            Intra module refs:   ?Subroutine8
+                                                   xMBRTUReceiveFSM
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000102C - 00001043 (0x18 bytes), align: 1
+  Segment part 19.            Intra module refs:   eMBRTUSend
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine5            0000102C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001044 - 00001045 (0x2 bytes), align: 1
+  Segment part 20.            Intra module refs:   eMBRTUSend
+                                                   eMBRTUStop
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            00001044 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001046 - 00001049 (0x4 bytes), align: 1
+  Segment part 21.            Intra module refs:   ?Subroutine0
+                                                   ?Subroutine2
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine9            00001046 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000104A - 000010A1 (0x58 bytes), align: 1
+  Segment part 22.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBRTUReceiveFSM        0000104A        eMBInit (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000005 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000010A2 - 000010A5 (0x4 bytes), align: 1
+  Segment part 23.            Intra module refs:   eMBRTUSend
+                                                   xMBRTUReceiveFSM
+                                                   xMBRTUTransmitFSM
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine4            000010A2 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000010A6 - 000010B5 (0x10 bytes), align: 1
+  Segment part 24.            Intra module refs:   xMBRTUReceiveFSM
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            000010A6 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000010B6 - 0000110B (0x56 bytes), align: 1
+  Segment part 25.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBRTUTransmitFSM       000010B6        eMBInit (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000110C - 00001113 (0x8 bytes), align: 1
+  Segment part 26.            Intra module refs:   eMBRTUSend
+                                                   xMBRTUTransmitFSM
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine6            0000110C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001114 - 00001119 (0x6 bytes), align: 1
+  Segment part 27.            Intra module refs:   eMBRTUStart
+                                                   xMBRTUTransmitFSM
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00001114 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000111A - 00001147 (0x2e bytes), align: 1
+  Segment part 28.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBRTUTimerT35Expired   0000111A        eMBInit (mb)
+               calls direct
+               CSTACK = 00000000 ( 00000001 )
+               RSTACK = 00000000 ( 00000002 )
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\mbutils.r90
+  PROGRAM MODULE, NAME : mbutils
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001148 - 00001181 (0x3a bytes), align: 1
+  Segment part 7.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBUtilSetBits          00001148        ?Subroutine21 (main)
+                                                   ?Subroutine35 (stepper)
+                                                   ?Subroutine6 (user_mb_app)
+                                                   main (main)
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001182 - 00001183 (0x2 bytes), align: 1
+  Segment part 8.             Intra module refs:   xMBUtilSetBits
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            00001182 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001184 - 00001187 (0x4 bytes), align: 1
+  Segment part 9.             Intra module refs:   ?Subroutine1
+                                                   ?Subroutine2
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine3            00001184 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001188 - 000011B1 (0x2a bytes), align: 1
+  Segment part 10.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBUtilGetBits          00001188        ?Subroutine26 (main)
+                                                   ?Subroutine28 (stepper)
+                                                   ?Subroutine5 (user_mb_app)
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000011B2 - 000011B7 (0x6 bytes), align: 1
+  Segment part 11.            Intra module refs:   xMBUtilGetBits
+                                                   xMBUtilSetBits
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            000011B2 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000011B8 - 000011BF (0x8 bytes), align: 1
+  Segment part 12.            Intra module refs:   xMBUtilGetBits
+                                                   xMBUtilSetBits
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            000011B8 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000011C0 - 000011DD (0x1e bytes), align: 1
+  Segment part 13.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           prveMBError2Exception   000011C0        eMBFuncReadCoils (mbfunccoils)
+                                                   eMBFuncReadDiscreteInputs (mbfuncdisc)
+                                                   eMBFuncReadHoldingRegister (mbfuncholding)
+                                                   eMBFuncReadInputRegister (mbfuncinput)
+                                                   eMBFuncWriteCoil (mbfunccoils)
+                                                   eMBFuncWriteHoldingRegister (mbfuncholding)
+               RSTACK = 00000000 ( 00000002 )
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\portevent.r90
+  PROGRAM MODULE, NAME : portevent
+
+  SEGMENTS IN THE MODULE
+  ======================
+NEAR_Z
+  Relative segment, address: DATA 00000219 - 0000021A (0x2 bytes), align: 0
+  Segment part 7.             Intra module refs:   xMBPortEventGet
+                                                   xMBPortEventInit
+                                                   xMBPortEventPost
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           eQueuedEvent            00000219 
+           xEventInQueue           0000021A 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000011DE - 000011E3 (0x6 bytes), align: 1
+  Segment part 9.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBPortEventInit        000011DE        eMBInit (mb)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000011E4 - 000011E7 (0x4 bytes), align: 1
+  Segment part 10.            Intra module refs:   xMBPortEventInit
+                                                   xMBPortEventPost
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            000011E4 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000011E8 - 000011F3 (0xc bytes), align: 1
+  Segment part 11.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBPortEventPost        000011E8        eMBPoll (mb)
+                                                   xMBRTUTimerT35Expired (mbrtu)
+                                                   xMBRTUTransmitFSM (mbrtu)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000011F4 - 00001213 (0x20 bytes), align: 1
+  Segment part 12.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBPortEventGet         000011F4        eMBPoll (mb)
+               RSTACK = 00000000 ( 00000002 )
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\portserial.r90
+  PROGRAM MODULE, NAME : portserial
+
+  SEGMENTS IN THE MODULE
+  ======================
+ABSOLUTE
+  Relative segment, address: DATA 0000002C - 0000002C (0x1 bytes), align: 0
+  Segment part 3. ROOT.       Intra module refs:   xMBPortSerialGetByte
+                                                   xMBPortSerialPutByte
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_UDR                  0000002C 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           UDR                     0000002C 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000002A - 0000002A (0x1 bytes), align: 0
+  Segment part 4. ROOT.       Intra module refs:   vMBPortSerialEnable
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_UCSRB                0000002A 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           UCSRB                   0000002A 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000029 - 00000029 (0x1 bytes), align: 0
+  Segment part 5. ROOT.       Intra module refs:   xMBPortSerialInit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_UBRRL                00000029 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           UBRRL                   00000029 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001214 - 00001239 (0x26 bytes), align: 1
+  Segment part 15.            Intra module refs:   xMBPortSerialInit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           vMBPortSerialEnable     00001214        ?Subroutine9 (mbrtu)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000123A - 00001261 (0x28 bytes), align: 1
+  Segment part 16.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBPortSerialInit       0000123A        eMBRTUInit (mbrtu)
+               calls direct
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001262 - 00001265 (0x4 bytes), align: 1
+  Segment part 17.            Intra module refs:   xMBPortSerialGetByte
+                                                   xMBPortSerialInit
+                                                   xMBPortSerialPutByte
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            00001262 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001266 - 00001269 (0x4 bytes), align: 1
+  Segment part 18.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBPortSerialPutByte    00001266        xMBRTUTransmitFSM (mbrtu)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000126A - 00001271 (0x8 bytes), align: 1
+  Segment part 19.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBPortSerialGetByte    0000126A        xMBRTUReceiveFSM (mbrtu)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001272 - 0000127B (0xa bytes), align: 1
+  Segment part 20.            Intra module refs:   USART_RXC_Handler::??INTVEC 48
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           USART_RXC_Handler       00001272 
+               interrupt function
+               calls indirect
+               CSTACK = 00000000 ( 0000000F )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000127C - 0000127F (0x4 bytes), align: 1
+  Segment part 21.            Intra module refs:   USART_RXC_Handler
+                                                   USART_Rec_Handler
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine3            0000127C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001280 - 0000128B (0xc bytes), align: 1
+  Segment part 22.            Intra module refs:   USART_Rec_Handler::??INTVEC 44
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           USART_Rec_Handler       00001280 
+               interrupt function
+               calls indirect
+               CSTACK = 00000000 ( 0000000F )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000128C - 000012AD (0x22 bytes), align: 1
+  Segment part 23.            Intra module refs:   USART_RXC_Handler
+                                                   USART_Rec_Handler
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            0000128C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000012AE - 000012D1 (0x24 bytes), align: 1
+  Segment part 24.            Intra module refs:   ?Subroutine3
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            000012AE 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000012D2 - 000012D5 (0x4 bytes), align: 1
+  Segment part 25.            Intra module refs:   USART_TXC_Handler::??INTVEC 52
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           USART_TXC_Handler       000012D2 
+               interrupt function
+               CSTACK = 00000000 ( 00000001 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+INTVEC
+  Common segment, address: CODE 00000000 - 0000002F (0x30 bytes), align: 1
+  Segment part 10. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           USART_Rec_Handler::??INTVEC 44
+                                   0000002C 
+    -------------------------------------------------------------------------
+INTVEC
+  Common segment, address: CODE 00000000 - 00000033 (0x34 bytes), align: 1
+  Segment part 11. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           USART_RXC_Handler::??INTVEC 48
+                                   00000030 
+    -------------------------------------------------------------------------
+INTVEC
+  Common segment, address: CODE 00000000 - 00000037 (0x38 bytes), align: 1
+  Segment part 12. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           USART_TXC_Handler::??INTVEC 52
+                                   00000034 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\porttimer.r90
+  PROGRAM MODULE, NAME : porttimer
+
+  SEGMENTS IN THE MODULE
+  ======================
+ABSOLUTE
+  Relative segment, address: DATA 00000058 - 00000058 (0x1 bytes), align: 0
+  Segment part 2. ROOT.       Intra module refs:   vMBPortTimersDisable
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TIFR                 00000058 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TIFR                    00000058 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000045 - 00000045 (0x1 bytes), align: 0
+  Segment part 3. ROOT.       Intra module refs:   vMBPortTimersDisable
+                                                   vMBPortTimersEnable
+                                                   xMBPortTimersInit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TCCR2                00000045 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TCCR2                   00000045 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000044 - 00000044 (0x1 bytes), align: 0
+  Segment part 4. ROOT.       Intra module refs:   vMBPortTimersEnable
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TCNT2                00000044 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TCNT2                   00000044 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000043 - 00000043 (0x1 bytes), align: 0
+  Segment part 5. ROOT.       Intra module refs:   vMBPortTimersEnable
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_OCR2                 00000043 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           OCR2                    00000043 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 0000021B - 0000021C (0x2 bytes), align: 0
+  Segment part 13.            Intra module refs:   vMBPortTimersEnable
+                                                   xMBPortTimersInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           usTimerOCRDelta         0000021B 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000012D6 - 000012FF (0x2a bytes), align: 1
+  Segment part 15.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           xMBPortTimersInit       000012D6        eMBRTUInit (mbrtu)
+               calls direct
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001300 - 00001321 (0x22 bytes), align: 1
+  Segment part 16.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           vMBPortTimersEnable     00001300        eMBRTUStart (mbrtu)
+                                                   xMBRTUReceiveFSM (mbrtu)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001322 - 00001335 (0x14 bytes), align: 1
+  Segment part 17.            Intra module refs:   xMBPortTimersInit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           vMBPortTimersDisable    00001322        eMBRTUStop (mbrtu)
+                                                   xMBRTUTimerT35Expired (mbrtu)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001336 - 00001381 (0x4c bytes), align: 1
+  Segment part 18.            Intra module refs:   TMR2_COMP_Handler::??INTVEC 12
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TMR2_COMP_Handler       00001336 
+               interrupt function
+               calls indirect
+               CSTACK = 00000000 ( 0000000F )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+INTVEC
+  Common segment, address: CODE 00000000 - 0000000F (0x10 bytes), align: 1
+  Segment part 10. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TMR2_COMP_Handler::??INTVEC 12
+                                   0000000C 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\stepper.r90
+  PROGRAM MODULE, NAME : stepper
+
+  SEGMENTS IN THE MODULE
+  ======================
+ABSOLUTE
+  Relative segment, address: DATA 0000004F - 0000004F (0x1 bytes), align: 0
+  Segment part 2. ROOT.       Intra module refs:   StepperInit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TCCR1A               0000004F 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TCCR1A                  0000004F 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000004E - 0000004E (0x1 bytes), align: 0
+  Segment part 3. ROOT.       Intra module refs:   MotorStart
+                                                   StepperInit
+                                                   StopClockTimer
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TCCR1B               0000004E 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TCCR1B                  0000004E 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000004C - 0000004D (0x2 bytes), align: 0
+  Segment part 4. ROOT.       Intra module refs:   MotorStart
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TCNT1                0000004C 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TCNT1                   0000004C 
+           TCNT1H                  0000004D 
+           TCNT1L                  0000004C 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 0000004A - 0000004B (0x2 bytes), align: 0
+  Segment part 5. ROOT.       Intra module refs:   MotorStart
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_OCR1A                0000004A 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           OCR1A                   0000004A 
+           OCR1AH                  0000004B 
+           OCR1AL                  0000004A 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000036 - 00000036 (0x1 bytes), align: 0
+  Segment part 7. ROOT.       Intra module refs:   DipSwitchHandle
+                                                   HallSensorHandle
+                                                   StepperInit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PINB                 00000036 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           PINB                    00000036 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000030 - 00000030 (0x1 bytes), align: 0
+  Segment part 11. ROOT.      Intra module refs:   DipSwitchHandle
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PIND                 00000030 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           PIND                    00000030 
+    -------------------------------------------------------------------------
+NEAR_F
+  Relative segment, address: CODE 00000254 - 0000031B (0xc8 bytes), align: 0
+  Segment part 28.            Intra module refs:   Prc2Rpm
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ucRpm150                00000254 
+           ucRpm200                000002B8 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001382 - 000014DD (0x15c bytes), align: 1
+  Segment part 31.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           StepperInit             00001382        main (main)
+               calls direct
+               CSTACK = 00000000 ( 00000006 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000014DE - 000014E3 (0x6 bytes), align: 1
+  Segment part 32.            Intra module refs:   ReadAnalogPins
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine31           000014DE 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000014E4 - 000014E7 (0x4 bytes), align: 1
+  Segment part 33.            Intra module refs:   ?Subroutine6
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine25           000014E4 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000014E8 - 000014EF (0x8 bytes), align: 1
+  Segment part 34.            Intra module refs:   ?Subroutine15
+                                                   ?Subroutine25
+                                                   ?Subroutine8
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine29           000014E8 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000014F0 - 000014F1 (0x2 bytes), align: 1
+  Segment part 35.            Intra module refs:   ReadAnalogPins
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine10           000014F0 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000014F2 - 000014F5 (0x4 bytes), align: 1
+  Segment part 36.            Intra module refs:   ?Subroutine10
+                                                   ReadAnalogPins
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000014F6 - 000014F9 (0x4 bytes), align: 1
+  Segment part 37.            Intra module refs:   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine5            000014F6 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000014FA - 000014FD (0x4 bytes), align: 1
+  Segment part 38.            Intra module refs:   ?Subroutine5
+                                                   Segment part 41
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine32           000014FA 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000014FE - 00001507 (0xa bytes), align: 1
+  Segment part 39.            Intra module refs:   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            000014FE 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001508 - 00001509 (0x2 bytes), align: 1
+  Segment part 40.            Intra module refs:   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00001508 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000150A - 00001511 (0x8 bytes), align: 1
+  Segment part 41.            Intra module refs:   ?Subroutine0
+                                                   StepperInit
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001512 - 0000151F (0xe bytes), align: 1
+  Segment part 42.            Intra module refs:   MotorStop
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           StopClockTimer          00001512 
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001520 - 00001581 (0x62 bytes), align: 1
+  Segment part 43.            Intra module refs:   ScrollingHandle
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           MotorStart              00001520        ?Subroutine17 (main)
+               calls direct
+               CSTACK = 00000000 ( 00000002 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001582 - 000015A1 (0x20 bytes), align: 1
+  Segment part 44.            Intra module refs:   StepperInit
+                                                   TMR_COMPA_Handler
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           MotorStop               00001582        ?Subroutine16 (main)
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000015A2 - 000015A9 (0x8 bytes), align: 1
+  Segment part 45.            Intra module refs:   MotorStop
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine8            000015A2 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000015AA - 000015AD (0x4 bytes), align: 1
+  Segment part 46.            Intra module refs:   ?Subroutine8
+                                                   ?Subroutine9
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine33           000015AA 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000015AE - 000015AF (0x2 bytes), align: 1
+  Segment part 47.            Intra module refs:   HallSensorHandle
+                                                   MotorStop
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            000015AE 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000015B0 - 000015B7 (0x8 bytes), align: 1
+  Segment part 48.            Intra module refs:   ?Subroutine2
+                                                   StepperInit
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000015B8 - 00001605 (0x4e bytes), align: 1
+  Segment part 49.            Intra module refs:   ReadAnalogPins
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           Adc2Rpm                 000015B8        main (main)
+               calls direct
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001606 - 0000160F (0xa bytes), align: 1
+  Segment part 50.            Intra module refs:   Adc2Rpm
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine21           00001606 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001610 - 00001633 (0x24 bytes), align: 1
+  Segment part 51.            Intra module refs:   Adc2Rpm
+                                                   StepperInit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           Prc2Rpm                 00001610        HandleModbusCommands (main)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001634 - 0000167B (0x48 bytes), align: 1
+  Segment part 52.            Intra module refs:   ScrollingHandle
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           Rpm2Ocr                 00001634        ?Subroutine17 (main)
+               calls direct
+               CSTACK = 00000000 ( 00000008 )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000167C - 00001681 (0x6 bytes), align: 1
+  Segment part 53.            Intra module refs:   Rpm2Ocr
+                                                   ScrollingHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine34           0000167C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001682 - 00001687 (0x6 bytes), align: 1
+  Segment part 54.            Intra module refs:   DipSwitchHandle
+                                                   MotorStart
+                                                   Prc2Rpm
+                                                   Rpm2Ocr
+                                                   ScrollingHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine20           00001682 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001688 - 0000168F (0x8 bytes), align: 1
+  Segment part 55.            Intra module refs:   Adc2Rpm
+                                                   Rpm2Ocr
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine17           00001688 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001690 - 00001697 (0x8 bytes), align: 1
+  Segment part 56.            Intra module refs:   MotorStart
+                                                   Rpm2Ocr
+                                                   TMR_COMPA_Handler
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine6            00001690 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001698 - 00001739 (0xa2 bytes), align: 1
+  Segment part 57.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ReadAnalogPins          00001698        main (main)
+               calls direct
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000173A - 00001749 (0x10 bytes), align: 1
+  Segment part 58.            Intra module refs:   ReadAnalogPins
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine22           0000173A 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000174A - 00001759 (0x10 bytes), align: 1
+  Segment part 59.            Intra module refs:   MotorStop
+                                                   ReadAnalogPins
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine19           0000174A 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000175A - 00001767 (0xe bytes), align: 1
+  Segment part 60.            Intra module refs:   ReadAnalogPins
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine4            0000175A 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001768 - 000017B9 (0x52 bytes), align: 1
+  Segment part 61.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           DipSwitchHandle         00001768        main (main)
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000017BA - 000017BD (0x4 bytes), align: 1
+  Segment part 62.            Intra module refs:   ?Subroutine15
+                                                   ?Subroutine27
+                                                   DipSwitchHandle
+                                                   HallSensorHandle
+                                                   MotorStart
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine35           000017BA 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000017BE - 000017C1 (0x4 bytes), align: 1
+  Segment part 63.            Intra module refs:   ScrollingHandle
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine15           000017BE 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000017C2 - 000017C7 (0x6 bytes), align: 1
+  Segment part 64.            Intra module refs:   DipSwitchHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine14           000017C2 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000017C8 - 000017CB (0x4 bytes), align: 1
+  Segment part 65.            Intra module refs:   ?Subroutine14
+                                                   ?Subroutine2
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine27           000017C8 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000017CC - 00001809 (0x3e bytes), align: 1
+  Segment part 66.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           LedsHandle              000017CC        main (main)
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000180A - 00001811 (0x8 bytes), align: 1
+  Segment part 67.            Intra module refs:   LedsHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine9            0000180A 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001812 - 00001815 (0x4 bytes), align: 1
+  Segment part 68.            Intra module refs:   ?Subroutine9
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine26           00001812 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001816 - 0000181B (0x6 bytes), align: 1
+  Segment part 69.            Intra module refs:   HallSensorHandle
+                                                   LedsHandle
+                                                   MotorStop
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine3            00001816 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000181C - 00001885 (0x6a bytes), align: 1
+  Segment part 70.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           HallSensorHandle        0000181C        main (main)
+               calls direct
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001886 - 0000188B (0x6 bytes), align: 1
+  Segment part 71.            Intra module refs:   Adc2Rpm
+                                                   HallSensorHandle
+                                                   Prc2Rpm
+                                                   ScrollingHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine23           00001886 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000188C - 0000188F (0x4 bytes), align: 1
+  Segment part 72.            Intra module refs:   ?Subroutine6
+                                                   ?Subroutine8
+                                                   HallSensorHandle
+                                                   ScrollingHandle
+                                                   StepperInit
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine28           0000188C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001890 - 00001893 (0x4 bytes), align: 1
+  Segment part 73.            Intra module refs:   HallSensorHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine11           00001890 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001894 - 0000189B (0x8 bytes), align: 1
+  Segment part 74.            Intra module refs:   ?Subroutine11
+                                                   ?Subroutine27
+                                                   DipSwitchHandle
+                                                   MotorStart
+                                                   ScrollingHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine30           00001894 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000189C - 000018B3 (0x18 bytes), align: 1
+  Segment part 75.            Intra module refs:   HallSensorHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine7            0000189C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000018B4 - 0000196F (0xbc bytes), align: 1
+  Segment part 76.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ScrollingHandle         000018B4        main (main)
+               calls direct
+               CSTACK = 00000000 ( 00000008 )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001970 - 00001975 (0x6 bytes), align: 1
+  Segment part 77.            Intra module refs:   Rpm2Ocr
+                                                   ScrollingHandle
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine13           00001970 
+    -------------------------------------------------------------------------
+NEAR_I
+  Relative segment, address: DATA 000000B7 - 000000DA (0x24 bytes), align: 0
+  Segment part 21.            Intra module refs:   ?Subroutine3
+                                                   ?Subroutine7
+                                                   HallSensorHandle
+                                                   MotorStart
+                                                   Rpm2Ocr
+                                                   ScrollingHandle
+                                                   Segment part 27
+                                                   Segment part 48
+                                                   TMR_COMPA_Handler
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           Clock                   000000CE        ?Subroutine17 (main)
+           HallShot                000000D7 
+           MotorControl            000000B7        HandleModbusCommands (main)
+                                                   main (main)
+           ScrollActive            000000D6        HandleManualControl (main)
+           StepCounter             000000D2 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ScrollingHandle::dir    000000DA 
+           ScrollingHandle::dly    000000D4 
+           HallSensorHandle::dly   000000D8 
+           HallSensorHandle::lstate
+                                   000000D9 
+    -------------------------------------------------------------------------
+NEAR_I
+  Relative segment, address: DATA 000000DB - 000000DC (0x2 bytes), align: 0
+  Segment part 26.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           pMotorControl           000000DB        eMBSetSlaveID (mbfuncother)
+    -------------------------------------------------------------------------
+NEAR_I
+  Relative segment, address: DATA 000000DD - 000000E4 (0x8 bytes), align: 0
+  Segment part 29.            Intra module refs:   ReadAnalogPins
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ReadAnalogPins::channel
+                                   000000E4 
+           ReadAnalogPins::hsink_tmp
+                                   000000DD 
+           ReadAnalogPins::n       000000E3 
+           ReadAnalogPins::pwm_tmp
+                                   000000E1 
+           ReadAnalogPins::vvx_tmp
+                                   000000DF 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001976 - 00001A25 (0xb0 bytes), align: 1
+  Segment part 78.            Intra module refs:   TMR_COMPA_Handler::??INTVEC 24
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TMR_COMPA_Handler       00001976 
+               interrupt function
+               calls direct
+               CSTACK = 00000000 ( 00000011 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001A26 - 00001A2D (0x8 bytes), align: 1
+  Segment part 79.            Intra module refs:   TMR_COMPA_Handler
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine24           00001A26 
+    -------------------------------------------------------------------------
+INTVEC
+  Common segment, address: CODE 00000000 - 0000001B (0x1c bytes), align: 1
+  Segment part 18. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TMR_COMPA_Handler::??INTVEC 24
+                                   00000018 
+    -------------------------------------------------------------------------
+NEAR_ID
+  Relative segment, address: CODE 0000246D - 00002490 (0x24 bytes), align: 0
+  Segment part 22.            Intra module refs:   Segment part 21
+    -------------------------------------------------------------------------
+NEAR_ID
+  Relative segment, address: CODE 00002491 - 00002492 (0x2 bytes), align: 0
+  Segment part 27.            Intra module refs:   pMotorControl
+    -------------------------------------------------------------------------
+NEAR_ID
+  Relative segment, address: CODE 00002493 - 0000249A (0x8 bytes), align: 0
+  Segment part 30.            Intra module refs:   ReadAnalogPins::channel
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\systick.r90
+  PROGRAM MODULE, NAME : systick
+
+  SEGMENTS IN THE MODULE
+  ======================
+ABSOLUTE
+  Relative segment, address: DATA 00000053 - 00000053 (0x1 bytes), align: 0
+  Segment part 2. ROOT.       Intra module refs:   SysTickInit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TCCR0                00000053 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TCCR0                   00000053 
+    -------------------------------------------------------------------------
+ABSOLUTE
+  Relative segment, address: DATA 00000052 - 00000052 (0x1 bytes), align: 0
+  Segment part 3. ROOT.       Intra module refs:   SysTickInit
+                                                   TMR_OVF_Handler
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_TCNT0                00000052 
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TCNT0                   00000052 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001A2E - 00001A3D (0x10 bytes), align: 1
+  Segment part 13.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           SysTickInit             00001A2E        main (main)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001A3E - 00001A47 (0xa bytes), align: 1
+  Segment part 14.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           GetTicks                00001A3E        ?Subroutine7 (main)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001A48 - 00001A53 (0xc bytes), align: 1
+  Segment part 15.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           pSysTickTimer           00001A48        ?Subroutine2 (main)
+                                                   ?Subroutine26 (stepper)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001A54 - 00001B19 (0xc6 bytes), align: 1
+  Segment part 16.            Intra module refs:   TMR_OVF_Handler::??INTVEC 36
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TMR_OVF_Handler         00001A54 
+               interrupt function
+               CSTACK = 00000000 ( 0000000B )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001B1A - 00001B1B (0x2 bytes), align: 1
+  Segment part 17.            Intra module refs:   TMR_OVF_Handler
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            00001B1A 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001B1C - 00001B23 (0x8 bytes), align: 1
+  Segment part 18.            Intra module refs:   ?Subroutine2
+                                                   TMR_OVF_Handler
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001B24 - 00001B31 (0xe bytes), align: 1
+  Segment part 19.            Intra module refs:   GetTicks
+                                                   TMR_OVF_Handler
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            00001B24 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001B32 - 00001B3D (0xc bytes), align: 1
+  Segment part 20.            Intra module refs:   TMR_OVF_Handler
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00001B32 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 0000021D - 00000231 (0x15 bytes), align: 0
+  Segment part 11.            Intra module refs:   ?Subroutine1
+                                                   pSysTickTimer
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TMR_OVF_Handler::_A_delay
+                                   00000229 
+           SysTickTimer            0000021D 
+           tick                    0000022E 
+    -------------------------------------------------------------------------
+INTVEC
+  Common segment, address: CODE 00000000 - 00000027 (0x28 bytes), align: 1
+  Segment part 8. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TMR_OVF_Handler::??INTVEC 36
+                                   00000024 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\temp_conv.r90
+  PROGRAM MODULE, NAME : temp_conv
+
+  SEGMENTS IN THE MODULE
+  ======================
+NEAR_F
+  Relative segment, address: CODE 0000031C - 00000359 (0x3e bytes), align: 0
+  Segment part 7.             Intra module refs:   calc_temperature
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           termo_table             0000031C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001B3E - 00001C11 (0xd4 bytes), align: 1
+  Segment part 8.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           calc_temperature        00001B3E        ReadAnalogPins (stepper)
+               CSTACK = 00000000 ( 00000006 )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001C12 - 00001C1B (0xa bytes), align: 1
+  Segment part 9.             Intra module refs:   calc_temperature
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            00001C12 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001C1C - 00001C25 (0xa bytes), align: 1
+  Segment part 10.            Intra module refs:   calc_temperature
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00001C1C 
+
+    *************************************************************************
+
+  FILE NAME : Z:\Dropbox\Projects\Ventmatika\Stepper\software\IAR\ATMEGA16\Obj\user_mb_app.r90
+  PROGRAM MODULE, NAME : user_mb_app
+
+  SEGMENTS IN THE MODULE
+  ======================
+NEAR_Z
+  Relative segment, address: DATA 00000232 - 00000237 (0x6 bytes), align: 0
+  Segment part 7.             Intra module refs:   eMBRegDiscreteCB
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ucSDiscInBuf            00000234        ?Subroutine18 (main)
+                                                   ?Subroutine30 (stepper)
+                                                   Segment part 22 (stepper)
+                                                   main (main)
+           usSDiscInStart          00000232 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 00000238 - 0000023D (0x6 bytes), align: 0
+  Segment part 9.             Intra module refs:   eMBRegCoilsCB
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ucSCoilBuf              0000023A        ?Subroutine19 (main)
+                                                   ?Subroutine21 (main)
+                                                   ?Subroutine29 (stepper)
+                                                   Segment part 22 (stepper)
+           usSCoilStart            00000238 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 0000023E - 0000025F (0x22 bytes), align: 0
+  Segment part 10.            Intra module refs:   eMBRegInputCB
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           usSRegInBuf             00000240        ?Subroutine23 (stepper)
+                                                   ?Subroutine3 (main)
+                                                   ?Subroutine7 (stepper)
+                                                   ReadAnalogPins (stepper)
+                                                   Segment part 22 (stepper)
+                                                   StepperInit (stepper)
+           usSRegInStart           0000023E 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 00000260 - 00000261 (0x2 bytes), align: 0
+  Segment part 11.            Intra module refs:   eMBRegHoldingCB
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           usSRegHoldStart         00000260 
+    -------------------------------------------------------------------------
+NEAR_Z
+  Relative segment, address: DATA 00000262 - 000002A1 (0x40 bytes), align: 0
+  Segment part 12.            Intra module refs:   ?Subroutine1
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           usSRegHoldBuf           00000262        ?Subroutine20 (stepper)
+                                                   ?Subroutine7 (stepper)
+                                                   HandleManualControl (main)
+                                                   HandleModbusCommands (main)
+                                                   Segment part 22 (stepper)
+                                                   StepperInit (stepper)
+                                                   TMR_COMPA_Handler (stepper)
+                                                   main (main)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001C26 - 00001C6D (0x48 bytes), align: 1
+  Segment part 13.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRegInputCB           00001C26        eMBFuncReadInputRegister (mbfuncinput)
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001C6E - 00001CDD (0x70 bytes), align: 1
+  Segment part 14.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRegHoldingCB         00001C6E        eMBFuncReadHoldingRegister (mbfuncholding)
+                                                   eMBFuncWriteHoldingRegister (mbfuncholding)
+               CSTACK = 00000000 ( 00000004 )
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001CDE - 00001CED (0x10 bytes), align: 1
+  Segment part 15.            Intra module refs:   eMBRegHoldingCB
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine1            00001CDE 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001CEE - 00001D6F (0x82 bytes), align: 1
+  Segment part 16.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRegCoilsCB           00001CEE        eMBFuncReadCoils (mbfunccoils)
+                                                   eMBFuncWriteCoil (mbfunccoils)
+               calls direct
+               CSTACK = 00000000 ( 0000000B )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001D70 - 00001D77 (0x8 bytes), align: 1
+  Segment part 17.            Intra module refs:   eMBRegCoilsCB
+                                                   eMBRegDiscreteCB
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine7            00001D70 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001D78 - 00001D83 (0xc bytes), align: 1
+  Segment part 18.            Intra module refs:   eMBRegCoilsCB
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine6            00001D78 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001D84 - 00001D87 (0x4 bytes), align: 1
+  Segment part 19.            Intra module refs:   eMBRegCoilsCB
+                                                   eMBRegDiscreteCB
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine3            00001D84 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001D88 - 00001D8F (0x8 bytes), align: 1
+  Segment part 20.            Intra module refs:   ?Subroutine3
+                                                   eMBRegInputCB
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001D90 - 00001DDD (0x4e bytes), align: 1
+  Segment part 21.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           eMBRegDiscreteCB        00001D90        eMBFuncReadDiscreteInputs (mbfuncdisc)
+               calls direct
+               CSTACK = 00000000 ( 0000000B )
+               RSTACK = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001DDE - 00001DF3 (0x16 bytes), align: 1
+  Segment part 22.            Intra module refs:   eMBRegCoilsCB
+                                                   eMBRegDiscreteCB
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine5            00001DDE 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001DF4 - 00001DF9 (0x6 bytes), align: 1
+  Segment part 23.            Intra module refs:   eMBRegCoilsCB
+                                                   eMBRegDiscreteCB
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine4            00001DF4 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001DFA - 00001E0D (0x14 bytes), align: 1
+  Segment part 24.            Intra module refs:   eMBRegCoilsCB
+                                                   eMBRegDiscreteCB
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine2            00001DFA 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001E0E - 00001E25 (0x18 bytes), align: 1
+  Segment part 25.            Intra module refs:   eMBRegCoilsCB
+                                                   eMBRegDiscreteCB
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           ?Subroutine0            00001E0E 
+
+    *************************************************************************
+
+  FILE NAME : C:\Program Files\IAR Systems\Embedded Workbench 6.0\avr\LIB\CLIB\cl3s-ec_mul-sf.r90
+  LIBRARY MODULE, NAME : ?__exit
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001E26 - 00001E2B (0x6 bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __exit                  00001E28 
+           ?C_EXIT                 00001E28 
+           ?C_FUNCALL              00001E26 
+           _exit                   00001E26        ?cstartup_call_main (?C_STARTUP)
+           exit                    00001E26        ?cstartup_call_main (?C_STARTUP)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?RESET
+
+  SEGMENTS IN THE MODULE
+  ======================
+INTVEC
+  Common segment, address: CODE 00000000 - 00000003 (0x4 bytes), align: 1
+  Segment part 0. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __program_start         00000000        Absolute parts (?ABS_ENTRY_MOD)
+           ?RESET                  00000000        Segment part 2 (?C_STARTUP)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?C_STARTUP
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001E2C, align: 1
+  Segment part 2.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?C_STARTUP              00001E2C        Segment part 0 (?RESET)
+           __RESTART               00001E2C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001E2C - 00001E37 (0xc bytes), align: 1
+  Segment part 5.             Intra module refs:   Segment part 2
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001E38 - 00001E3B (0x4 bytes), align: 1
+  Segment part 7.             Intra module refs:   Segment part 5
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?call_low_level_init    00001E38 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001E3C - 00001E43 (0x8 bytes), align: 1
+  Segment part 8.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?need_segment_init      00001E3C        ?<Segment init: NEAR_I> (main)
+                                                   ?<Segment init: NEAR_Z> (eeprom)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001E44 - 00001E4F (0xc bytes), align: 1
+  Segment part 9.             Intra module refs:   ?call_low_level_init
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?cstartup_call_main     00001E44 
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?S_EC_MUL_L02
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001E50 - 00001E5F (0x10 bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?S_EC_MUL_L02           00001E50        ?Subroutine0 (temp_conv)
+                                                   Rpm2Ocr (stepper)
+                                                   ScrollingHandle (stepper)
+                                                   eMBPoll (mb)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?S_SHL_L02
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001E60 - 00001E6B (0xc bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?S_SHL_L02              00001E60        ?Subroutine0 (user_mb_app)
+                                                   ?Subroutine3 (mbutils)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?US_SHR_L02
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001E6C - 00001E77 (0xc bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?US_SHR_L02             00001E6C        ?Subroutine0 (mbutils)
+                                                   ?Subroutine2 (user_mb_app)
+                                                   ?Subroutine4 (user_mb_app)
+                                                   eMBFuncReadCoils (mbfunccoils)
+                                                   eMBFuncReadDiscreteInputs (mbfuncdisc)
+                                                   xMBUtilGetBits (mbutils)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?SS_SHR_L02
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001E78 - 00001E83 (0xc bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?SS_SHR_L02             00001E78        ?Subroutine0 (user_mb_app)
+                                                   ?Subroutine22 (stepper)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?US_DIVMOD_L02
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001E84 - 00001EAB (0x28 bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?US_DIVMOD_L02          00001E84        ?Subroutine13 (stepper)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?L_EC_MUL_L03
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001EAC - 00001EEB (0x40 bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?L_EC_MUL_L03           00001EAC        calc_temperature (temp_conv)
+                                                   xMBPortTimersInit (porttimer)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?L_SHL_L03
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001EEC - 00001EFB (0x10 bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?L_SHL_L03              00001EEC        xMBPortSerialInit (portserial)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?UL_SHR_L03
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001EFC - 00001F0B (0x10 bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?UL_SHR_L03             00001EFC        Segment part 9 (?FLOATS_L04)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?UL_DIVMOD_L03
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001F0C - 00001F51 (0x46 bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?UL_DIVMOD_L03          00001F0C        ?SL_DIVMOD_L03 (?SL_DIVMOD_L03)
+                                                   eMBRTUInit (mbrtu)
+                                                   xMBPortSerialInit (portserial)
+                                                   xMBPortTimersInit (porttimer)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?SL_DIVMOD_L03
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001F52 - 00001F75 (0x24 bytes), align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?SL_DIVMOD_L03          00001F52        calc_temperature (temp_conv)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001F76 - 00001F85 (0x10 bytes), align: 1
+  Segment part 1.             Intra module refs:   ?SL_DIVMOD_L03
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?L_NEG_L03              00001F76        Segment part 9 (?FLOATS_L04)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001F86 - 00001F95 (0x10 bytes), align: 1
+  Segment part 2.             Intra module refs:   ?SL_DIVMOD_L03
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?L_NEG_Q_L03            00001F86 
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?FLOATS_L04
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00001F96 - 00001FBF (0x2a bytes), align: 1
+  Segment part 0.             Intra module refs:   ?F2SL_L04
+                                                   ?F_ADD_L04
+                                                   ?F_DIV_L04
+                                                   ?F_MUL_L04
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00001FC0 - 00002013 (0x54 bytes), align: 1
+  Segment part 1.             Intra module refs:   ?F_ADD_L04
+                                                   ?F_DIV_L04
+                                                   ?F_MUL_L04
+                                                   Segment part 5
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?F_ROUND_L04            00001FE0 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002014 - 00002015 (0x2 bytes), align: 1
+  Segment part 3.             Intra module refs:   ?F_ROUND_L04
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002016 - 00002021 (0xc bytes), align: 1
+  Segment part 5.             Intra module refs:   ?UL2F_L04
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002022 - 00002025 (0x4 bytes), align: 1
+  Segment part 6.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?UL2F_L04               00002022        ?Subroutine17 (stepper)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002026 - 00002037 (0x12 bytes), align: 1
+  Segment part 8.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?F2SL_L04               00002026        Adc2Rpm (stepper)
+                                                   Rpm2Ocr (stepper)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002038 - 0000205B (0x24 bytes), align: 1
+  Segment part 9.             Intra module refs:   ?F2SL_L04
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000205C - 00002089 (0x2e bytes), align: 1
+  Segment part 10.            Intra module refs:   ?F_ADD_L04
+                                                   ?F_DIV_L04
+                                                   ?F_MUL_L04
+                                                   Segment part 11
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?TEST_P_L04             0000205C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000208A - 000020A9 (0x20 bytes), align: 1
+  Segment part 11.            Intra module refs:   ?F_ADD_L04
+                                                   ?F_DIV_L04
+                                                   ?F_MUL_L04
+                                                   Segment part 17
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000020AA - 00002151 (0xa8 bytes), align: 1
+  Segment part 12.            Intra module refs:   Segment part 17
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?F_ADD_L04              000020CA        Adc2Rpm (stepper)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002152 - 0000215D (0xc bytes), align: 1
+  Segment part 14.            Intra module refs:   ?F2SL_L04
+                                                   ?F_DIV_L04
+                                                   ?F_INFINITE_L04
+                                                   ?F_MUL_L04
+                                                   ?F_NAN_L04
+                                                   Segment part 9
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?F_ZERO_L04             00002152 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000215E - 00002165 (0x8 bytes), align: 1
+  Segment part 15.            Intra module refs:   ?F_DIV_L04
+                                                   ?F_MUL_L04
+                                                   Segment part 3
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?F_INFINITE_L04         0000215E 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002166 - 0000216B (0x6 bytes), align: 1
+  Segment part 16.            Intra module refs:   ?F_ADD_L04
+                                                   ?F_DIV_L04
+                                                   ?F_MUL_L04
+                                                   Segment part 17
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?F_NAN_L04              00002166 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000216C - 00002185 (0x1a bytes), align: 1
+  Segment part 17.            Intra module refs:   ?F_DIV_L04
+                                                   ?F_MUL_L04
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002186 - 0000225B (0xd6 bytes), align: 1
+  Segment part 18.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?F_MUL_L04              00002186        Adc2Rpm (stepper)
+                                                   Rpm2Ocr (stepper)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000225C - 0000236B (0x110 bytes), align: 1
+  Segment part 19.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?F_DIV_L04              00002278        Adc2Rpm (stepper)
+                                                   Rpm2Ocr (stepper)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?PROLOGUE_L09
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 0000236C - 0000236D (0x2 bytes), align: 1
+  Segment part 5.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE11_L09         0000236C        eMBRegCoilsCB (user_mb_app)
+                                                   eMBRegDiscreteCB (user_mb_app)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000236E - 0000236F (0x2 bytes), align: 1
+  Segment part 6.             Intra module refs:   ?PROLOGUE11_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE10_L09         0000236E 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002370 - 00002371 (0x2 bytes), align: 1
+  Segment part 7.             Intra module refs:   ?PROLOGUE10_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE9_L09          00002370 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002372 - 00002373 (0x2 bytes), align: 1
+  Segment part 8.             Intra module refs:   ?PROLOGUE9_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE8_L09          00002372        Rpm2Ocr (stepper)
+                                                   ScrollingHandle (stepper)
+                                                   eMBRTUReceive (mbrtu)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002374 - 00002375 (0x2 bytes), align: 1
+  Segment part 9.             Intra module refs:   ?PROLOGUE8_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE7_L09          00002374 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002376 - 00002377 (0x2 bytes), align: 1
+  Segment part 10.            Intra module refs:   ?PROLOGUE7_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE6_L09          00002376        EEPROM_GetDWord (eeprom)
+                                                   EEPROM_PutDWord (eeprom)
+                                                   calc_temperature (temp_conv)
+                                                   eMBSetSlaveID (mbfuncother)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002378 - 00002379 (0x2 bytes), align: 1
+  Segment part 11.            Intra module refs:   ?PROLOGUE6_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE5_L09          00002378        eMBFuncReadCoils (mbfunccoils)
+                                                   eMBFuncReadDiscreteInputs (mbfuncdisc)
+                                                   eMBFuncReadHoldingRegister (mbfuncholding)
+                                                   eMBFuncReadInputRegister (mbfuncinput)
+                                                   eMBRTUInit (mbrtu)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000237A - 0000237B (0x2 bytes), align: 1
+  Segment part 12.            Intra module refs:   ?PROLOGUE5_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE4_L09          0000237A        ?Subroutine1 (mb)
+                                                   ?Subroutine4 (mbrtu)
+                                                   EEPROM_GetWord (eeprom)
+                                                   EEPROM_PutWord (eeprom)
+                                                   ReadAnalogPins (stepper)
+                                                   StepperInit (stepper)
+                                                   eMBFuncReportSlaveID (mbfuncother)
+                                                   eMBFuncWriteCoil (mbfunccoils)
+                                                   eMBRegHoldingCB (user_mb_app)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000237C - 0000237D (0x2 bytes), align: 1
+  Segment part 13.            Intra module refs:   ?PROLOGUE4_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE3_L09          0000237C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000237E - 0000237F (0x2 bytes), align: 1
+  Segment part 14.            Intra module refs:   ?PROLOGUE3_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE2_L09          0000237E 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002380 - 00002381 (0x2 bytes), align: 1
+  Segment part 15.            Intra module refs:   ?PROLOGUE2_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?PROLOGUE1_L09          00002380 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002382 - 00002383 (0x2 bytes), align: 1
+  Segment part 16.            Intra module refs:   ?PROLOGUE1_L09
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?EPILOGUE_B_L09
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 00002384 - 00002385 (0x2 bytes), align: 1
+  Segment part 5.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B11_L09       00002384        ?Subroutine7 (user_mb_app)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002386 - 00002387 (0x2 bytes), align: 1
+  Segment part 6.             Intra module refs:   ?EPILOGUE_B11_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B10_L09       00002386 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002388 - 00002389 (0x2 bytes), align: 1
+  Segment part 7.             Intra module refs:   ?EPILOGUE_B10_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B9_L09        00002388 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000238A - 0000238B (0x2 bytes), align: 1
+  Segment part 8.             Intra module refs:   ?EPILOGUE_B9_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B8_L09        0000238A        ?Subroutine34 (stepper)
+                                                   eMBRTUReceive (mbrtu)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000238C - 0000238D (0x2 bytes), align: 1
+  Segment part 9.             Intra module refs:   ?EPILOGUE_B8_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B7_L09        0000238C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000238E - 0000238F (0x2 bytes), align: 1
+  Segment part 10.            Intra module refs:   ?EPILOGUE_B7_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B6_L09        0000238E        ?Subroutine11 (eeprom)
+                                                   calc_temperature (temp_conv)
+                                                   eMBSetSlaveID (mbfuncother)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002390 - 00002391 (0x2 bytes), align: 1
+  Segment part 11.            Intra module refs:   ?EPILOGUE_B6_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B5_L09        00002390        eMBFuncReadCoils (mbfunccoils)
+                                                   eMBFuncReadDiscreteInputs (mbfuncdisc)
+                                                   eMBFuncReadHoldingRegister (mbfuncholding)
+                                                   eMBFuncReadInputRegister (mbfuncinput)
+                                                   eMBRTUInit (mbrtu)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002392 - 00002393 (0x2 bytes), align: 1
+  Segment part 12.            Intra module refs:   ?EPILOGUE_B5_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B4_L09        00002392        ?Subroutine10 (eeprom)
+                                                   ?Subroutine3 (mb)
+                                                   ?Subroutine31 (stepper)
+                                                   Segment part 18 (mbrtu)
+                                                   eMBFuncReportSlaveID (mbfuncother)
+                                                   eMBFuncWriteCoil (mbfunccoils)
+                                                   eMBRegHoldingCB (user_mb_app)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002394 - 00002395 (0x2 bytes), align: 1
+  Segment part 13.            Intra module refs:   ?EPILOGUE_B4_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B3_L09        00002394 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002396 - 00002397 (0x2 bytes), align: 1
+  Segment part 14.            Intra module refs:   ?EPILOGUE_B3_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B2_L09        00002396 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 00002398 - 00002399 (0x2 bytes), align: 1
+  Segment part 15.            Intra module refs:   ?EPILOGUE_B2_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B1_L09        00002398 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 0000239A - 000023A3 (0xa bytes), align: 1
+  Segment part 16.            Intra module refs:   ?EPILOGUE_B1_L09
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?EPILOGUE_B0_L09        0000239A 
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?REGISTER_CGREGR4_L10
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023A4, align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?Register_R4_is_cg_reg
+                                   000023A4        EEPROM_GetDWord (eeprom)
+                                                   EEPROM_PutDWord (eeprom)
+                                                   Rpm2Ocr (stepper)
+                                                   ScrollingHandle (stepper)
+                                                   calc_temperature (temp_conv)
+                                                   eMBFuncReadCoils (mbfunccoils)
+                                                   eMBFuncReadDiscreteInputs (mbfuncdisc)
+                                                   eMBFuncReadHoldingRegister (mbfuncholding)
+                                                   eMBFuncReadInputRegister (mbfuncinput)
+                                                   eMBRTUInit (mbrtu)
+                                                   eMBRTUReceive (mbrtu)
+                                                   eMBRegCoilsCB (user_mb_app)
+                                                   eMBRegDiscreteCB (user_mb_app)
+                                                   eMBSetSlaveID (mbfuncother)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?REGISTER_CGREGR5_L10
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023A4, align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?Register_R5_is_cg_reg
+                                   000023A4        EEPROM_GetDWord (eeprom)
+                                                   EEPROM_PutDWord (eeprom)
+                                                   Rpm2Ocr (stepper)
+                                                   ScrollingHandle (stepper)
+                                                   calc_temperature (temp_conv)
+                                                   eMBRTUReceive (mbrtu)
+                                                   eMBRegCoilsCB (user_mb_app)
+                                                   eMBRegDiscreteCB (user_mb_app)
+                                                   eMBSetSlaveID (mbfuncother)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?REGISTER_CGREGR6_L10
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023A4, align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?Register_R6_is_cg_reg
+                                   000023A4        Rpm2Ocr (stepper)
+                                                   ScrollingHandle (stepper)
+                                                   eMBRTUReceive (mbrtu)
+                                                   eMBRegCoilsCB (user_mb_app)
+                                                   eMBRegDiscreteCB (user_mb_app)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?REGISTER_CGREGR7_L10
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023A4, align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?Register_R7_is_cg_reg
+                                   000023A4        Rpm2Ocr (stepper)
+                                                   ScrollingHandle (stepper)
+                                                   eMBRTUReceive (mbrtu)
+                                                   eMBRegCoilsCB (user_mb_app)
+                                                   eMBRegDiscreteCB (user_mb_app)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?REGISTER_CGREGR8_L10
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023A4, align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?Register_R8_is_cg_reg
+                                   000023A4        eMBRegCoilsCB (user_mb_app)
+                                                   eMBRegDiscreteCB (user_mb_app)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?REGISTER_CGREGR10_L10
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023A4, align: 1
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?Register_R10_is_cg_reg
+                                   000023A4        eMBRegCoilsCB (user_mb_app)
+                                                   eMBRegDiscreteCB (user_mb_app)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?low_level_init
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023A4 - 000023A7 (0x4 bytes), align: 1
+  Segment part 3.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __low_level_init        000023A4        ?call_low_level_init (?C_STARTUP)
+               RSTACK = 00000000 ( 00000002 )
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?memcpy
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023A8 - 000023C5 (0x1e bytes), align: 1
+  Segment part 3.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           memcpy                  000023A8        eMBFuncReportSlaveID (mbfuncother)
+                                                   eMBSetSlaveID (mbfuncother)
+               RSTACK = 00000000 ( 00000002 )
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?segment_init
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: CODE 000023C6 - 000023CD (0x8 bytes), align: 1
+  Segment part 3.             Intra module refs:   __segment_init
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           __memclr                000023C6 
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000023CE - 000023D5 (0x8 bytes), align: 1
+  Segment part 4.             Intra module refs:   __segment_init
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           __flashcpy              000023CE 
+               RSTACK = 00000000 ( 00000002 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000023D6 - 000023E1 (0xc bytes), align: 1
+  Segment part 5.             Intra module refs:   __flashcpy
+                                                   __memclr
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: CODE 000023E2 - 00002415 (0x34 bytes), align: 1
+  Segment part 6.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __segment_init          000023E2        ?need_segment_init (?C_STARTUP)
+               calls direct
+               RSTACK = 00000000 ( 00000002 )
+
+    *************************************************************************
+
+  DEFINED ABSOLUTE ENTRIES
+  PROGRAM MODULE, NAME : ?FILLER_BYTES
+
+  SEGMENTS IN THE MODULE
+  ======================
+INTVEC
+  Common segment, address: CODE 00000000 - 00000037 (0x38 bytes), align: 0
+  Segment part 1.
+    -------------------------------------------------------------------------
+?FILL1
+  Relative segment, address: CODE 00000038 - 00000053 (0x1c bytes), align: 0
+  Segment part 0.
+
+
+
+
+                ****************************************
+                *                                      *
+                *            MODULE SUMMARY            *
+                *                                      *
+                ****************************************
+
+Module               CODE      DATA
+------               ----      ----
+                    (Rel)  (Rel)  (Abs)
+?C_STARTUP             36
+?EPILOGUE_B_L09        32
+?FILLER_BYTES          28
+  + common             56
+?FLOATS_L04           982
+?L_EC_MUL_L03          64
+?L_SHL_L03             16
+?PROLOGUE_L09          24
+?RESET
+  + common              4
+?SL_DIVMOD_L03         68
+?SS_SHR_L02            12
+?S_EC_MUL_L02          16
+?S_SHL_L02             12
+?UL_DIVMOD_L03         70
+?UL_SHR_L03            16
+?US_DIVMOD_L02         40
+?US_SHR_L02            12
+?__exit                 6
+?low_level_init         4
+?memcpy                30
+?segment_init          80
+eeprom                332      1      6
+  + shared              6
+func                   38             3
+  + shared                            2
+main                1 230     33      3
+  + shared              6             6
+mb                    555     63
+mbcrc                 572
+mbfunccoils           240
+mbfuncdisc            140
+mbfuncholding         186
+mbfuncinput           126
+mbfuncother           140     34
+mbrtu                 594    264
+mbutils               150
+portevent              54      2
+portserial            194             3
+  + common             56
+porttimer             172      2      4
+  + common             16
+stepper             1 954     46      8
+  + common             28
+systick               272     21      2
+  + common             40
+temp_conv             294
+user_mb_app           512    112
+N/A (command line)           320
+N/A (alignment)
+----------          -----    ---     --
+Total:              9 315    898     37
+  + common             56
+
+
+                ****************************************
+                *                                      *
+                *      SEGMENTS IN ADDRESS ORDER       *
+                *                                      *
+                ****************************************
+
+
+SEGMENT              SPACE    START ADDRESS   END ADDRESS     SIZE  TYPE  ALIGN
+=======              =====    =============   ===========     ====  ====  =====
+INTVEC               CODE          00000000 - 00000037          38   com    1
+?FILL1               CODE          00000038 - 00000053          1C   rel    0
+NEAR_F               CODE          00000054 - 00000359         306   rel    0
+SWITCH               CODE               0000035A                     dse    0
+INITTAB              CODE          0000035A - 00000365           C   rel    0
+CODE                 CODE          00000366 - 00002415        20B0   rel    1
+TINY_ID              CODE               00002416                     dse    0
+NEAR_ID              CODE          00002416 - 0000249A          85   rel    0
+ABSOLUTE             DATA               0000001C                     rel    0
+                     DATA               0000001D                   
+                     DATA               0000001E                   
+                     DATA               0000001F                   
+                     DATA          00000024 - 00000027           4 
+                     DATA          00000029 - 0000002A           2 
+                     DATA          0000002C - 0000002C           1 
+                     DATA          00000030 - 00000038           9 
+                     DATA          0000003C - 0000003F           4 
+                     DATA          00000041 - 00000041           1 
+                     DATA          00000043 - 00000045           3 
+                     DATA          0000004A - 0000004F           6 
+                     DATA          00000052 - 00000053           2 
+                     DATA          00000055 - 00000055           1 
+                     DATA          00000057 - 00000059           3 
+                     DATA          0000005F - 0000005F           1 
+NEAR_I               DATA          00000060 - 000000E4          85   rel    0
+NEAR_Z               DATA          000000E5 - 000002A1         1BD   rel    0
+RSTACK               DATA          000002A2 - 000002E1          40   dse    0
+CSTACK               DATA          000002E2 - 000003E1         100   dse    0
+
+                ****************************************
+                *                                      *
+                *        END OF CROSS REFERENCE        *
+                *                                      *
+                ****************************************
+
+ 9 343 bytes of CODE memory (+             28 range fill )
+   898 bytes of DATA memory (+ 37 absolute )
+
+Errors: none
+Warnings: none
+

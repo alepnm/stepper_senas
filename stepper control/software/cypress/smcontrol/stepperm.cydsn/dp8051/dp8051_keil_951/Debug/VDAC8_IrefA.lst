@@ -1,0 +1,337 @@
+C51 COMPILER V9.51   VDAC8_IREFA                                                           05/22/2017 14:28:05 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE VDAC8_IREFA
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\VDAC8_IrefA.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -Generated_Source\PSoC3\VDAC8_IrefA.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(2) P
+                    -R(.\DP8051\DP8051_Keil_951\Debug/VDAC8_IrefA.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\VDAC8_IrefA.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: VDAC8_IrefA.c  
+   3          * Version 1.90
+   4          *
+   5          * Description:
+   6          *  This file provides the source code to the API for the 8-bit Voltage DAC 
+   7          *  (VDAC8) User Module.
+   8          *
+   9          * Note:
+  10          *  Any unusual or non-standard behavior should be noted here. Other-
+  11          *  wise, this section should remain blank.
+  12          *
+  13          ********************************************************************************
+  14          * Copyright 2008-2012, Cypress Semiconductor Corporation.  All rights reserved.
+  15          * You may use this file only in accordance with the license, terms, conditions, 
+  16          * disclaimers, and limitations in the end user license agreement accompanying 
+  17          * the software package with which this file was provided.
+  18          *******************************************************************************/
+  19          
+  20          #include "cytypes.h"
+  21          #include "VDAC8_IrefA.h"
+  22          
+  23          #if (CY_PSOC5A)
+              #include <CyLib.h>
+              #endif /* CY_PSOC5A */
+  26          
+  27          uint8 VDAC8_IrefA_initVar = 0u;
+  28          
+  29          #if (CY_PSOC5A)
+                  static uint8 VDAC8_IrefA_restoreVal = 0u;
+              #endif /* CY_PSOC5A */
+  32          
+  33          #if (CY_PSOC5A)
+                  static VDAC8_IrefA_backupStruct VDAC8_IrefA_backup;
+              #endif /* CY_PSOC5A */
+  36          
+  37          
+  38          /*******************************************************************************
+  39          * Function Name: VDAC8_IrefA_Init
+  40          ********************************************************************************
+  41          * Summary:
+  42          *  Initialize to the schematic state.
+  43          * 
+  44          * Parameters:
+  45          *  void:
+  46          *
+  47          * Return:
+  48          *  void
+  49          *
+  50          * Theory:
+  51          *
+  52          * Side Effects:
+  53          *
+C51 COMPILER V9.51   VDAC8_IREFA                                                           05/22/2017 14:28:05 PAGE 2   
+
+  54          *******************************************************************************/
+  55          void VDAC8_IrefA_Init(void) 
+  56          {
+  57   1          VDAC8_IrefA_CR0 = (VDAC8_IrefA_MODE_V );
+  58   1      
+  59   1          /* Set default data source */
+  60   1          #if(VDAC8_IrefA_DEFAULT_DATA_SRC != 0 )
+                      VDAC8_IrefA_CR1 = (VDAC8_IrefA_DEFAULT_CNTL | VDAC8_IrefA_DACBUS_ENABLE) ;
+                  #else
+  63   1              VDAC8_IrefA_CR1 = (VDAC8_IrefA_DEFAULT_CNTL | VDAC8_IrefA_DACBUS_DISABLE) ;
+  64   1          #endif /* (VDAC8_IrefA_DEFAULT_DATA_SRC != 0 ) */
+  65   1      
+  66   1          /* Set default strobe mode */
+  67   1          #if(VDAC8_IrefA_DEFAULT_STRB != 0)
+                      VDAC8_IrefA_Strobe |= VDAC8_IrefA_STRB_EN ;
+                  #endif/* (VDAC8_IrefA_DEFAULT_STRB != 0) */
+  70   1      
+  71   1          /* Set default range */
+  72   1          VDAC8_IrefA_SetRange(VDAC8_IrefA_DEFAULT_RANGE); 
+  73   1      
+  74   1          /* Set default speed */
+  75   1          VDAC8_IrefA_SetSpeed(VDAC8_IrefA_DEFAULT_SPEED);
+  76   1      }
+  77          
+  78          
+  79          /*******************************************************************************
+  80          * Function Name: VDAC8_IrefA_Enable
+  81          ********************************************************************************
+  82          * Summary:
+  83          *  Enable the VDAC8
+  84          * 
+  85          * Parameters:
+  86          *  void
+  87          *
+  88          * Return:
+  89          *  void
+  90          *
+  91          * Theory:
+  92          *
+  93          * Side Effects:
+  94          *
+  95          *******************************************************************************/
+  96          void VDAC8_IrefA_Enable(void) 
+  97          {
+  98   1          VDAC8_IrefA_PWRMGR |= VDAC8_IrefA_ACT_PWR_EN;
+  99   1          VDAC8_IrefA_STBY_PWRMGR |= VDAC8_IrefA_STBY_PWR_EN;
+ 100   1      
+ 101   1          /*This is to restore the value of register CR0 ,
+ 102   1          which is modified  in Stop API , this prevents misbehaviour of VDAC */
+ 103   1          #if (CY_PSOC5A)
+                      if(VDAC8_IrefA_restoreVal == 1u) 
+                      {
+                           VDAC8_IrefA_CR0 = VDAC8_IrefA_backup.data_value;
+                           VDAC8_IrefA_restoreVal = 0u;
+                      }
+                  #endif /* CY_PSOC5A */
+ 110   1      }
+ 111          
+ 112          
+ 113          /*******************************************************************************
+ 114          * Function Name: VDAC8_IrefA_Start
+ 115          ********************************************************************************
+C51 COMPILER V9.51   VDAC8_IREFA                                                           05/22/2017 14:28:05 PAGE 3   
+
+ 116          *
+ 117          * Summary:
+ 118          *  The start function initializes the voltage DAC with the default values, 
+ 119          *  and sets the power to the given level.  A power level of 0, is the same as
+ 120          *  executing the stop function.
+ 121          *
+ 122          * Parameters:
+ 123          *  Power: Sets power level between off (0) and (3) high power
+ 124          *
+ 125          * Return:
+ 126          *  void 
+ 127          *
+ 128          * Global variables:
+ 129          *  VDAC8_IrefA_initVar: Is modified when this function is called for the 
+ 130          *  first time. Is used to ensure that initialization happens only once.
+ 131          *
+ 132          *******************************************************************************/
+ 133          void VDAC8_IrefA_Start(void)  
+ 134          {
+ 135   1          /* Hardware initiazation only needs to occure the first time */
+ 136   1          if(VDAC8_IrefA_initVar == 0u)
+ 137   1          { 
+ 138   2              VDAC8_IrefA_Init();
+ 139   2              VDAC8_IrefA_initVar = 1u;
+ 140   2          }
+ 141   1      
+ 142   1          /* Enable power to DAC */
+ 143   1          VDAC8_IrefA_Enable();
+ 144   1      
+ 145   1          /* Set default value */
+ 146   1          VDAC8_IrefA_SetValue(VDAC8_IrefA_DEFAULT_DATA); 
+ 147   1      }
+ 148          
+ 149          
+ 150          /*******************************************************************************
+ 151          * Function Name: VDAC8_IrefA_Stop
+ 152          ********************************************************************************
+ 153          *
+ 154          * Summary:
+ 155          *  Powers down DAC to lowest power state.
+ 156          *
+ 157          * Parameters:
+ 158          *  void
+ 159          *
+ 160          * Return:
+ 161          *  void
+ 162          *
+ 163          * Theory:
+ 164          *
+ 165          * Side Effects:
+ 166          *
+ 167          *******************************************************************************/
+ 168          void VDAC8_IrefA_Stop(void) 
+ 169          {
+ 170   1          /* Disble power to DAC */
+ 171   1          VDAC8_IrefA_PWRMGR &= (uint8)(~VDAC8_IrefA_ACT_PWR_EN);
+ 172   1          VDAC8_IrefA_STBY_PWRMGR &= (uint8)(~VDAC8_IrefA_STBY_PWR_EN);
+ 173   1      
+ 174   1          /* This is a work around for PSoC5A  ,
+ 175   1          this sets VDAC to current mode with output off */
+ 176   1          #if (CY_PSOC5A)
+                      VDAC8_IrefA_backup.data_value = VDAC8_IrefA_CR0;
+C51 COMPILER V9.51   VDAC8_IREFA                                                           05/22/2017 14:28:05 PAGE 4   
+
+                      VDAC8_IrefA_CR0 = VDAC8_IrefA_CUR_MODE_OUT_OFF;
+                      VDAC8_IrefA_restoreVal = 1u;
+                  #endif /* CY_PSOC5A */
+ 181   1      }
+ 182          
+ 183          
+ 184          /*******************************************************************************
+ 185          * Function Name: VDAC8_IrefA_SetSpeed
+ 186          ********************************************************************************
+ 187          *
+ 188          * Summary:
+ 189          *  Set DAC speed
+ 190          *
+ 191          * Parameters:
+ 192          *  power: Sets speed value
+ 193          *
+ 194          * Return:
+ 195          *  void
+ 196          *
+ 197          * Theory:
+ 198          *
+ 199          * Side Effects:
+ 200          *
+ 201          *******************************************************************************/
+ 202          void VDAC8_IrefA_SetSpeed(uint8 speed) 
+ 203          {
+ 204   1          /* Clear power mask then write in new value */
+ 205   1          VDAC8_IrefA_CR0 &= (uint8)(~VDAC8_IrefA_HS_MASK);
+ 206   1          VDAC8_IrefA_CR0 |=  (speed & VDAC8_IrefA_HS_MASK);
+ 207   1      }
+ 208          
+ 209          
+ 210          /*******************************************************************************
+ 211          * Function Name: VDAC8_IrefA_SetRange
+ 212          ********************************************************************************
+ 213          *
+ 214          * Summary:
+ 215          *  Set one of three current ranges.
+ 216          *
+ 217          * Parameters:
+ 218          *  Range: Sets one of Three valid ranges.
+ 219          *
+ 220          * Return:
+ 221          *  void 
+ 222          *
+ 223          * Theory:
+ 224          *
+ 225          * Side Effects:
+ 226          *
+ 227          *******************************************************************************/
+ 228          void VDAC8_IrefA_SetRange(uint8 range) 
+ 229          {
+ 230   1          VDAC8_IrefA_CR0 &= (uint8)(~VDAC8_IrefA_RANGE_MASK);      /* Clear existing mode */
+ 231   1          VDAC8_IrefA_CR0 |= (range & VDAC8_IrefA_RANGE_MASK);      /*  Set Range  */
+ 232   1          VDAC8_IrefA_DacTrim();
+ 233   1      }
+ 234          
+ 235          
+ 236          /*******************************************************************************
+ 237          * Function Name: VDAC8_IrefA_SetValue
+ 238          ********************************************************************************
+ 239          *
+C51 COMPILER V9.51   VDAC8_IREFA                                                           05/22/2017 14:28:05 PAGE 5   
+
+ 240          * Summary:
+ 241          *  Set 8-bit DAC value
+ 242          *
+ 243          * Parameters:  
+ 244          *  value:  Sets DAC value between 0 and 255.
+ 245          *
+ 246          * Return: 
+ 247          *  void 
+ 248          *
+ 249          * Theory: 
+ 250          *
+ 251          * Side Effects:
+ 252          *
+ 253          *******************************************************************************/
+ 254          void VDAC8_IrefA_SetValue(uint8 value) 
+ 255          {
+ 256   1          #if (CY_PSOC5A)
+                      uint8 VDAC8_IrefA_intrStatus = CyEnterCriticalSection();
+                  #endif /* CY_PSOC5A */
+ 259   1      
+ 260   1          VDAC8_IrefA_Data = value;                /*  Set Value  */
+ 261   1      
+ 262   1          /* PSOC5A requires a double write */
+ 263   1          /* Exit Critical Section */
+ 264   1          #if (CY_PSOC5A)
+                      VDAC8_IrefA_Data = value;
+                      CyExitCriticalSection(VDAC8_IrefA_intrStatus);
+                  #endif /* CY_PSOC5A */
+ 268   1      }
+ 269          
+ 270          
+ 271          /*******************************************************************************
+ 272          * Function Name: VDAC8_IrefA_DacTrim
+ 273          ********************************************************************************
+ 274          *
+ 275          * Summary:
+ 276          *  Set the trim value for the given range.
+ 277          *
+ 278          * Parameters:
+ 279          *  range:  1V or 4V range.  See constants.
+ 280          *
+ 281          * Return:
+ 282          *  void
+ 283          *
+ 284          * Theory: 
+ 285          *
+ 286          * Side Effects:
+ 287          *
+ 288          *******************************************************************************/
+ 289          void VDAC8_IrefA_DacTrim(void) 
+ 290          {
+ 291   1          uint8 mode;
+ 292   1      
+ 293   1          mode = (uint8)((VDAC8_IrefA_CR0 & VDAC8_IrefA_RANGE_MASK) >> 2) + VDAC8_IrefA_TRIM_M7_1V_RNG_OFFSET;
+ 294   1          VDAC8_IrefA_TR = CY_GET_XTND_REG8((uint8 *)(VDAC8_IrefA_DAC_TRIM_BASE + mode));
+ 295   1      }
+ 296          
+ 297          
+ 298          /* [] END OF FILE */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.51   VDAC8_IREFA                                                           05/22/2017 14:28:05 PAGE 6   
+
+   CODE SIZE        =    164    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      1    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

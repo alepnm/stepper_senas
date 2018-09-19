@@ -1,0 +1,1932 @@
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE ADC_DELSIG_1
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\ADC_DelSig_1.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -Generated_Source\PSoC3\ADC_DelSig_1.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(2) 
+                    -PR(.\DP8051\DP8051_Keil_951\Debug/ADC_DelSig_1.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\ADC_DelSig_1.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: ADC_DelSig_1.c
+   3          * Version 3.20
+   4          *
+   5          * Description:
+   6          *  This file provides the source code to the API for the Delta-Sigma ADC
+   7          *  Component.
+   8          *
+   9          * Note:
+  10          *
+  11          ********************************************************************************
+  12          * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  13          * You may use this file only in accordance with the license, terms, conditions,
+  14          * disclaimers, and limitations in the end user license agreement accompanying
+  15          * the software package with which this file was provided.
+  16          *******************************************************************************/
+  17          
+  18          #include "ADC_DelSig_1.h"
+  19          
+  20          #if(ADC_DelSig_1_DEFAULT_INTERNAL_CLK)
+  21              #include "ADC_DelSig_1_theACLK.h"
+  22          #endif /* ADC_DelSig_1_DEFAULT_INTERNAL_CLK */
+  23          
+  24          #include "ADC_DelSig_1_Ext_CP_Clk.h"
+  25          
+  26          #if(ADC_DelSig_1_DEFAULT_INPUT_MODE)
+                  #include "ADC_DelSig_1_AMux.h"
+              #endif /* ADC_DelSig_1_DEFAULT_INPUT_MODE */
+  29          
+  30          
+  31          /***************************************
+  32          * Global data allocation
+  33          ***************************************/
+  34          
+  35          /* Software flag for checking conversion completed or not */
+  36          volatile uint8 ADC_DelSig_1_convDone = 0u;
+  37          
+  38          /* Software flag to stop conversion for single sample conversion mode
+  39          *   with resolution above 16 bits 
+  40          */
+  41          volatile uint8 ADC_DelSig_1_stopConversion = 0u;
+  42          
+  43          /* To run the initialization block only at the start up */
+  44          uint8 ADC_DelSig_1_initVar = 0u;
+  45          
+  46          /* To check whether ADC started or not before switching the configuration */
+  47          volatile uint8 ADC_DelSig_1_started = 0u;
+  48          
+  49          /* Flag to hold ADC config number. By default active config is 1. */
+  50          volatile uint8 ADC_DelSig_1_Config = 1u;
+  51          
+  52          volatile int32 ADC_DelSig_1_Offset;
+  53          volatile int32 ADC_DelSig_1_CountsPerVolt;
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 2   
+
+  54          
+  55          
+  56          /***************************************
+  57          * Local data allocation
+  58          ***************************************/
+  59          
+  60          /* The array with precalculated gain compensation coefficients */
+  61          static ADC_DelSig_1_GCOR_STRUCT ADC_DelSig_1_gcor[ADC_DelSig_1_DEFAULT_NUM_CONFIGS];
+  62          
+  63          
+  64          
+  65          /***************************************
+  66          * Forward function references
+  67          ***************************************/
+  68          static void ADC_DelSig_1_InitConfig(uint8 config) ;
+  69          static void ADC_DelSig_1_GainCompensation(uint8 inputRange, uint16 idealDecGain, uint16 idealOddDecGain, 
+  70                                      uint8 resolution, uint8 config) ;
+  71          static void ADC_DelSig_1_SetDSMRef0Reg(uint8 value) ;
+  72          
+  73          
+  74          /******************************************************************************
+  75          * Function Name: ADC_DelSig_1_Init
+  76          *******************************************************************************
+  77          *
+  78          * Summary:
+  79          *  Initialize component's parameters to the parameters set by user in the
+  80          *  customizer of the component placed onto schematic. Usually called in
+  81          * ADC_DelSig_1_Start().
+  82          *
+  83          *
+  84          * Parameters:
+  85          *  None
+  86          *
+  87          * Return:
+  88          *  None
+  89          *
+  90          *******************************************************************************/
+  91          void ADC_DelSig_1_Init(void) 
+  92          {
+  93   1      
+  94   1          ADC_DelSig_1_Config = 1u;
+  95   1          ADC_DelSig_1_convDone = 0u;
+  96   1      
+  97   1          ADC_DelSig_1_Ext_CP_Clk_SetMode(CYCLK_DUTY);
+  98   1      
+  99   1          /* This is only valid if there is an internal clock */
+ 100   1          #if(ADC_DelSig_1_DEFAULT_INTERNAL_CLK)
+ 101   1              ADC_DelSig_1_theACLK_SetMode(CYCLK_DUTY);
+ 102   1          #endif /* ADC_DelSig_1_DEFAULT_INTERNAL_CLK */
+ 103   1      
+ 104   1          #if(ADC_DelSig_1_IRQ_REMOVE == 0u)
+ 105   1              /* Set interrupt priority */
+ 106   1              CyIntSetPriority(ADC_DelSig_1_INTC_NUMBER, ADC_DelSig_1_INTC_PRIOR_NUMBER);
+ 107   1          #endif   /* End ADC_DelSig_1_IRQ_REMOVE */
+ 108   1      
+ 109   1          /* Init static registers with common configuration */
+ 110   1          ADC_DelSig_1_DSM_DEM0_REG    = ADC_DelSig_1_CFG1_DSM_DEM0;
+ 111   1          ADC_DelSig_1_DSM_DEM1_REG    = ADC_DelSig_1_CFG1_DSM_DEM1;
+ 112   1          ADC_DelSig_1_DSM_MISC_REG    = ADC_DelSig_1_CFG1_DSM_MISC;
+ 113   1          ADC_DelSig_1_DSM_CLK_REG    |= ADC_DelSig_1_CFG1_DSM_CLK;
+ 114   1          ADC_DelSig_1_DSM_REF1_REG    = ADC_DelSig_1_CFG1_DSM_REF1;
+ 115   1      
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 3   
+
+ 116   1          ADC_DelSig_1_DSM_OUT0_REG    = ADC_DelSig_1_CFG1_DSM_OUT0;
+ 117   1          ADC_DelSig_1_DSM_OUT1_REG    = ADC_DelSig_1_CFG1_DSM_OUT1;
+ 118   1      
+ 119   1          ADC_DelSig_1_DSM_CR0_REG     = ADC_DelSig_1_CFG1_DSM_CR0;
+ 120   1          ADC_DelSig_1_DSM_CR1_REG     = ADC_DelSig_1_CFG1_DSM_CR1;
+ 121   1      #if(ADC_DelSig_1_MI_ENABLE != 0u) /* Enable Modulator Input */
+                  ADC_DelSig_1_DSM_CR3_REG     |= ADC_DelSig_1_DSM_MODBIT_EN;
+              #else
+ 124   1          ADC_DelSig_1_DSM_CR3_REG     = ADC_DelSig_1_CFG1_DSM_CR3;
+ 125   1      #endif /* ADC_DelSig_1_MI_ENABLE != 0u*/    
+ 126   1          ADC_DelSig_1_DSM_CR8_REG     = ADC_DelSig_1_CFG1_DSM_CR8;
+ 127   1          ADC_DelSig_1_DSM_CR9_REG     = ADC_DelSig_1_CFG1_DSM_CR9;
+ 128   1          ADC_DelSig_1_DSM_CR13_REG    = ADC_DelSig_1_CFG1_DSM_CR13;
+ 129   1      
+ 130   1          ADC_DelSig_1_DEC_SR_REG      = ADC_DelSig_1_CFG1_DEC_SR;
+ 131   1      
+ 132   1          /* Calculate Gain compensation coefficients for all configurations */
+ 133   1          ADC_DelSig_1_GainCompensation(ADC_DelSig_1_CFG1_INPUT_RANGE,
+ 134   1                                            ADC_DelSig_1_CFG1_IDEAL_DEC_GAIN,
+ 135   1                                            ADC_DelSig_1_CFG1_IDEAL_ODDDEC_GAIN,
+ 136   1                                            ADC_DelSig_1_CFG1_RESOLUTION,
+ 137   1                                            ADC_DelSig_1_CFG1);
+ 138   1          #if(ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 1)
+ 139   1              ADC_DelSig_1_GainCompensation(ADC_DelSig_1_CFG2_INPUT_RANGE,
+ 140   1                                                ADC_DelSig_1_CFG2_IDEAL_DEC_GAIN,
+ 141   1                                                ADC_DelSig_1_CFG2_IDEAL_ODDDEC_GAIN,
+ 142   1                                                ADC_DelSig_1_CFG2_RESOLUTION,
+ 143   1                                                ADC_DelSig_1_CFG2);
+ 144   1          #endif /* ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 1 */
+ 145   1          #if(ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 2)
+ 146   1              ADC_DelSig_1_GainCompensation(ADC_DelSig_1_CFG3_INPUT_RANGE,
+ 147   1                                                ADC_DelSig_1_CFG3_IDEAL_DEC_GAIN,
+ 148   1                                                ADC_DelSig_1_CFG3_IDEAL_ODDDEC_GAIN,
+ 149   1                                                ADC_DelSig_1_CFG3_RESOLUTION,
+ 150   1                                                ADC_DelSig_1_CFG3);
+ 151   1          #endif /* ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 2 */
+ 152   1          #if(ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 3)
+ 153   1              ADC_DelSig_1_GainCompensation(ADC_DelSig_1_CFG4_INPUT_RANGE,
+ 154   1                                                ADC_DelSig_1_CFG4_IDEAL_DEC_GAIN,
+ 155   1                                                ADC_DelSig_1_CFG4_IDEAL_ODDDEC_GAIN,
+ 156   1                                                ADC_DelSig_1_CFG4_RESOLUTION,
+ 157   1                                                ADC_DelSig_1_CFG4);
+ 158   1          #endif /* ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 3 */
+ 159   1      
+ 160   1          /* Set GCOR register for config1 */
+ 161   1          ADC_DelSig_1_DEC_GVAL_REG = ADC_DelSig_1_gcor[ADC_DelSig_1_Config - 1u].gval;
+ 162   1          CY_SET_REG16(ADC_DelSig_1_DEC_GCOR_16B_PTR, ADC_DelSig_1_gcor[ADC_DelSig_1_Config - 1u].gcor);
+ 163   1      
+ 164   1          /* Initialize the registers with default customizer settings for config1 */
+ 165   1          ADC_DelSig_1_InitConfig(ADC_DelSig_1_Config);
+ 166   1      }
+ 167          
+ 168          
+ 169          /******************************************************************************
+ 170          * Function Name: ADC_DelSig_1_Enable
+ 171          *******************************************************************************
+ 172          *
+ 173          * Summary:
+ 174          *  Enables the ADC DelSig block operation.
+ 175          *
+ 176          *
+ 177          * Parameters:
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 4   
+
+ 178          *  None
+ 179          *
+ 180          * Return:
+ 181          *  None
+ 182          *
+ 183          *******************************************************************************/
+ 184          void ADC_DelSig_1_Enable(void) 
+ 185          {
+ 186   1              uint8 config;
+ 187   1          uint8 enableInterrupts;
+ 188   1          enableInterrupts = CyEnterCriticalSection();
+ 189   1      
+ 190   1          /* Read volatile variable to the local variable */
+ 191   1          config = ADC_DelSig_1_Config;
+ 192   1          
+ 193   1          /* Enable active mode power for ADC */
+ 194   1          ADC_DelSig_1_PWRMGR_DEC_REG |= ADC_DelSig_1_ACT_PWR_DEC_EN;
+ 195   1          ADC_DelSig_1_PWRMGR_DSM_REG |= ADC_DelSig_1_ACT_PWR_DSM_EN;
+ 196   1      
+ 197   1           /* Enable alternative active mode power for ADC */
+ 198   1          ADC_DelSig_1_STBY_PWRMGR_DEC_REG |= ADC_DelSig_1_STBY_PWR_DEC_EN;
+ 199   1          ADC_DelSig_1_STBY_PWRMGR_DSM_REG |= ADC_DelSig_1_STBY_PWR_DSM_EN;
+ 200   1      
+ 201   1          /* Disable PRES, Enable power to VCMBUF0, REFBUF0 and REFBUF1, enable PRES */
+ 202   1          ADC_DelSig_1_RESET_CR4_REG |= ADC_DelSig_1_IGNORE_PRESA1;
+ 203   1          ADC_DelSig_1_RESET_CR5_REG |= ADC_DelSig_1_IGNORE_PRESA2;
+ 204   1      
+ 205   1          ADC_DelSig_1_DSM_CR17_REG |= (ADC_DelSig_1_DSM_EN_BUF_VREF | ADC_DelSig_1_DSM_EN_BUF_VCM);
+ 206   1      
+ 207   1          /* Code to disable the REFBUF0 if reference chosen is External ref */
+ 208   1          #if (((ADC_DelSig_1_CFG1_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P03) || \
+ 209   1                (ADC_DelSig_1_CFG1_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P32)) || \
+ 210   1               ((ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 1) && \
+ 211   1                ((ADC_DelSig_1_CFG2_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P03) ||  \
+ 212   1                 (ADC_DelSig_1_CFG2_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P32))) || \
+ 213   1               ((ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 2) && \
+ 214   1                ((ADC_DelSig_1_CFG3_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P03) ||  \
+ 215   1                 (ADC_DelSig_1_CFG3_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P32))) || \
+ 216   1               ((ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 3) && \
+ 217   1                ((ADC_DelSig_1_CFG4_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P03) || \
+ 218   1                 (ADC_DelSig_1_CFG4_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P32))))
+                      if (((config == 1u) &&
+                          ((ADC_DelSig_1_CFG1_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P03) ||
+                           (ADC_DelSig_1_CFG1_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P32))) ||
+                          ((config == 2u) &&
+                          ((ADC_DelSig_1_CFG2_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P03) ||
+                           (ADC_DelSig_1_CFG2_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P32))) ||
+                          ((config == 3u) &&
+                          ((ADC_DelSig_1_CFG3_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P03) ||
+                           (ADC_DelSig_1_CFG3_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P32))) ||
+                          ((config == 4u) &&
+                          ((ADC_DelSig_1_CFG4_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P03) ||
+                           (ADC_DelSig_1_CFG4_REFERENCE == ADC_DelSig_1_EXT_REF_ON_P32))))
+                      {
+                          /* Disable the REFBUF0 */
+                          ADC_DelSig_1_DSM_CR17_REG &= (uint8)~ADC_DelSig_1_DSM_EN_BUF_VREF;
+                      }
+                  #endif /* External ref */
+ 236   1      
+ 237   1          #if (((ADC_DelSig_1_CFG1_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF) || \
+ 238   1               ((ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 1) && \
+ 239   1                (ADC_DelSig_1_CFG2_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF)) || \
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 5   
+
+ 240   1               ((ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 2) && \
+ 241   1                (ADC_DelSig_1_CFG3_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF)) || \
+ 242   1               ((ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 3) && \
+ 243   1                (ADC_DelSig_1_CFG4_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF))))
+                      if(((config == 1u) &&
+                          (ADC_DelSig_1_CFG1_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF) &&
+                          ((ADC_DelSig_1_CFG1_REFERENCE != ADC_DelSig_1_EXT_REF_ON_P03) &&
+                           (ADC_DelSig_1_CFG1_REFERENCE != ADC_DelSig_1_EXT_REF_ON_P32))) ||
+                           ((config == 2u) &&
+                            (ADC_DelSig_1_CFG2_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF) &&
+                           ((ADC_DelSig_1_CFG2_REFERENCE != ADC_DelSig_1_EXT_REF_ON_P03) &&
+                           (ADC_DelSig_1_CFG2_REFERENCE != ADC_DelSig_1_EXT_REF_ON_P32))) ||
+                           ((config == 3u) &&
+                            (ADC_DelSig_1_CFG3_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF) &&
+                           ((ADC_DelSig_1_CFG3_REFERENCE != ADC_DelSig_1_EXT_REF_ON_P03) &&
+                           (ADC_DelSig_1_CFG3_REFERENCE != ADC_DelSig_1_EXT_REF_ON_P32))) ||
+                           ((config == 4u) &&
+                            (ADC_DelSig_1_CFG4_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF) &&
+                           ((ADC_DelSig_1_CFG4_REFERENCE != ADC_DelSig_1_EXT_REF_ON_P03) &&
+                           (ADC_DelSig_1_CFG4_REFERENCE != ADC_DelSig_1_EXT_REF_ON_P32))))
+                      {
+                          /* Enable the REFBUF1 */
+                          ADC_DelSig_1_DSM_REF0_REG |= ADC_DelSig_1_DSM_EN_BUF_VREF_INN;
+                      }
+                  #endif /* VSSA_TO_2VREF */
+ 265   1          if(config != 0u)
+ 266   1          {
+ 267   2              /* Suppress compiler warning */
+ 268   2          }
+ 269   1      
+ 270   1          /* Wait for 3 microseconds */
+ 271   1          CyDelayUs(ADC_DelSig_1_PRES_DELAY_TIME);
+ 272   1      
+ 273   1          /* Enable the press circuit */
+ 274   1          ADC_DelSig_1_RESET_CR4_REG &= (uint8)~ADC_DelSig_1_IGNORE_PRESA1;
+ 275   1          ADC_DelSig_1_RESET_CR5_REG &= (uint8)~ADC_DelSig_1_IGNORE_PRESA2;
+ 276   1      
+ 277   1          /* Enable negative pumps for DSM  */
+ 278   1          ADC_DelSig_1_PUMP_CR1_REG  |= ( ADC_DelSig_1_PUMP_CR1_CLKSEL | ADC_DelSig_1_PUMP_CR1_FORCE );
+ 279   1      
+ 280   1          /* Enable Modulator Chopping if required */
+ 281   1          ADC_DelSig_1_DSM_CR2_REG = ADC_DelSig_1_CFG1_DSM_CR2;
+ 282   1      
+ 283   1          /* This is only valid if there is an internal clock */
+ 284   1          #if(ADC_DelSig_1_DEFAULT_INTERNAL_CLK)
+ 285   1              ADC_DelSig_1_PWRMGR_CLK_REG |= ADC_DelSig_1_ACT_PWR_CLK_EN;
+ 286   1              ADC_DelSig_1_STBY_PWRMGR_CLK_REG |= ADC_DelSig_1_STBY_PWR_CLK_EN;
+ 287   1          #endif /* ADC_DelSig_1_DEFAULT_INTERNAL_CLK */
+ 288   1      
+ 289   1          /* Enable the active and alternate active power for charge pump clock */
+ 290   1          ADC_DelSig_1_PWRMGR_CHARGE_PUMP_CLK_REG |= ADC_DelSig_1_ACT_PWR_CHARGE_PUMP_CLK_EN;
+ 291   1          ADC_DelSig_1_STBY_PWRMGR_CHARGE_PUMP_CLK_REG |= ADC_DelSig_1_STBY_PWR_CHARGE_PUMP_CLK_EN;
+ 292   1      
+ 293   1          #if(ADC_DelSig_1_IRQ_REMOVE == 0u)
+ 294   1              /* Clear a pending interrupt */
+ 295   1              CyIntClearPending(ADC_DelSig_1_INTC_NUMBER);
+ 296   1              /* Enable interrupt */
+ 297   1              CyIntEnable(ADC_DelSig_1_INTC_NUMBER);
+ 298   1          #endif   /* End ADC_DelSig_1_IRQ_REMOVE */
+ 299   1      
+ 300   1          CyExitCriticalSection(enableInterrupts);
+ 301   1      
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 6   
+
+ 302   1      }
+ 303          
+ 304          
+ 305          /*******************************************************************************
+ 306          * Function Name: ADC_DelSig_1_Start
+ 307          ********************************************************************************
+ 308          *
+ 309          * Summary:
+ 310          *  Performs all required initialization for this component and enables
+ 311          *  the power. It configure all the register the first time it is called.
+ 312          *  Subsequent calls of the Start function only enable the ADC and turn
+ 313          *  on the power. If multiple configurations are selected, it will
+ 314          *  configure the ADC for configuration 1 by default, unless the
+ 315          *  ADC_DelSig_1_SelectConfiguration( ) function has been called to change
+ 316          *  the default setting.
+ 317          *
+ 318          * Parameters:
+ 319          *  None
+ 320          *
+ 321          * Return:
+ 322          *  None
+ 323          *
+ 324          * Global variables:
+ 325          *  ADC_DelSig_1_initVar:  Used to check the initial configuration,
+ 326          *  modified when this function is called for the first time.
+ 327          *
+ 328          *******************************************************************************/
+ 329          void ADC_DelSig_1_Start(void) 
+ 330          {
+ 331   1          if(ADC_DelSig_1_initVar == 0u)
+ 332   1          {
+ 333   2              if(ADC_DelSig_1_started == 0u)
+ 334   2              {
+ 335   3                  ADC_DelSig_1_Init();
+ 336   3              }
+ 337   2              ADC_DelSig_1_initVar = 1u;
+ 338   2          }
+ 339   1      
+ 340   1          /* Enable the ADC */
+ 341   1          ADC_DelSig_1_Enable();
+ 342   1      }
+ 343          
+ 344          
+ 345          /*******************************************************************************
+ 346          * Function Name: ADC_DelSig_1_Stop
+ 347          ********************************************************************************
+ 348          *
+ 349          * Summary:
+ 350          *  This function stops and powers down the ADC component and the internal
+ 351          *  clock if the external clock is not selected. If an external clock is
+ 352          *  used, it is up to the designer to power down the external clock it
+ 353          *  required.
+ 354          *
+ 355          * Parameters:
+ 356          *  None
+ 357          *
+ 358          * Return:
+ 359          *  None
+ 360          *
+ 361          *******************************************************************************/
+ 362          void ADC_DelSig_1_Stop(void) 
+ 363          {
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 7   
+
+ 364   1          uint8 enableInterrupts;
+ 365   1          enableInterrupts = CyEnterCriticalSection();
+ 366   1      
+ 367   1          /* Stop conversions */
+ 368   1          ADC_DelSig_1_DEC_CR_REG &= (uint8)~ADC_DelSig_1_DEC_START_CONV;
+ 369   1          ADC_DelSig_1_DEC_SR_REG |=  ADC_DelSig_1_DEC_INTR_CLEAR;
+ 370   1      
+ 371   1          /* Disable PRES, Disable power to VCMBUF0, REFBUF0 and REFBUF1,
+ 372   1             enable PRES */
+ 373   1          ADC_DelSig_1_RESET_CR4_REG |= ADC_DelSig_1_IGNORE_PRESA1;
+ 374   1          ADC_DelSig_1_RESET_CR5_REG |= ADC_DelSig_1_IGNORE_PRESA2;
+ 375   1      
+ 376   1          ADC_DelSig_1_DSM_CR17_REG &= (uint8)~(ADC_DelSig_1_DSM_EN_BUF_VREF | ADC_DelSig_1_DSM_EN_BUF_VCM);
+ 377   1          ADC_DelSig_1_DSM_REF0_REG &= (uint8)~ADC_DelSig_1_DSM_EN_BUF_VREF_INN;
+ 378   1      
+ 379   1          /* Wait for 3 microseconds. */
+ 380   1          CyDelayUs(ADC_DelSig_1_PRES_DELAY_TIME);
+ 381   1      
+ 382   1          /* Enable the press circuit */
+ 383   1          ADC_DelSig_1_RESET_CR4_REG &= (uint8)~ADC_DelSig_1_IGNORE_PRESA1;
+ 384   1          ADC_DelSig_1_RESET_CR5_REG &= (uint8)~ADC_DelSig_1_IGNORE_PRESA2;
+ 385   1      
+ 386   1          /* Disable power to the ADC */
+ 387   1          ADC_DelSig_1_PWRMGR_DSM_REG &= (uint8)~ADC_DelSig_1_ACT_PWR_DSM_EN;
+ 388   1      
+ 389   1          /* Disable power to Decimator block */
+ 390   1          ADC_DelSig_1_PWRMGR_DEC_REG &= (uint8)~ADC_DelSig_1_ACT_PWR_DEC_EN;
+ 391   1      
+ 392   1          /* Disable alternative active power to the ADC */
+ 393   1          ADC_DelSig_1_STBY_PWRMGR_DEC_REG &= (uint8)~ADC_DelSig_1_STBY_PWR_DEC_EN;
+ 394   1          ADC_DelSig_1_STBY_PWRMGR_DSM_REG &= (uint8)~ADC_DelSig_1_STBY_PWR_DSM_EN;
+ 395   1      
+ 396   1         /* Disable negative pumps for DSM  */
+ 397   1          ADC_DelSig_1_PUMP_CR1_REG &= (uint8)~(ADC_DelSig_1_PUMP_CR1_CLKSEL | ADC_DelSig_1_PUMP_CR1_FORCE );
+ 398   1      
+ 399   1          /* This is only valid if there is an internal clock */
+ 400   1          #if(ADC_DelSig_1_DEFAULT_INTERNAL_CLK)
+ 401   1              ADC_DelSig_1_PWRMGR_CLK_REG &= (uint8)~ADC_DelSig_1_ACT_PWR_CLK_EN;
+ 402   1              ADC_DelSig_1_STBY_PWRMGR_CLK_REG &= (uint8)~ADC_DelSig_1_STBY_PWR_CLK_EN;
+ 403   1          #endif /* ADC_DelSig_1_DEFAULT_INTERNAL_CLK */
+ 404   1      
+ 405   1          /* Disable Modulator Chopping */
+ 406   1          ADC_DelSig_1_DSM_CR2_REG &= (uint8)~ADC_DelSig_1_DSM_MOD_CHOP_EN;
+ 407   1          /* Disable power to charge pump clock */
+ 408   1          ADC_DelSig_1_PWRMGR_CHARGE_PUMP_CLK_REG &= (uint8)~ADC_DelSig_1_ACT_PWR_CHARGE_PUMP_CLK_EN;
+ 409   1          ADC_DelSig_1_STBY_PWRMGR_CHARGE_PUMP_CLK_REG &= (uint8)~ADC_DelSig_1_STBY_PWR_CHARGE_PUMP_CLK_EN;
+ 410   1          
+ 411   1          CyExitCriticalSection(enableInterrupts);
+ 412   1      }
+ 413          
+ 414          
+ 415          /*******************************************************************************
+ 416          * Function Name: ADC_DelSig_1_SetBufferGain
+ 417          ********************************************************************************
+ 418          *
+ 419          * Summary:
+ 420          *  Sets input buffer gain.
+ 421          *
+ 422          * Parameters:
+ 423          *  gain:  Two bit value to select a gain of 1, 2, 4, or 8.
+ 424          *
+ 425          * Return:
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 8   
+
+ 426          *  None
+ 427          *
+ 428          *******************************************************************************/
+ 429          void ADC_DelSig_1_SetBufferGain(uint8 gain) 
+ 430          {
+ 431   1          uint8 tmpReg;
+ 432   1          tmpReg = ADC_DelSig_1_DSM_BUF1_REG & (uint8)~ADC_DelSig_1_DSM_GAIN_MASK;
+ 433   1          tmpReg |= (uint8)(gain << ADC_DelSig_1_DSM_GAIN_SHIFT) & ADC_DelSig_1_DSM_GAIN_MASK;
+ 434   1          ADC_DelSig_1_DSM_BUF1_REG = tmpReg;
+ 435   1      }
+ 436          
+ 437          
+ 438          /*******************************************************************************
+ 439          * Function Name: ADC_DelSig_1_SetCoherency
+ 440          ********************************************************************************
+ 441          *
+ 442          * Summary:
+ 443          *  This function allows the user to change which of the ADC's 3 word
+ 444          *  result will trigger a coherency unlock. The ADC's result will not be
+ 445          *  updated until the set byte is read either by the ADC or DMA. 
+ 446          *  By default the LSB is the coherency byte for right alignment data format. 
+ 447          *  The middle or high byte is set automatically depend on left alignment 
+ 448          *  configuration for DMA data transfer.
+ 449          *  If DMA or if a custom API requires different byte to be read the last,
+ 450          *  this API should be used to set the last byte of the ADC result that is read. 
+ 451          *  If a multibyte read is performed either by DMA or the ARM processor, the
+ 452          *  coherency can be set to any byte in the last word read.
+ 453          *
+ 454          * Parameters:
+ 455          *  coherency:  Two bit value to set the coherency bit.
+ 456          *           00-Coherency checking off
+ 457          *           01-low byte is key byte
+ 458          *           02-middle byte is the key byte
+ 459          *           03-high byte is the key byte
+ 460          *
+ 461          * Return:
+ 462          *  None
+ 463          *
+ 464          *******************************************************************************/
+ 465          void ADC_DelSig_1_SetCoherency(uint8 coherency) 
+ 466          {
+ 467   1          uint8 tmpReg;
+ 468   1      
+ 469   1          tmpReg = ADC_DelSig_1_DEC_COHER_REG & (uint8)~ADC_DelSig_1_DEC_SAMP_KEY_MASK;
+ 470   1          tmpReg |= coherency & ADC_DelSig_1_DEC_SAMP_KEY_MASK;
+ 471   1          ADC_DelSig_1_DEC_COHER_REG = tmpReg;
+ 472   1      }
+ 473          
+ 474          
+ 475          /*******************************************************************************
+ 476          * Function Name: ADC_DelSig_1_SetGCOR
+ 477          ********************************************************************************
+ 478          *
+ 479          * Summary:
+ 480          *  Calculates a new GCOR value and writes it into the GCOR register. 
+ 481          *  The GCOR value is a 16-bit value that represents a gain of 0 to 2. 
+ 482          *  The ADC result is multiplied by this value before it is placed in the ADC 
+ 483          *  output registers. The numerical format for the GCOR value is:
+ 484          *  0x0000 -> 0.000
+ 485          *  0x8000 -> 1.000
+ 486          *  0xFFFF -> 1.99997
+ 487          *  When executing the function, the old GCOR value is multiplied by
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 9   
+
+ 488          *  gainAdjust and reloaded into the GCOR register.
+ 489          *
+ 490          * Parameters:
+ 491          *  gainAdjust:  floating point value to set GCOR registers.
+ 492          *
+ 493          * Return:
+ 494          *  uint8: 0 - if GCOR value is within the expected range.
+ 495          *         1 - the correction value is outside GCOR value range of
+ 496          *             0.00 to 1.9999.
+ 497          *
+ 498          * Side Effects:  The GVAL register is set to the amount of valid bits in the
+ 499          *                GCOR  register minus one. If GVAL is 15 (0x0F), all 16 bits
+ 500          *                of the GCOR registers will be valid. If for example GVAL is
+ 501          *                11 (0x0B) only 12 bits will be valid. The least 4 bits will
+ 502          *                be lost when the GCOR value is shifted 4 places to the right.
+ 503          *
+ 504          ******************************************************************************/
+ 505          uint8 ADC_DelSig_1_SetGCOR(float32 gainAdjust) 
+ 506          {
+ 507   1          uint16 tmpReg;
+ 508   1          uint8 status;
+ 509   1          float32 tmpValue;
+ 510   1      
+ 511   1          tmpReg = ADC_DelSig_1_gcor[ADC_DelSig_1_Config - 1u].gcor;
+ 512   1          tmpValue = ((float32)tmpReg / (float32)ADC_DelSig_1_IDEAL_GAIN_CONST);
+ 513   1          tmpValue = tmpValue * gainAdjust;
+ 514   1      
+ 515   1          if (tmpValue > 1.9999)
+ 516   1          {
+ 517   2              status = 1u;
+ 518   2          }
+ 519   1          else
+ 520   1          {
+ 521   2              tmpValue *= (float32)ADC_DelSig_1_IDEAL_GAIN_CONST;
+ 522   2                      tmpReg = (uint16)tmpValue;
+ 523   2              CY_SET_REG16(ADC_DelSig_1_DEC_GCOR_16B_PTR, tmpReg);
+ 524   2              /* Update gain array to be used by SelectConfiguration() API */
+ 525   2             ADC_DelSig_1_gcor[ADC_DelSig_1_Config - 1u].gcor = tmpReg;
+ 526   2      
+ 527   2              status = 0u;
+ 528   2      
+ 529   2          }
+ 530   1          return(status);
+ 531   1      }
+ 532          
+ 533          
+ 534          /******************************************************************************
+ 535          * Function Name: ADC_DelSig_1_ReadGCOR
+ 536          *******************************************************************************
+ 537          *
+ 538          * Summary:
+ 539          *  This API returns the current GCOR register value, normalized based on the
+ 540          *  GVAL register settings.
+ 541          *  For example, if the GCOR value is 0x0812 and the GVAL register is set to 
+ 542          *  11 (0x0B) then the returned value will be shifted by for bits to the left.
+ 543          *  (Actual GCOR value = 0x0812, returned value = 0x8120)
+ 544          *
+ 545          * Parameters:
+ 546          *  None
+ 547          *
+ 548          * Return:
+ 549          *  uint16:  Normalized GCOR value.
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 10  
+
+ 550          *
+ 551          *******************************************************************************/
+ 552          uint16 ADC_DelSig_1_ReadGCOR(void) 
+ 553          {
+ 554   1          uint8 gValue;
+ 555   1          uint16 gcorValue;
+ 556   1      
+ 557   1          gValue = ADC_DelSig_1_DEC_GVAL_REG;
+ 558   1          gcorValue = CY_GET_REG16(ADC_DelSig_1_DEC_GCOR_16B_PTR);
+ 559   1      
+ 560   1          if (gValue < ADC_DelSig_1_MAX_GVAL)
+ 561   1          {
+ 562   2              gcorValue <<= ADC_DelSig_1_MAX_GVAL - gValue;
+ 563   2          }
+ 564   1      
+ 565   1          return gcorValue;
+ 566   1      }
+ 567          
+ 568          
+ 569          /*******************************************************************************
+ 570          * Function Name: ADC_DelSig_1_StartConvert
+ 571          ********************************************************************************
+ 572          *
+ 573          * Summary:
+ 574          *  Forces the ADC to initiate a conversion. If in the "Single Sample"
+ 575          *  mode, one conversion will be performed then the ADC will halt. If in
+ 576          *  one of the other three conversion modes, the ADC will run
+ 577          *  continuously until the ADC_Stop() or ADC_StopConvert() is called.
+ 578          *
+ 579          * Parameters:
+ 580          *  None
+ 581          *
+ 582          * Return:
+ 583          *  None
+ 584          *
+ 585          *******************************************************************************/
+ 586          void ADC_DelSig_1_StartConvert(void) 
+ 587          {
+ 588   1          /* Start the conversion */
+ 589   1          ADC_DelSig_1_DEC_CR_REG |= ADC_DelSig_1_DEC_START_CONV;
+ 590   1      }
+ 591          
+ 592          
+ 593          /*******************************************************************************
+ 594          * Function Name: ADC_DelSig_1_StopConvert
+ 595          ********************************************************************************
+ 596          *
+ 597          * Summary:
+ 598          *  Forces the ADC to stop all conversions. If the ADC is in the middle of a
+ 599          *  conversion, the ADC will be reset and not provide a result for that partial
+ 600          *  conversion.
+ 601          *
+ 602          * Parameters:
+ 603          *  None
+ 604          *
+ 605          * Return:
+ 606          *  None
+ 607          *
+ 608          *******************************************************************************/
+ 609          void ADC_DelSig_1_StopConvert(void) 
+ 610          {
+ 611   1          /* Stop all conversions */
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 11  
+
+ 612   1          ADC_DelSig_1_DEC_CR_REG &= (uint8)~ADC_DelSig_1_DEC_START_CONV;
+ 613   1      }
+ 614          
+ 615          
+ 616          /*******************************************************************************
+ 617          * Function Name: ADC_DelSig_1_IsEndConversion
+ 618          ********************************************************************************
+ 619          *
+ 620          * Summary:
+ 621          *  Checks the status that the most recently started conversion has completed.
+ 622          *  The status is cleared by any of ADC_GetResult8(), ADC_GetResult16() or 
+ 623          *  ADC_GetResult32() API.
+ 624          *  This function provides the programmer with two options. In one mode this 
+ 625          *  function immediately returns with the conversion status. In the other mode,
+ 626          *  the function does not return (blocking) until the conversion has completed.
+ 627          *
+ 628          * Parameters:
+ 629          *  retMode: Check conversion return mode. See the following table for options.
+ 630          *   ADC_DelSig_1_RETURN_STATUS -   Immediately returns conversion result
+ 631          *                                      status.
+ 632          *   ADC_DelSig_1_WAIT_FOR_RESULT - Does not return until ADC conversion
+ 633          *                                      is complete.
+ 634          *
+ 635          * Return:
+ 636          *  If a nonzero value is returned, the last conversion has completed.
+ 637          *  If the returned value is zero, the ADC is still calculating the last result.
+ 638          *
+ 639          * Global variables:
+ 640          *  ADC_DelSig_1_convDone:  Used to check whether conversion is complete
+ 641          *  or not for single sample mode with resolution is above 16
+ 642          *
+ 643          *******************************************************************************/
+ 644          uint8 ADC_DelSig_1_IsEndConversion(uint8 retMode) 
+ 645          {
+ 646   1          uint8 status;
+ 647   1      
+ 648   1          do
+ 649   1          {
+ 650   2              /* Check for stop convert if conversion mode is Single Sample with
+ 651   2              *   resolution above 16 bit
+ 652   2              */
+ 653   2              if(ADC_DelSig_1_stopConversion != 0u)
+ 654   2              {
+ 655   3                  status = ADC_DelSig_1_convDone;
+ 656   3              }
+ 657   2              else
+ 658   2              {
+ 659   3                  status = ADC_DelSig_1_DEC_SR_REG & ADC_DelSig_1_DEC_CONV_DONE;
+ 660   3              }
+ 661   2          }while((status != ADC_DelSig_1_DEC_CONV_DONE) && (retMode == ADC_DelSig_1_WAIT_FOR_RESULT));
+ 662   1      
+ 663   1          return(status);
+ 664   1      }
+ 665          
+ 666          
+ 667          /*******************************************************************************
+ 668          * Function Name: ADC_DelSig_1_GetResult8
+ 669          ********************************************************************************
+ 670          *
+ 671          * Summary:
+ 672          *  This function returns the result of an 8-bit conversion. If the
+ 673          *  resolution is set greater than 8-bits, the LSB of the result will be
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 12  
+
+ 674          *  returned. When the ADC is configured for 8-bit single ended mode,
+ 675          *  the ADC_GetResult16() function should be used instead. This
+ 676          *  function returns only signed 8-bit values. The maximum positive
+ 677          *  signed 8-bit value is 127, but in singled ended 8-bit mode, the
+ 678          *  maximum positive value is 255.
+ 679          *
+ 680          * Parameters:
+ 681          *  None
+ 682          *
+ 683          * Return:
+ 684          *  int8: The LSB of the last ADC conversion.
+ 685          *
+ 686          * Global variables:
+ 687          *  ADC_DelSig_1_convDone:  Cleared in single sample mode with resolution
+ 688          *                              above 16 bits
+ 689          *
+ 690          *******************************************************************************/
+ 691          int8 ADC_DelSig_1_GetResult8( void ) 
+ 692          {
+ 693   1          int8 result;
+ 694   1          uint8 coherency;
+ 695   1      
+ 696   1          /* Read active coherency configuration */
+ 697   1          coherency = ADC_DelSig_1_DEC_COHER_REG & ADC_DelSig_1_DEC_SAMP_KEY_MASK;
+ 698   1      
+ 699   1          result = (int8)ADC_DelSig_1_DEC_SAMP_REG;
+ 700   1      
+ 701   1          if(coherency == ADC_DelSig_1_DEC_SAMP_KEY_MID)
+ 702   1          {   /* Dummy read of the middle byte to unlock the coherency */
+ 703   2              (void)ADC_DelSig_1_DEC_SAMPM_REG;
+ 704   2          }
+ 705   1          else  if(coherency == ADC_DelSig_1_DEC_SAMP_KEY_HIGH)
+ 706   1          {   /* Dummy read of the MSB byte to unlock the coherency */
+ 707   2              (void)ADC_DelSig_1_DEC_SAMPH_REG;
+ 708   2          }
+ 709   1          else /*No action required for other coherency */
+ 710   1          {
+ 711   2          }
+ 712   1          /* Clear conversion complete status in Single Sample mode with resolution above 16 bit */
+ 713   1          if(ADC_DelSig_1_stopConversion != 0u)
+ 714   1          {
+ 715   2              ADC_DelSig_1_convDone = 0u;
+ 716   2          }
+ 717   1          return (result);
+ 718   1      }
+ 719          
+ 720          
+ 721          /*******************************************************************************
+ 722          * Function Name: ADC_DelSig_1_GetResult16
+ 723          ********************************************************************************
+ 724          *
+ 725          * Summary:
+ 726          *  Returns a 16-bit result for a conversion with a result that has a
+ 727          *  resolution of 8 to 16 bits. If the resolution is set greater than 16-bits,
+ 728          *  it will return the 16 least significant bits of the result. When the ADC
+ 729          *  is configured for 16-bit single ended mode, the ADC_GetResult32()
+ 730          *  function should be used instead. This function returns only signed
+ 731          *  16-bit result, which allows a maximum positive value of 32767, not 65535.
+ 732          *  This function supports different coherency settings.
+ 733          *
+ 734          * Parameters:
+ 735          *   void
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 13  
+
+ 736          *
+ 737          * Return:
+ 738          *  int16:  ADC result.
+ 739          *
+ 740          * Global variables:
+ 741          *  ADC_DelSig_1_convDone:  Cleared in single sample mode with resolution
+ 742          *                              above 16 bits
+ 743          *
+ 744          *******************************************************************************/
+ 745          int16 ADC_DelSig_1_GetResult16(void) 
+ 746          {
+ 747   1          uint16 result;
+ 748   1          uint8 coherency;
+ 749   1      
+ 750   1          /* Read active coherency configuration */
+ 751   1          coherency = ADC_DelSig_1_DEC_COHER_REG & ADC_DelSig_1_DEC_SAMP_KEY_MASK;
+ 752   1      
+ 753   1          if(coherency <= ADC_DelSig_1_DEC_SAMP_KEY_LOW)
+ 754   1          {   /*  Use default method to read result registers i.e. LSB byte read at the end*/
+ 755   2              #if (CY_PSOC3)
+ 756   2                  result = ADC_DelSig_1_DEC_SAMPM_REG;
+ 757   2                  result = (result << 8u) | ADC_DelSig_1_DEC_SAMP_REG;
+ 758   2              #else
+                          result = (CY_GET_REG16(ADC_DelSig_1_DEC_SAMP_16B_PTR));
+                      #endif /* CY_PSOC3 */
+ 761   2          }
+ 762   1          else /* MID or HIGH */
+ 763   1          {   /* Read middle byte at the end */
+ 764   2              #if (CY_PSOC3)
+ 765   2                  result = (CY_GET_REG16(ADC_DelSig_1_DEC_SAMP_16B_PTR));
+ 766   2              #else
+                          result = ADC_DelSig_1_DEC_SAMP_REG;
+                          result |=  (uint16)((uint16)ADC_DelSig_1_DEC_SAMPM_REG << 8u);
+                      #endif /* CY_PSOC3 */
+ 770   2              if(coherency == ADC_DelSig_1_DEC_SAMP_KEY_HIGH)
+ 771   2              {   /* Dummy read of the MSB byte to unlock the coherency */
+ 772   3                  (void)ADC_DelSig_1_DEC_SAMPH_REG;
+ 773   3              }
+ 774   2          }
+ 775   1          /* Clear conversion complete status in Single Sample mode with resolution above 16 bit */
+ 776   1          if(ADC_DelSig_1_stopConversion != 0u)
+ 777   1          {
+ 778   2              ADC_DelSig_1_convDone = 0u;
+ 779   2          }
+ 780   1      
+ 781   1          return ((int16)result);
+ 782   1      }
+ 783          
+ 784          
+ 785          /*******************************************************************************
+ 786          * Function Name: ADC_DelSig_1_GetResult32
+ 787          ********************************************************************************
+ 788          *
+ 789          * Summary:
+ 790          *  Returns a 32-bit result for a conversion with a result that has a
+ 791          *  resolution of 8 to 20 bits.
+ 792          *  This function supports different coherency settings.
+ 793          *
+ 794          * Parameters:
+ 795          *  None
+ 796          *
+ 797          * Return:
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 14  
+
+ 798          *  int32: Result of the last ADC conversion.
+ 799          *
+ 800          * Global variables:
+ 801          *  ADC_DelSig_1_convDone:  Cleared in single sample mode with resolution
+ 802          *                              above 16 bits
+ 803          *
+ 804          *******************************************************************************/
+ 805          int32 ADC_DelSig_1_GetResult32(void) 
+ 806          {
+ 807   1          uint32 result;
+ 808   1          uint8 coherency;
+ 809   1          #if (CY_PSOC3)
+ 810   1                  uint16 tmp;
+ 811   1          #endif /* CY_PSOC3 */
+ 812   1      
+ 813   1          /* Read active coherency configuration */
+ 814   1          coherency = ADC_DelSig_1_DEC_COHER_REG & ADC_DelSig_1_DEC_SAMP_KEY_MASK;
+ 815   1      
+ 816   1          if(coherency <= ADC_DelSig_1_DEC_SAMP_KEY_LOW)
+ 817   1          {   /*  Use default method to read result registers i.e. LSB byte read at the end*/
+ 818   2              #if (CY_PSOC3)
+ 819   2                  result = ADC_DelSig_1_DEC_SAMPH_REG;
+ 820   2                  if((result & 0x80u) != 0u)
+ 821   2                  {   /* Sign extend */
+ 822   3                      result |= 0xFF00u;
+ 823   3                  }
+ 824   2                  result = (result << 8u) | ADC_DelSig_1_DEC_SAMPM_REG;
+ 825   2                  result = (result << 8u) | ADC_DelSig_1_DEC_SAMP_REG;
+ 826   2              #else
+                          result = CY_GET_REG16(ADC_DelSig_1_DEC_SAMPH_16B_PTR);
+                          result = (result << 16u) | (CY_GET_REG16(ADC_DelSig_1_DEC_SAMP_16B_PTR));
+                      #endif /* CY_PSOC3 */
+ 830   2          }
+ 831   1          else if(coherency == ADC_DelSig_1_DEC_SAMP_KEY_MID)
+ 832   1          {   /* Read middle byte at the end */
+ 833   2              #if (CY_PSOC3)
+ 834   2                  result = ADC_DelSig_1_DEC_SAMPH_REG;
+ 835   2                  if((result & 0x80u) != 0u)
+ 836   2                  {   /* Sign extend */
+ 837   3                      result |= 0xFF00u;
+ 838   3                  }
+ 839   2                  result = (result << 16u) | (CY_GET_REG16(ADC_DelSig_1_DEC_SAMP_16B_PTR));
+ 840   2              #else
+                          result = CY_GET_REG16(ADC_DelSig_1_DEC_SAMPH_16B_PTR);
+                          result = (result << 16u) | ADC_DelSig_1_DEC_SAMP_REG;
+                          result |=  (uint32)((uint32)ADC_DelSig_1_DEC_SAMPM_REG << 8u);
+                      #endif /* CY_PSOC3 */
+ 845   2          }
+ 846   1          else /*ADC_DelSig_1_DEC_SAMP_KEY_HIGH */
+ 847   1          {
+ 848   2              /* Read MSB byte at the end */
+ 849   2              #if (CY_PSOC3)
+ 850   2                  result = CY_GET_REG16(ADC_DelSig_1_DEC_SAMP_16B_PTR);
+ 851   2                              tmp = ADC_DelSig_1_DEC_SAMPH_REG;
+ 852   2                  if((tmp & 0x80u) != 0u)
+ 853   2                  {   /* Sign extend */
+ 854   3                      tmp |= 0xFF00u;
+ 855   3                  }
+ 856   2                  result |= (uint32)tmp << 16u;
+ 857   2              #else
+                          result = CY_GET_REG16(ADC_DelSig_1_DEC_SAMP_16B_PTR);
+                          result |= (uint32)((uint32)CY_GET_REG16(ADC_DelSig_1_DEC_SAMPH_16B_PTR) << 16u);
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 15  
+
+                      #endif /* CY_PSOC3 */
+ 861   2          }
+ 862   1          /* Clear conversion complete status in Single Sample mode with resolution above 16 bit */
+ 863   1          if(ADC_DelSig_1_stopConversion != 0u)
+ 864   1          {
+ 865   2              ADC_DelSig_1_convDone = 0u;
+ 866   2          }
+ 867   1      
+ 868   1          return ((int32)result);
+ 869   1      }
+ 870          
+ 871          
+ 872          /*******************************************************************************
+ 873          * Function Name: ADC_DelSig_1_SetOffset
+ 874          ********************************************************************************
+ 875          *
+ 876          * Summary:
+ 877          *  Sets the ADC offset which is used by the functions ADC_CountsTo_uVolts, 
+ 878          *  ADC_CountsTo_mVolts, and ADC_CountsTo_Volts to subtract the offset from the 
+ 879          *  given reading before calculating the voltage conversion.
+ 880          *
+ 881          * Parameters:
+ 882          *  int32:  This value is a measured value when the inputs are shorted or 
+ 883          *          connected to the same input voltage.
+ 884          *
+ 885          * Return:
+ 886          *  None
+ 887          *
+ 888          * Global variables:
+ 889          *  ADC_DelSig_1_Offset:  Modified to set the user provided offset. This
+ 890          *  variable is used for offset calibration purpose.
+ 891          *
+ 892          * Side Effects:
+ 893          *  Affects the ADC_DelSig_1_CountsTo_Volts,
+ 894          *  ADC_DelSig_1_CountsTo_mVolts, ADC_DelSig_1_CountsTo_uVolts functions
+ 895          *  by subtracting the given offset.
+ 896          *
+ 897          *******************************************************************************/
+ 898          void ADC_DelSig_1_SetOffset(int32 offset) 
+ 899          {
+ 900   1      
+ 901   1          ADC_DelSig_1_Offset = offset;
+ 902   1      }
+ 903          
+ 904          
+ 905          /*******************************************************************************
+ 906          * Function Name: ADC_DelSig_1_SetGain
+ 907          ********************************************************************************
+ 908          *
+ 909          * Summary:
+ 910          *  Sets the ADC gain in counts per volt for the voltage conversion
+ 911          *  functions below. This value is set by default by the reference and
+ 912          *  input range settings. It should only be used to further calibrate the
+ 913          *  ADC with a known input or if an external reference is used. This
+ 914          *  function may also be used to calibrate an entire signal chain, not
+ 915          *  just the ADC.
+ 916          *
+ 917          * Parameters:
+ 918          *  int32: ADC gain in counts per volt.
+ 919          *
+ 920          * Return:
+ 921          *  None
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 16  
+
+ 922          *
+ 923          * Global variables:
+ 924          *  ADC_DelSig_1_CountsPerVolt:  modified to set the ADC gain in counts
+ 925          *   per volt.
+ 926          *
+ 927          * Side Effects:
+ 928          *  Affects the ADC_DelSig_1_CountsTo_Volts,
+ 929          *  ADC_DelSig_1_CountsTo_mVolts, ADC_DelSig_1_CountsTo_uVolts functions
+ 930          *  supplying the correct conversion between ADC counts and voltage.
+ 931          *
+ 932          *******************************************************************************/
+ 933          void ADC_DelSig_1_SetGain(int32 adcGain) 
+ 934          {
+ 935   1          ADC_DelSig_1_CountsPerVolt = adcGain;
+ 936   1      }
+ 937          
+ 938          
+ 939          /*******************************************************************************
+ 940          * Function Name: ADC_DelSig_1_CountsTo_mVolts
+ 941          ********************************************************************************
+ 942          *
+ 943          * Summary:
+ 944          *  Converts the ADC counts output to mVolts as a 16-bit integer. For
+ 945          *  example, if the ADC measured 0.534 volts, the return value would
+ 946          *  be 534 mVolts.
+ 947          *
+ 948          * Parameters:
+ 949          *  int32: adcCounts Result from the ADC conversion.
+ 950          *
+ 951          * Return:
+ 952          *  int16:  Result in mVolts
+ 953          *
+ 954          * Global variables:
+ 955          *  ADC_DelSig_1_CountsPerVolt:  used to convert ADC counts to mVolts.
+ 956          *  ADC_DelSig_1_Offset:  Used as the offset while converting ADC counts
+ 957          *   to mVolts.
+ 958          *
+ 959          *******************************************************************************/
+ 960          int16 ADC_DelSig_1_CountsTo_mVolts(int32 adcCounts) 
+ 961          {
+ 962   1      
+ 963   1          int16 mVolts;
+ 964   1      
+ 965   1          /* Convert adcCounts to the right align if left option selected */
+ 966   1          #if(ADC_DelSig_1_CFG1_DEC_DIV != 0)
+                      if(ADC_DelSig_1_Config == ADC_DelSig_1_CFG1)
+                      {
+                          adcCounts /= ADC_DelSig_1_CFG1_DEC_DIV;
+                      }
+                  #endif /* ADC_DelSig_1_CFG1_DEC_DIV */
+ 972   1          #if((ADC_DelSig_1_CFG2_DEC_DIV != 0) && (ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 1))
+                      if(ADC_DelSig_1_Config == ADC_DelSig_1_CFG2)
+                      {
+                          adcCounts /= ADC_DelSig_1_CFG2_DEC_DIV;
+                      }
+                  #endif /* ADC_DelSig_1_CFG2_DEC_DIV */
+ 978   1          #if((ADC_DelSig_1_CFG3_DEC_DIV != 0) && (ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 2))
+                      if(ADC_DelSig_1_Config == ADC_DelSig_1_CFG3)
+                      {
+                          adcCounts /= ADC_DelSig_1_CFG3_DEC_DIV;
+                      }
+                  #endif /* ADC_DelSig_1_CFG2_DEC_DIV */
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 17  
+
+ 984   1          #if((ADC_DelSig_1_CFG4_DEC_DIV != 0) && (ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 3))
+                      if(ADC_DelSig_1_Config == ADC_DelSig_1_CFG4)
+                      {
+                          adcCounts /= ADC_DelSig_1_CFG4_DEC_DIV;
+                      }
+                  #endif /* ADC_DelSig_1_CFG2_DEC_DIV */
+ 990   1      
+ 991   1          /* Subtract ADC offset */
+ 992   1          adcCounts -= ADC_DelSig_1_Offset;
+ 993   1      
+ 994   1          mVolts = (int16)(( adcCounts * ADC_DelSig_1_1MV_COUNTS ) / ADC_DelSig_1_CountsPerVolt) ;
+ 995   1      
+ 996   1          return(mVolts);
+ 997   1      }
+ 998          
+ 999          
+1000          /*******************************************************************************
+1001          * Function Name: ADC_DelSig_1_CountsTo_Volts
+1002          ********************************************************************************
+1003          *
+1004          * Summary:
+1005          *  Converts the ADC output to Volts as a floating point number. For
+1006          *  example, if the ADC measure a voltage of 1.2345 Volts, the
+1007          *  returned result would be +1.2345 Volts.
+1008          *
+1009          * Parameters:
+1010          *  int32 adcCounts:  Result from the ADC conversion.
+1011          *
+1012          * Return:
+1013          *  float32: Result in Volts
+1014          *
+1015          * Global variables:
+1016          *  ADC_DelSig_1_CountsPerVolt:  used to convert to Volts.
+1017          *  ADC_DelSig_1_Offset:  Used as the offset while converting ADC counts
+1018          *   to Volts.
+1019          *
+1020          *******************************************************************************/
+1021          float32 ADC_DelSig_1_CountsTo_Volts(int32 adcCounts) 
+1022          {
+1023   1      
+1024   1          float32 Volts;
+1025   1      
+1026   1          /* Convert adcCounts to the right align if left option selected */
+1027   1          #if(ADC_DelSig_1_CFG1_DEC_DIV != 0)
+                      if(ADC_DelSig_1_Config == ADC_DelSig_1_CFG1)
+                      {
+                          adcCounts /= ADC_DelSig_1_CFG1_DEC_DIV;
+                      }
+                  #endif /* ADC_DelSig_1_CFG1_DEC_DIV */
+1033   1          #if((ADC_DelSig_1_CFG2_DEC_DIV != 0) && (ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 1))
+                      if(ADC_DelSig_1_Config == ADC_DelSig_1_CFG2)
+                      {
+                          adcCounts /= ADC_DelSig_1_CFG2_DEC_DIV;
+                      }
+                  #endif /* ADC_DelSig_1_CFG2_DEC_DIV */
+1039   1          #if((ADC_DelSig_1_CFG3_DEC_DIV != 0) && (ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 2))
+                      if(ADC_DelSig_1_Config == ADC_DelSig_1_CFG3)
+                      {
+                          adcCounts /= ADC_DelSig_1_CFG3_DEC_DIV;
+                      }
+                  #endif /* ADC_DelSig_1_CFG2_DEC_DIV */
+1045   1          #if((ADC_DelSig_1_CFG4_DEC_DIV != 0) && (ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 3))
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 18  
+
+                      if(ADC_DelSig_1_Config == ADC_DelSig_1_CFG4)
+                      {
+                          adcCounts /= ADC_DelSig_1_CFG4_DEC_DIV;
+                      }
+                  #endif /* ADC_DelSig_1_CFG2_DEC_DIV */
+1051   1      
+1052   1          /* Subtract ADC offset */
+1053   1          adcCounts -= ADC_DelSig_1_Offset;
+1054   1      
+1055   1          Volts = (float32)adcCounts / (float32)ADC_DelSig_1_CountsPerVolt;
+1056   1      
+1057   1          return( Volts );
+1058   1      }
+1059          
+1060          
+1061          /*******************************************************************************
+1062          * Function Name: ADC_DelSig_1_CountsTo_uVolts
+1063          ********************************************************************************
+1064          *
+1065          * Summary:
+1066          *  Converts the ADC output to uVolts as a 32-bit integer. For example,
+1067          *  if the ADC measured -0.02345 Volts, the return value would be -23450 uVolts.
+1068          *
+1069          * Parameters:
+1070          *  int32 adcCounts: Result from the ADC conversion.
+1071          *
+1072          * Return:
+1073          *  int32:  Result in uVolts
+1074          *
+1075          * Global variables:
+1076          *  ADC_DelSig_1_CountsPerVolt:  used to convert ADC counts to mVolts.
+1077          *  ADC_DelSig_1_Offset:  Used as the offset while converting ADC counts
+1078          *   to mVolts.
+1079          *
+1080          * Theory:
+1081          *  Care must be taken to not exceed the maximum value for a 31 bit signed
+1082          *  number in the conversion to uVolts and at the same time not lose resolution.
+1083          *
+1084          *  uVolts = ((A * adcCounts) / ((int32)ADC_DelSig_1_CountsPerVolt / B));
+1085          *
+1086          *******************************************************************************/
+1087          int32 ADC_DelSig_1_CountsTo_uVolts(int32 adcCounts) 
+1088          {
+1089   1      
+1090   1          int32 uVolts;
+1091   1          int32 coefA;
+1092   1          int32 coefB;
+1093   1          uint8 resolution;
+1094   1      
+1095   1          /* Set the resolution based on the configuration */
+1096   1          /* Convert adcCounts to the right align if left option selected */
+1097   1          if (ADC_DelSig_1_Config == ADC_DelSig_1_CFG1)
+1098   1          {
+1099   2              resolution = ADC_DelSig_1_CFG1_RESOLUTION;
+1100   2              #if(ADC_DelSig_1_CFG1_DEC_DIV != 0)
+                          adcCounts /= ADC_DelSig_1_CFG1_DEC_DIV;
+                      #endif /* ADC_DelSig_1_CFG1_DEC_DIV */
+1103   2          }
+1104   1          else if (ADC_DelSig_1_Config == ADC_DelSig_1_CFG2)
+1105   1          {
+1106   2              resolution = ADC_DelSig_1_CFG2_RESOLUTION;
+1107   2              #if(ADC_DelSig_1_CFG2_DEC_DIV != 0)
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 19  
+
+                          adcCounts /= ADC_DelSig_1_CFG2_DEC_DIV;
+                      #endif /* ADC_DelSig_1_CFG2_DEC_DIV */
+1110   2          }
+1111   1          else if (ADC_DelSig_1_Config == ADC_DelSig_1_CFG3)
+1112   1          {
+1113   2              resolution = ADC_DelSig_1_CFG3_RESOLUTION;
+1114   2              #if(ADC_DelSig_1_CFG3_DEC_DIV != 0)
+                          adcCounts /= ADC_DelSig_1_CFG3_DEC_DIV;
+                      #endif /* ADC_DelSig_1_CFG3_DEC_DIV */
+1117   2          }
+1118   1          else
+1119   1          {
+1120   2              resolution = ADC_DelSig_1_CFG4_RESOLUTION;
+1121   2              #if(ADC_DelSig_1_CFG4_DEC_DIV != 0)
+                          adcCounts /= ADC_DelSig_1_CFG4_DEC_DIV;
+                      #endif /* ADC_DelSig_1_CFG4_DEC_DIV */
+1124   2          }
+1125   1      
+1126   1          switch (resolution)
+1127   1          {
+1128   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_12) || \
+1129   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_12) || \
+1130   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_12) || \
+1131   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_12) )
+                          case (uint8)ADC_DelSig_1__BITS_12:
+                              coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_2;
+                              coefB = ADC_DelSig_1_DIVISOR_2;
+                              break;
+                      #endif /* ADC_DelSig_1__BITS_12 */    
+1137   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_13) || \
+1138   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_13) || \
+1139   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_13) || \
+1140   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_13) )
+                          case (uint8)ADC_DelSig_1__BITS_13:
+                              coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_4;
+                              coefB = ADC_DelSig_1_DIVISOR_4;
+                              break;
+                      #endif /* ADC_DelSig_1__BITS_13 */    
+1146   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_14) || \
+1147   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_14) || \
+1148   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_14) || \
+1149   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_14) )
+                          case (uint8)ADC_DelSig_1__BITS_14:
+                              coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_8;
+                              coefB = ADC_DelSig_1_DIVISOR_8;
+                              break;
+                      #endif /* ADC_DelSig_1__BITS_14 */    
+1155   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_15) || \
+1156   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_15) || \
+1157   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_15) || \
+1158   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_15) )
+                          case (uint8)ADC_DelSig_1__BITS_15:
+                              coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_16;
+                              coefB = ADC_DelSig_1_DIVISOR_16;
+                              break;
+                      #endif /* ADC_DelSig_1__BITS_15 */    
+1164   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_16) || \
+1165   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_16) || \
+1166   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_16) || \
+1167   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_16) )
+1168   2                  case (uint8)ADC_DelSig_1__BITS_16:
+1169   2                      coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_32;
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 20  
+
+1170   2                      coefB = ADC_DelSig_1_DIVISOR_32;
+1171   2                      break;
+1172   2              #endif /* ADC_DelSig_1__BITS_16 */    
+1173   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_17) || \
+1174   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_17) || \
+1175   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_17) || \
+1176   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_17) )
+                          case (uint8)ADC_DelSig_1__BITS_17:
+                              coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_64;
+                              coefB = ADC_DelSig_1_DIVISOR_64;
+                              break;
+                      #endif /* ADC_DelSig_1__BITS_17 */    
+1182   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_18) || \
+1183   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_18) || \
+1184   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_18) || \
+1185   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_18) )
+                          case (uint8)ADC_DelSig_1__BITS_18:
+                              coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_125;
+                              coefB = ADC_DelSig_1_DIVISOR_125;
+                              break;
+                      #endif /* ADC_DelSig_1__BITS_18 */    
+1191   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_19) || \
+1192   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_19) || \
+1193   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_19) || \
+1194   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_19) )
+                          case (uint8)ADC_DelSig_1__BITS_19:
+                              coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_250;
+                              coefB = ADC_DelSig_1_DIVISOR_250;
+                              break;
+                      #endif /* ADC_DelSig_1__BITS_19 */    
+1200   2              #if( (ADC_DelSig_1_CFG1_RESOLUTION == ADC_DelSig_1__BITS_20) || \
+1201   2                   (ADC_DelSig_1_CFG2_RESOLUTION == ADC_DelSig_1__BITS_20) || \
+1202   2                   (ADC_DelSig_1_CFG3_RESOLUTION == ADC_DelSig_1__BITS_20) || \
+1203   2                   (ADC_DelSig_1_CFG4_RESOLUTION == ADC_DelSig_1__BITS_20) )
+                          case (uint8)ADC_DelSig_1__BITS_20:
+                              coefA = ADC_DelSig_1_1UV_COUNTS / ADC_DelSig_1_DIVISOR_500;
+                              coefB = ADC_DelSig_1_DIVISOR_500;
+                              break;
+                      #endif /* ADC_DelSig_1__BITS_20 */    
+1209   2              default:    /* resolution < 12 */
+1210   2                  /* 11 bits ADC + 2^20(1048576) = 31 bits */
+1211   2                  coefA = ADC_DelSig_1_1UV_COUNTS;
+1212   2                  coefB = ADC_DelSig_1_DIVISOR_1;
+1213   2                  break;
+1214   2          }
+1215   1          coefB = ADC_DelSig_1_CountsPerVolt / coefB;
+1216   1          uVolts = ((coefA * adcCounts) / coefB) - ((coefA * ADC_DelSig_1_Offset) / coefB);
+1217   1      
+1218   1          return( uVolts );
+1219   1      }
+1220          
+1221          
+1222          /*******************************************************************************
+1223          * Function Name: ADC_DelSig_1_InitConfig(uint8 config)
+1224          ********************************************************************************
+1225          *
+1226          * Summary:
+1227          *  Initializes all registers based on customizer settings
+1228          *
+1229          * Parameters:
+1230          *   void
+1231          *
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 21  
+
+1232          * Return:
+1233          *  None
+1234          *
+1235          * Global variables:
+1236          *  ADC_DelSig_1_CountsPerVolt:  Used to set the default counts per volt.
+1237          *
+1238          * Side Effects: Rewrites the coherency set by ADC_DelSig_1_SetCoherency()
+1239          *   API to the default value.
+1240          *
+1241          *******************************************************************************/
+1242          static void ADC_DelSig_1_InitConfig(uint8 config) 
+1243          {
+1244   1          ADC_DelSig_1_stopConversion = 0u;
+1245   1      
+1246   1          if (config == 1u)
+1247   1          {
+1248   2              /* Default Config */
+1249   2              ADC_DelSig_1_DEC_CR_REG      = ADC_DelSig_1_CFG1_DEC_CR;
+1250   2              ADC_DelSig_1_DEC_SHIFT1_REG  = ADC_DelSig_1_CFG1_DEC_SHIFT1;
+1251   2              ADC_DelSig_1_DEC_SHIFT2_REG  = ADC_DelSig_1_CFG1_DEC_SHIFT2;
+1252   2              ADC_DelSig_1_DEC_DR2_REG     = ADC_DelSig_1_CFG1_DEC_DR2;
+1253   2              ADC_DelSig_1_DEC_DR2H_REG    = ADC_DelSig_1_CFG1_DEC_DR2H;
+1254   2              ADC_DelSig_1_DEC_DR1_REG     = ADC_DelSig_1_CFG1_DEC_DR1;
+1255   2              ADC_DelSig_1_DEC_OCOR_REG    = ADC_DelSig_1_CFG1_DEC_OCOR;
+1256   2              ADC_DelSig_1_DEC_OCORM_REG   = ADC_DelSig_1_CFG1_DEC_OCORM;
+1257   2              ADC_DelSig_1_DEC_OCORH_REG   = ADC_DelSig_1_CFG1_DEC_OCORH;
+1258   2              ADC_DelSig_1_DEC_COHER_REG   = ADC_DelSig_1_CFG1_DEC_COHER;
+1259   2      
+1260   2              ADC_DelSig_1_DSM_CR4_REG     = ADC_DelSig_1_CFG1_DSM_CR4;
+1261   2              ADC_DelSig_1_DSM_CR5_REG     = ADC_DelSig_1_CFG1_DSM_CR5;
+1262   2              ADC_DelSig_1_DSM_CR6_REG     = ADC_DelSig_1_CFG1_DSM_CR6;
+1263   2              ADC_DelSig_1_DSM_CR7_REG     = ADC_DelSig_1_CFG1_DSM_CR7;
+1264   2              ADC_DelSig_1_DSM_CR10_REG    = ADC_DelSig_1_CFG1_DSM_CR10;
+1265   2              ADC_DelSig_1_DSM_CR11_REG    = ADC_DelSig_1_CFG1_DSM_CR11;
+1266   2              ADC_DelSig_1_DSM_CR12_REG    = ADC_DelSig_1_CFG1_DSM_CR12;
+1267   2              ADC_DelSig_1_DSM_CR14_REG    = ADC_DelSig_1_CFG1_DSM_CR14;
+1268   2              ADC_DelSig_1_DSM_CR15_REG    = ADC_DelSig_1_CFG1_DSM_CR15;
+1269   2              ADC_DelSig_1_DSM_CR16_REG    = ADC_DelSig_1_CFG1_DSM_CR16;
+1270   2              ADC_DelSig_1_DSM_CR17_REG    = ADC_DelSig_1_CFG1_DSM_CR17;
+1271   2              /* Set DSM_REF0_REG by disabling and enabling the PRESS circuit */
+1272   2              ADC_DelSig_1_SetDSMRef0Reg(ADC_DelSig_1_CFG1_DSM_REF0);
+1273   2              ADC_DelSig_1_DSM_REF2_REG    = ADC_DelSig_1_CFG1_DSM_REF2;
+1274   2              ADC_DelSig_1_DSM_REF3_REG    = ADC_DelSig_1_CFG1_DSM_REF3;
+1275   2      
+1276   2              ADC_DelSig_1_DSM_BUF0_REG    = ADC_DelSig_1_CFG1_DSM_BUF0;
+1277   2              ADC_DelSig_1_DSM_BUF1_REG    = ADC_DelSig_1_CFG1_DSM_BUF1;
+1278   2              ADC_DelSig_1_DSM_BUF2_REG    = ADC_DelSig_1_CFG1_DSM_BUF2;
+1279   2              ADC_DelSig_1_DSM_BUF3_REG    = ADC_DelSig_1_CFG1_DSM_BUF3;
+1280   2      
+1281   2              /* To select either Vssa or Vref to -ve input of DSM depending on
+1282   2              *  the input  range selected.
+1283   2              */
+1284   2              #if(ADC_DelSig_1_DEFAULT_INPUT_MODE)
+                          #if (ADC_DelSig_1_CFG1_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF)
+                              ADC_DelSig_1_AMux_Select(1u);
+                          #else
+                              ADC_DelSig_1_AMux_Select(0u);
+                          #endif /* ADC_DelSig_1_IR_VSSA_TO_2VREF) */
+                      #endif /* ADC_DelSig_1_DEFAULT_INPUT_MODE */
+1291   2      
+1292   2              /* Set the Conversion stop if resolution is above 16 bit and conversion
+1293   2              *   mode is Single sample
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 22  
+
+1294   2              */
+1295   2              #if(ADC_DelSig_1_CFG1_RESOLUTION > 16 && \
+1296   2                  ADC_DelSig_1_CFG1_CONV_MODE == ADC_DelSig_1_MODE_SINGLE_SAMPLE)
+                          ADC_DelSig_1_stopConversion = 1u;
+                      #endif /* Single sample with resolution above 16 bits. */
+1299   2      
+1300   2              ADC_DelSig_1_CountsPerVolt = (int32)ADC_DelSig_1_CFG1_COUNTS_PER_VOLT;
+1301   2      
+1302   2              ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister(ADC_DelSig_1_CFG1_CP_CLK_DIVIDER, 1u);
+1303   2      
+1304   2              /* This is only valid if there is an internal clock */
+1305   2              #if(ADC_DelSig_1_DEFAULT_INTERNAL_CLK)
+1306   2                  ADC_DelSig_1_theACLK_SetDividerRegister(ADC_DelSig_1_CFG1_ADC_CLK_DIVIDER, 1u);
+1307   2              #endif /* ADC_DelSig_1_DEFAULT_INTERNAL_CLK */
+1308   2      
+1309   2              #if(ADC_DelSig_1_IRQ_REMOVE == 0u)
+1310   2                  /* Set interrupt vector */
+1311   2                  (void)CyIntSetVector(ADC_DelSig_1_INTC_NUMBER, &ADC_DelSig_1_ISR1);
+1312   2              #endif   /* End ADC_DelSig_1_IRQ_REMOVE */
+1313   2          }
+1314   1      
+1315   1          #if(ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 1)
+1316   1              if(config == 2u)
+1317   1              {
+1318   2                  /* Second Config */
+1319   2                  ADC_DelSig_1_DEC_CR_REG      = ADC_DelSig_1_CFG2_DEC_CR;
+1320   2                  ADC_DelSig_1_DEC_SHIFT1_REG  = ADC_DelSig_1_CFG2_DEC_SHIFT1;
+1321   2                  ADC_DelSig_1_DEC_SHIFT2_REG  = ADC_DelSig_1_CFG2_DEC_SHIFT2;
+1322   2                  ADC_DelSig_1_DEC_DR2_REG     = ADC_DelSig_1_CFG2_DEC_DR2;
+1323   2                  ADC_DelSig_1_DEC_DR2H_REG    = ADC_DelSig_1_CFG2_DEC_DR2H;
+1324   2                  ADC_DelSig_1_DEC_DR1_REG     = ADC_DelSig_1_CFG2_DEC_DR1;
+1325   2                  ADC_DelSig_1_DEC_OCOR_REG    = ADC_DelSig_1_CFG2_DEC_OCOR;
+1326   2                  ADC_DelSig_1_DEC_OCORM_REG   = ADC_DelSig_1_CFG2_DEC_OCORM;
+1327   2                  ADC_DelSig_1_DEC_OCORH_REG   = ADC_DelSig_1_CFG2_DEC_OCORH;
+1328   2                  ADC_DelSig_1_DEC_COHER_REG   = ADC_DelSig_1_CFG2_DEC_COHER;
+1329   2      
+1330   2                  ADC_DelSig_1_DSM_CR4_REG     = ADC_DelSig_1_CFG2_DSM_CR4;
+1331   2                  ADC_DelSig_1_DSM_CR5_REG     = ADC_DelSig_1_CFG2_DSM_CR5;
+1332   2                  ADC_DelSig_1_DSM_CR6_REG     = ADC_DelSig_1_CFG2_DSM_CR6;
+1333   2                  ADC_DelSig_1_DSM_CR7_REG     = ADC_DelSig_1_CFG2_DSM_CR7;
+1334   2                  ADC_DelSig_1_DSM_CR10_REG    = ADC_DelSig_1_CFG2_DSM_CR10;
+1335   2                  ADC_DelSig_1_DSM_CR11_REG    = ADC_DelSig_1_CFG2_DSM_CR11;
+1336   2                  ADC_DelSig_1_DSM_CR12_REG    = ADC_DelSig_1_CFG2_DSM_CR12;
+1337   2                  ADC_DelSig_1_DSM_CR14_REG    = ADC_DelSig_1_CFG2_DSM_CR14;
+1338   2                  ADC_DelSig_1_DSM_CR15_REG    = ADC_DelSig_1_CFG2_DSM_CR15;
+1339   2                  ADC_DelSig_1_DSM_CR16_REG    = ADC_DelSig_1_CFG2_DSM_CR16;
+1340   2                  ADC_DelSig_1_DSM_CR17_REG    = ADC_DelSig_1_CFG2_DSM_CR17;
+1341   2                  /* Set DSM_REF0_REG by disabling and enabling the PRESS cirucit */
+1342   2                  ADC_DelSig_1_SetDSMRef0Reg(ADC_DelSig_1_CFG2_DSM_REF0);
+1343   2                  ADC_DelSig_1_DSM_REF2_REG    = ADC_DelSig_1_CFG2_DSM_REF2;
+1344   2                  ADC_DelSig_1_DSM_REF3_REG    = ADC_DelSig_1_CFG2_DSM_REF3;
+1345   2      
+1346   2                  ADC_DelSig_1_DSM_BUF0_REG    = ADC_DelSig_1_CFG2_DSM_BUF0;
+1347   2                  ADC_DelSig_1_DSM_BUF1_REG    = ADC_DelSig_1_CFG2_DSM_BUF1;
+1348   2                  ADC_DelSig_1_DSM_BUF2_REG    = ADC_DelSig_1_CFG2_DSM_BUF2;
+1349   2                  ADC_DelSig_1_DSM_BUF3_REG    = ADC_DelSig_1_CFG2_DSM_BUF3;
+1350   2      
+1351   2                  /* To select either Vssa or Vref to -ve input of DSM depending on
+1352   2                  *  the input range selected.
+1353   2                  */
+1354   2      
+1355   2                  #if(ADC_DelSig_1_DEFAULT_INPUT_MODE)
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 23  
+
+                              #if (ADC_DelSig_1_CFG2_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF)
+                                  ADC_DelSig_1_AMux_Select(1u);
+                              #else
+                                  ADC_DelSig_1_AMux_Select(0u);
+                              #endif /* ADC_DelSig_1_IR_VSSA_TO_2VREF) */
+                          #endif /* ADC_DelSig_1_DEFAULT_INPUT_MODE */
+1362   2      
+1363   2                  /* Set the Conversion stop if resolution is above 16 bit and
+1364   2                  *   conversion mode is Single sample
+1365   2                  */
+1366   2                  #if(ADC_DelSig_1_CFG2_RESOLUTION > 16 && \
+1367   2                      ADC_DelSig_1_CFG2_CONV_MODE == ADC_DelSig_1_MODE_SINGLE_SAMPLE)
+                              ADC_DelSig_1_stopConversion = 1u;
+                          #endif /* Single sample with resolution above 16 bits. */
+1370   2      
+1371   2                  ADC_DelSig_1_CountsPerVolt = (int32)ADC_DelSig_1_CFG2_COUNTS_PER_VOLT;
+1372   2      
+1373   2                  ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister(ADC_DelSig_1_CFG2_CP_CLK_DIVIDER, 1u);
+1374   2      
+1375   2                  /* This is only valid if there is an internal clock */
+1376   2                  #if(ADC_DelSig_1_DEFAULT_INTERNAL_CLK)
+1377   2                      ADC_DelSig_1_theACLK_SetDividerRegister(ADC_DelSig_1_CFG2_ADC_CLK_DIVIDER, 1u);
+1378   2                  #endif /* ADC_DelSig_1_DEFAULT_INTERNAL_CLK */
+1379   2      
+1380   2                  #if(ADC_DelSig_1_IRQ_REMOVE == 0u)
+1381   2                      /* Set interrupt vector */
+1382   2                      (void)CyIntSetVector(ADC_DelSig_1_INTC_NUMBER, &ADC_DelSig_1_ISR2);
+1383   2                  #endif   /* End ADC_DelSig_1_IRQ_REMOVE */
+1384   2              }
+1385   1          #endif /* ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 1 */
+1386   1      
+1387   1          #if(ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 2)
+1388   1              if(config == 3u)
+1389   1              {
+1390   2                  /* Third Config */
+1391   2                  ADC_DelSig_1_DEC_CR_REG      = ADC_DelSig_1_CFG3_DEC_CR;
+1392   2                  ADC_DelSig_1_DEC_SHIFT1_REG  = ADC_DelSig_1_CFG3_DEC_SHIFT1;
+1393   2                  ADC_DelSig_1_DEC_SHIFT2_REG  = ADC_DelSig_1_CFG3_DEC_SHIFT2;
+1394   2                  ADC_DelSig_1_DEC_DR2_REG     = ADC_DelSig_1_CFG3_DEC_DR2;
+1395   2                  ADC_DelSig_1_DEC_DR2H_REG    = ADC_DelSig_1_CFG3_DEC_DR2H;
+1396   2                  ADC_DelSig_1_DEC_DR1_REG     = ADC_DelSig_1_CFG3_DEC_DR1;
+1397   2                  ADC_DelSig_1_DEC_OCOR_REG    = ADC_DelSig_1_CFG3_DEC_OCOR;
+1398   2                  ADC_DelSig_1_DEC_OCORM_REG   = ADC_DelSig_1_CFG3_DEC_OCORM;
+1399   2                  ADC_DelSig_1_DEC_OCORH_REG   = ADC_DelSig_1_CFG3_DEC_OCORH;
+1400   2                  ADC_DelSig_1_DEC_COHER_REG   = ADC_DelSig_1_CFG3_DEC_COHER;
+1401   2      
+1402   2                  ADC_DelSig_1_DSM_CR4_REG     = ADC_DelSig_1_CFG3_DSM_CR4;
+1403   2                  ADC_DelSig_1_DSM_CR5_REG     = ADC_DelSig_1_CFG3_DSM_CR5;
+1404   2                  ADC_DelSig_1_DSM_CR6_REG     = ADC_DelSig_1_CFG3_DSM_CR6;
+1405   2                  ADC_DelSig_1_DSM_CR7_REG     = ADC_DelSig_1_CFG3_DSM_CR7;
+1406   2                  ADC_DelSig_1_DSM_CR10_REG    = ADC_DelSig_1_CFG3_DSM_CR10;
+1407   2                  ADC_DelSig_1_DSM_CR11_REG    = ADC_DelSig_1_CFG3_DSM_CR11;
+1408   2                  ADC_DelSig_1_DSM_CR12_REG    = ADC_DelSig_1_CFG3_DSM_CR12;
+1409   2                  ADC_DelSig_1_DSM_CR14_REG    = ADC_DelSig_1_CFG3_DSM_CR14;
+1410   2                  ADC_DelSig_1_DSM_CR15_REG    = ADC_DelSig_1_CFG3_DSM_CR15;
+1411   2                  ADC_DelSig_1_DSM_CR16_REG    = ADC_DelSig_1_CFG3_DSM_CR16;
+1412   2                  ADC_DelSig_1_DSM_CR17_REG    = ADC_DelSig_1_CFG3_DSM_CR17;
+1413   2                  /* Set DSM_REF0_REG by disabling and enabling the PRESS circuit */
+1414   2                  ADC_DelSig_1_SetDSMRef0Reg(ADC_DelSig_1_CFG3_DSM_REF0);
+1415   2                  ADC_DelSig_1_DSM_REF2_REG    = ADC_DelSig_1_CFG3_DSM_REF2;
+1416   2                  ADC_DelSig_1_DSM_REF3_REG    = ADC_DelSig_1_CFG3_DSM_REF3;
+1417   2      
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 24  
+
+1418   2                  ADC_DelSig_1_DSM_BUF0_REG    = ADC_DelSig_1_CFG3_DSM_BUF0;
+1419   2                  ADC_DelSig_1_DSM_BUF1_REG    = ADC_DelSig_1_CFG3_DSM_BUF1;
+1420   2                  ADC_DelSig_1_DSM_BUF2_REG    = ADC_DelSig_1_CFG3_DSM_BUF2;
+1421   2                  ADC_DelSig_1_DSM_BUF3_REG    = ADC_DelSig_1_CFG3_DSM_BUF3;
+1422   2      
+1423   2                  /* To select either Vssa or Vref to -ve input of DSM depending on
+1424   2                  *  the input range selected.
+1425   2                  */
+1426   2                  #if(ADC_DelSig_1_DEFAULT_INPUT_MODE)
+                              #if (ADC_DelSig_1_CFG3_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF)
+                                  ADC_DelSig_1_AMux_Select(1u);
+                              #else
+                                  ADC_DelSig_1_AMux_Select(0u);
+                              #endif /* ADC_DelSig_1_IR_VSSA_TO_2VREF) */
+                          #endif /* ADC_DelSig_1_DEFAULT_INPUT_MODE */
+1433   2      
+1434   2                  /* Set the Conversion stop if resolution is above 16 bit and
+1435   2                     conversion  mode is Single sample */
+1436   2                  #if(ADC_DelSig_1_CFG3_RESOLUTION > 16 && \
+1437   2                      ADC_DelSig_1_CFG3_CONV_MODE == ADC_DelSig_1_MODE_SINGLE_SAMPLE)
+                              ADC_DelSig_1_stopConversion = 1u;
+                          #endif /* Single sample with resolution above 16 bits */
+1440   2      
+1441   2                  ADC_DelSig_1_CountsPerVolt = (int32)ADC_DelSig_1_CFG3_COUNTS_PER_VOLT;
+1442   2      
+1443   2                  ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister(ADC_DelSig_1_CFG3_CP_CLK_DIVIDER, 1u);
+1444   2      
+1445   2                  /* This is only valid if there is an internal clock */
+1446   2                  #if(ADC_DelSig_1_DEFAULT_INTERNAL_CLK)
+1447   2                      ADC_DelSig_1_theACLK_SetDividerRegister(ADC_DelSig_1_CFG3_ADC_CLK_DIVIDER, 1u);
+1448   2                  #endif /* ADC_DelSig_1_DEFAULT_INTERNAL_CLK */
+1449   2      
+1450   2                  #if(ADC_DelSig_1_IRQ_REMOVE == 0u)
+1451   2                      /* Set interrupt vector */
+1452   2                      (void)CyIntSetVector(ADC_DelSig_1_INTC_NUMBER, &ADC_DelSig_1_ISR3);
+1453   2                  #endif   /* End ADC_DelSig_1_IRQ_REMOVE */
+1454   2              }
+1455   1          #endif /* ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 2 */
+1456   1      
+1457   1          #if(ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 3)
+1458   1              if (config == 4u)
+1459   1              {
+1460   2                  /* Fourth Config */
+1461   2                  ADC_DelSig_1_DEC_CR_REG      = ADC_DelSig_1_CFG4_DEC_CR;
+1462   2                  ADC_DelSig_1_DEC_SHIFT1_REG  = ADC_DelSig_1_CFG4_DEC_SHIFT1;
+1463   2                  ADC_DelSig_1_DEC_SHIFT2_REG  = ADC_DelSig_1_CFG4_DEC_SHIFT2;
+1464   2                  ADC_DelSig_1_DEC_DR2_REG     = ADC_DelSig_1_CFG4_DEC_DR2;
+1465   2                  ADC_DelSig_1_DEC_DR2H_REG    = ADC_DelSig_1_CFG4_DEC_DR2H;
+1466   2                  ADC_DelSig_1_DEC_DR1_REG     = ADC_DelSig_1_CFG4_DEC_DR1;
+1467   2                  ADC_DelSig_1_DEC_OCOR_REG    = ADC_DelSig_1_CFG4_DEC_OCOR;
+1468   2                  ADC_DelSig_1_DEC_OCORM_REG   = ADC_DelSig_1_CFG4_DEC_OCORM;
+1469   2                  ADC_DelSig_1_DEC_OCORH_REG   = ADC_DelSig_1_CFG4_DEC_OCORH;
+1470   2                  ADC_DelSig_1_DEC_COHER_REG   = ADC_DelSig_1_CFG4_DEC_COHER;
+1471   2      
+1472   2                  ADC_DelSig_1_DSM_CR4_REG     = ADC_DelSig_1_CFG4_DSM_CR4;
+1473   2                  ADC_DelSig_1_DSM_CR5_REG     = ADC_DelSig_1_CFG4_DSM_CR5;
+1474   2                  ADC_DelSig_1_DSM_CR6_REG     = ADC_DelSig_1_CFG4_DSM_CR6;
+1475   2                  ADC_DelSig_1_DSM_CR7_REG     = ADC_DelSig_1_CFG4_DSM_CR7;
+1476   2                  ADC_DelSig_1_DSM_CR10_REG    = ADC_DelSig_1_CFG4_DSM_CR10;
+1477   2                  ADC_DelSig_1_DSM_CR11_REG    = ADC_DelSig_1_CFG4_DSM_CR11;
+1478   2                  ADC_DelSig_1_DSM_CR12_REG    = ADC_DelSig_1_CFG4_DSM_CR12;
+1479   2                  ADC_DelSig_1_DSM_CR14_REG    = ADC_DelSig_1_CFG4_DSM_CR14;
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 25  
+
+1480   2                  ADC_DelSig_1_DSM_CR15_REG    = ADC_DelSig_1_CFG4_DSM_CR15;
+1481   2                  ADC_DelSig_1_DSM_CR16_REG    = ADC_DelSig_1_CFG4_DSM_CR16;
+1482   2                  ADC_DelSig_1_DSM_CR17_REG    = ADC_DelSig_1_CFG4_DSM_CR17;
+1483   2                  /* Set DSM_REF0_REG by disabling and enabling the PRESS circuit */
+1484   2                  ADC_DelSig_1_SetDSMRef0Reg(ADC_DelSig_1_CFG4_DSM_REF0);
+1485   2                  ADC_DelSig_1_DSM_REF2_REG    = ADC_DelSig_1_CFG4_DSM_REF2;
+1486   2                  ADC_DelSig_1_DSM_REF3_REG    = ADC_DelSig_1_CFG4_DSM_REF3;
+1487   2      
+1488   2                  ADC_DelSig_1_DSM_BUF0_REG    = ADC_DelSig_1_CFG4_DSM_BUF0;
+1489   2                  ADC_DelSig_1_DSM_BUF1_REG    = ADC_DelSig_1_CFG4_DSM_BUF1;
+1490   2                  ADC_DelSig_1_DSM_BUF2_REG    = ADC_DelSig_1_CFG4_DSM_BUF2;
+1491   2                  ADC_DelSig_1_DSM_BUF3_REG    = ADC_DelSig_1_CFG4_DSM_BUF3;
+1492   2      
+1493   2                  /* To select either Vssa or Vref to -ve input of DSM depending on
+1494   2                  *  the input range selected.
+1495   2                  */
+1496   2                  #if(ADC_DelSig_1_DEFAULT_INPUT_MODE)
+                              #if (ADC_DelSig_1_CFG4_INPUT_RANGE == ADC_DelSig_1_IR_VSSA_TO_2VREF)
+                                  ADC_DelSig_1_AMux_Select(1u);
+                              #else
+                                  ADC_DelSig_1_AMux_Select(0u);
+                              #endif /* ADC_DelSig_1_IR_VSSA_TO_2VREF) */
+                          #endif /* ADC_DelSig_1_DEFAULT_INPUT_MODE */
+1503   2      
+1504   2                  /* Set the Conversion stop if resolution is above 16 bit and
+1505   2                     conversion mode is Single sample */
+1506   2                  #if(ADC_DelSig_1_CFG4_RESOLUTION > 16 && \
+1507   2                      ADC_DelSig_1_CFG4_CONV_MODE == ADC_DelSig_1_MODE_SINGLE_SAMPLE)
+                              ADC_DelSig_1_stopConversion = 1u;
+                          #endif /* Single sample with resolution above 16 bits */
+1510   2      
+1511   2                  ADC_DelSig_1_CountsPerVolt = (int32)ADC_DelSig_1_CFG4_COUNTS_PER_VOLT;
+1512   2      
+1513   2                  ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister(ADC_DelSig_1_CFG4_CP_CLK_DIVIDER, 1u);
+1514   2      
+1515   2                  /* This is only valid if there is an internal clock */
+1516   2                  #if(ADC_DelSig_1_DEFAULT_INTERNAL_CLK)
+1517   2                      ADC_DelSig_1_theACLK_SetDividerRegister(ADC_DelSig_1_CFG4_ADC_CLK_DIVIDER, 1u);
+1518   2                  #endif /* ADC_DelSig_1_DEFAULT_INTERNAL_CLK */
+1519   2      
+1520   2                  #if(ADC_DelSig_1_IRQ_REMOVE == 0u)
+1521   2                      /* Set interrupt vector */
+1522   2                      (void)CyIntSetVector(ADC_DelSig_1_INTC_NUMBER, &ADC_DelSig_1_ISR4);
+1523   2                  #endif   /* End ADC_DelSig_1_IRQ_REMOVE */
+1524   2              }
+1525   1          #endif /* ADC_DelSig_1_DEFAULT_NUM_CONFIGS > 3 */
+1526   1      }
+1527          
+1528          
+1529          /*******************************************************************************
+1530          * Function Name: ADC_DelSig_1_SelectCofiguration
+1531          ********************************************************************************
+1532          *
+1533          * Summary:
+1534          *  Sets one of up to four ADC configurations. Before setting the new
+1535          *  configuration, the ADC is stopped and powered down. After setting
+1536          *  the new configuration, the ADC can be powered and conversion
+1537          *  can be restarted depending up on the value of second parameter
+1538          *  restart. If the value of this parameter is 1, then ADC will be
+1539          *  restarted. If this value is zero, then user must call ADC_DelSig_1_Start
+1540          *  and ADC_DelSig_1_StartConvert() to restart the conversion.
+1541          *
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 26  
+
+1542          * Parameters:
+1543          *  config:  configuration user wants to select.
+1544          *           Valid range: 1..4
+1545          *  restart:  Restart option. 1 means start the ADC and restart the conversion.
+1546          *                            0 means do not start the ADC and conversion.
+1547          *
+1548          * Return:
+1549          *  None
+1550          *
+1551          *******************************************************************************/
+1552          void ADC_DelSig_1_SelectConfiguration(uint8 config, uint8 restart)
+1553                                                        
+1554          {
+1555   1          /* Check whether the configuration number is valid or not */
+1556   1          if((config > 0u) && (config <= ADC_DelSig_1_DEFAULT_NUM_CONFIGS))
+1557   1          {
+1558   2              /* Set the flag to ensure Start() API doesn't override the 
+1559   2                      *  selected configuration
+1560   2                      */
+1561   2              if(ADC_DelSig_1_initVar == 0u)
+1562   2              {
+1563   3                  ADC_DelSig_1_started = 1u;
+1564   3              }
+1565   2      
+1566   2              /* Update the config flag */
+1567   2              ADC_DelSig_1_Config = config;
+1568   2      
+1569   2              /* Stop the ADC  */
+1570   2              ADC_DelSig_1_Stop();
+1571   2      
+1572   2              /* Set the  ADC registers based on the configuration */
+1573   2              ADC_DelSig_1_InitConfig(config);
+1574   2      
+1575   2              /* Compensate the gain */
+1576   2              ADC_DelSig_1_DEC_GVAL_REG = ADC_DelSig_1_gcor[config - 1u].gval;
+1577   2              CY_SET_REG16(ADC_DelSig_1_DEC_GCOR_16B_PTR, ADC_DelSig_1_gcor[config - 1u].gcor);
+1578   2      
+1579   2              if(restart == 1u)
+1580   2              {
+1581   3                  /* Restart the ADC */
+1582   3                  ADC_DelSig_1_Start();
+1583   3      
+1584   3                  /* Restart the ADC conversion */
+1585   3                  ADC_DelSig_1_StartConvert();
+1586   3              }
+1587   2          }
+1588   1          else
+1589   1          {
+1590   2              /* Halt CPU in debug mode if config is out of valid range */
+1591   2              CYASSERT(0u != 0u);
+1592   2          }
+1593   1      }
+1594          
+1595          
+1596          /*******************************************************************************
+1597          * Function Name: ADC_DelSig_1_GainCompensation
+1598          ********************************************************************************
+1599          *
+1600          * Summary:
+1601          *  This API calculates the trim value and then store this to gcor structure.
+1602          *
+1603          * Parameters:
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 27  
+
+1604          *  inputRange:  input range for which trim value is to be calculated.
+1605          *  IdealDecGain:  Ideal Decimator gain for the selected resolution and
+1606          *                 conversion  mode.
+1607          *  IdealOddDecGain:  Ideal odd decimation gain for the selected resolution and
+1608                               conversion mode.
+1609          *  resolution:  Resolution to select the proper flash location for trim value.
+1610          *  config:      Specifies the configuration number
+1611          *               Valid range: 1..4
+1612          *
+1613          * Return:
+1614          *  None
+1615          *
+1616          *******************************************************************************/
+1617          static void ADC_DelSig_1_GainCompensation(uint8 inputRange, uint16 idealDecGain, uint16 idealOddDecGain,
+1618                                        uint8 resolution, uint8 config) 
+1619          {
+1620   1          int8 flash;
+1621   1              int32 normalised;
+1622   1              uint16 gcorValue;
+1623   1          uint32 gcorTmp;
+1624   1      
+1625   1          if((config > 0u) && (config <= ADC_DelSig_1_DEFAULT_NUM_CONFIGS))
+1626   1          {
+1627   2              switch(inputRange)
+1628   2              {
+1629   3                  case ADC_DelSig_1_IR_VNEG_VREF_DIFF:
+1630   3                  case ADC_DelSig_1_IR_VSSA_TO_2VREF:
+1631   3                      /* Normalize the flash Value */
+1632   3                      if(resolution > 15u)
+1633   3                      {
+1634   4                          flash = ADC_DelSig_1_DEC_TRIM_VREF_DIFF_16_20;
+1635   4                      }
+1636   3                      else
+1637   3                      {
+1638   4                          flash = ADC_DelSig_1_DEC_TRIM_VREF_DIFF_8_15;
+1639   4                      }
+1640   3                      break;
+1641   3      
+1642   3                  case ADC_DelSig_1_IR_VNEG_VREF_2_DIFF:
+1643   3                      /* Normalize the flash Value */
+1644   3                      if(resolution > 15u)
+1645   3                      {
+1646   4                          flash = ADC_DelSig_1_DEC_TRIM_VREF_2_DIFF_16_20;
+1647   4                      }
+1648   3                      else
+1649   3                      {
+1650   4                          flash = ADC_DelSig_1_DEC_TRIM_VREF_2_DIFF_8_15;
+1651   4                      }
+1652   3                      break;
+1653   3      
+1654   3                  case ADC_DelSig_1_IR_VNEG_VREF_4_DIFF:
+1655   3                      /* Normalize the flash Value */
+1656   3                      if(resolution > 15u)
+1657   3                      {
+1658   4                          flash = ADC_DelSig_1_DEC_TRIM_VREF_4_DIFF_16_20;
+1659   4                      }
+1660   3                      else
+1661   3                      {
+1662   4                          flash = ADC_DelSig_1_DEC_TRIM_VREF_4_DIFF_8_15;
+1663   4                      }
+1664   3                      break;
+1665   3      
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 28  
+
+1666   3                  case ADC_DelSig_1_IR_VNEG_VREF_16_DIFF:
+1667   3                      /* Normalize the flash Value */
+1668   3                      if(resolution > 15u)
+1669   3                      {
+1670   4                          flash = ADC_DelSig_1_DEC_TRIM_VREF_16_DIFF_16_20;
+1671   4                      }
+1672   3                      else
+1673   3                      {
+1674   4                          flash = ADC_DelSig_1_DEC_TRIM_VREF_16_DIFF_8_15;
+1675   4                      }
+1676   3                      break;
+1677   3      
+1678   3                  default:
+1679   3                      flash = 0;
+1680   3                      break;
+1681   3              }
+1682   2      
+1683   2              /* Add two values */
+1684   2                      normalised = (int32)idealDecGain + ((int32)flash * 32);
+1685   2              gcorTmp = (uint32)normalised * (uint32)idealOddDecGain;
+1686   2              gcorValue = (uint16)(gcorTmp / ADC_DelSig_1_IDEAL_GAIN_CONST);
+1687   2      
+1688   2              if (resolution < (ADC_DelSig_1_MAX_GVAL - 1u))
+1689   2              {
+1690   3                  gcorValue = (gcorValue >> (ADC_DelSig_1_MAX_GVAL - (resolution + 1u)));
+1691   3                  ADC_DelSig_1_gcor[config - 1u].gval = (resolution + 1u);
+1692   3              }
+1693   2              else
+1694   2              {
+1695   3                  /* Use all 16 bits */
+1696   3                  ADC_DelSig_1_gcor[config - 1u].gval = ADC_DelSig_1_MAX_GVAL;
+1697   3              }
+1698   2      
+1699   2              /* Save the gain correction register value */
+1700   2              ADC_DelSig_1_gcor[config - 1u].gcor = gcorValue;
+1701   2          }
+1702   1          else
+1703   1          {
+1704   2              /* Halt CPU in debug mode if config is out of valid range */
+1705   2              CYASSERT(0u != 0u);
+1706   2          }
+1707   1      }
+1708          
+1709          
+1710          /******************************************************************************
+1711          * Function Name: ADC_DelSig_1_SetDSMRef0Reg(uint8)
+1712          ******************************************************************************
+1713          *
+1714          * Summary:
+1715          *  This API sets the DSM_REF0 register. This is written for internal use.
+1716          *
+1717          * Parameters:
+1718          *  value:  Value to be written to DSM_REF0 register.
+1719          *
+1720          * Return:
+1721          *  None
+1722          *
+1723          ******************************************************************************/
+1724          static void ADC_DelSig_1_SetDSMRef0Reg(uint8 value) 
+1725          {
+1726   1          uint8 enableInterrupts;
+1727   1          enableInterrupts = CyEnterCriticalSection();
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 29  
+
+1728   1      
+1729   1          /* Disable PRES, Enable power to VCMBUF0, REFBUF0 and REFBUF1, enable PRES */
+1730   1          ADC_DelSig_1_RESET_CR4_REG |= (ADC_DelSig_1_IGNORE_PRESA1 | ADC_DelSig_1_IGNORE_PRESD1);
+1731   1          ADC_DelSig_1_RESET_CR5_REG |= (ADC_DelSig_1_IGNORE_PRESA2 | ADC_DelSig_1_IGNORE_PRESD2);
+1732   1          ADC_DelSig_1_DSM_REF0_REG = value;
+1733   1      
+1734   1          /* Wait for 3 microseconds */
+1735   1          CyDelayUs(ADC_DelSig_1_PRES_DELAY_TIME);
+1736   1          /* Enable the press circuit */
+1737   1          ADC_DelSig_1_RESET_CR4_REG &= (uint8)~(ADC_DelSig_1_IGNORE_PRESA1 | ADC_DelSig_1_IGNORE_PRESD1);
+1738   1          ADC_DelSig_1_RESET_CR5_REG &= (uint8)~(ADC_DelSig_1_IGNORE_PRESA2 | ADC_DelSig_1_IGNORE_PRESD2);
+1739   1      
+1740   1          CyExitCriticalSection(enableInterrupts);
+1741   1      }
+1742          
+1743          
+1744          /*******************************************************************************
+1745          * Function Name: ADC_DelSig_1_Read8
+1746          ********************************************************************************
+1747          *
+1748          * Summary:
+1749          *  This function simplifies getting results from the ADC when only a
+1750          *  single reading is required. When called, it will start ADC
+1751          *  conversions, wait for the conversion to be complete, stop ADC
+1752          *  conversion and return the result. This is a blocking function and will
+1753          *  not return until the result is ready.
+1754          *
+1755          * Parameters:
+1756          *  None
+1757          *
+1758          * Return:
+1759          *  int8:  ADC result.
+1760          *
+1761          *******************************************************************************/
+1762          int8 ADC_DelSig_1_Read8(void) 
+1763          {
+1764   1          int8 result;
+1765   1      
+1766   1          /* Clear pending conversion done status */
+1767   1          ADC_DelSig_1_DEC_SR_REG |= ADC_DelSig_1_DEC_INTR_CLEAR;
+1768   1          ADC_DelSig_1_StartConvert();
+1769   1          (void)ADC_DelSig_1_IsEndConversion(ADC_DelSig_1_WAIT_FOR_RESULT);
+1770   1           result = ADC_DelSig_1_GetResult8();
+1771   1          ADC_DelSig_1_StopConvert();
+1772   1          
+1773   1           return(result);
+1774   1      }
+1775          
+1776          
+1777          /*******************************************************************************
+1778          * Function Name: ADC_DelSig_1_Read16
+1779          ********************************************************************************
+1780          *
+1781          * Summary:
+1782          *  This function simplifies getting results from the ADC when only a
+1783          *  single reading is required. When called, it will start ADC
+1784          *  conversions, wait for the conversion to be complete, stop ADC
+1785          *  conversion and return the result. This is a blocking function and will
+1786          *  not return until the result is ready.
+1787          *
+1788          * Parameters:
+1789          *   void
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 30  
+
+1790          *
+1791          * Return:
+1792          *  int16:  ADC result.
+1793          *
+1794          *******************************************************************************/
+1795          int16 ADC_DelSig_1_Read16(void) 
+1796          {
+1797   1          int16 result;
+1798   1      
+1799   1          /* Clear pending conversion done status */
+1800   1          ADC_DelSig_1_DEC_SR_REG |= ADC_DelSig_1_DEC_INTR_CLEAR;
+1801   1          ADC_DelSig_1_StartConvert();
+1802   1          (void)ADC_DelSig_1_IsEndConversion(ADC_DelSig_1_WAIT_FOR_RESULT);
+1803   1           result = ADC_DelSig_1_GetResult16();
+1804   1          ADC_DelSig_1_StopConvert();
+1805   1          
+1806   1           return(result);
+1807   1      }
+1808          
+1809          
+1810          /*******************************************************************************
+1811          * Function Name: ADC_DelSig_1_Read32
+1812          ********************************************************************************
+1813          *
+1814          * Summary:
+1815          *  This function simplifies getting results from the ADC when only a
+1816          *  single reading is required. When called, it will start ADC
+1817          *  conversions, wait for the conversion to be complete, stop ADC
+1818          *  conversion and return the result. This is a blocking function and will
+1819          *  not return until the result is ready.
+1820          *
+1821          * Parameters:
+1822          *  None
+1823          *
+1824          * Return:
+1825          *  int32: ADC result.
+1826          *
+1827          *******************************************************************************/
+1828          int32 ADC_DelSig_1_Read32(void) 
+1829          {
+1830   1          int32 result;
+1831   1          
+1832   1          /* Clear pending conversion done status */
+1833   1          ADC_DelSig_1_DEC_SR_REG |= ADC_DelSig_1_DEC_INTR_CLEAR;
+1834   1          ADC_DelSig_1_StartConvert();
+1835   1          (void)ADC_DelSig_1_IsEndConversion(ADC_DelSig_1_WAIT_FOR_RESULT);
+1836   1           result = ADC_DelSig_1_GetResult32();
+1837   1          ADC_DelSig_1_StopConvert();
+1838   1          
+1839   1           return(result);
+1840   1      }
+1841          
+1842          
+1843          /* [] END OF FILE */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3349    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     25      59
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+C51 COMPILER V9.51   ADC_DELSIG_1                                                          05/22/2017 14:27:57 PAGE 31  
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

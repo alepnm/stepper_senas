@@ -1,0 +1,257 @@
+C51 COMPILER V9.51   UART                                                                  05/22/2017 14:27:56 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\UART.obj
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -UART.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB WL(2) PR(.\DP8051\DP8051_Keil_951\Deb
+                    -ug/UART.lst) OT(5) OJ(.\DP8051\DP8051_Keil_951\Debug\UART.obj)
+
+line level    source
+
+   1          
+   2          /*******************************************************************************
+   3          * File Name: UART.c  
+   4          * Version 1.1
+   5          *
+   6          * Description:
+   7          *  This file includes function of speed close loop control.
+   8          *
+   9          * Note:
+  10          *
+  11          ********************************************************************************
+  12          * Copyright (2010), Cypress Semiconductor Corporation.
+  13          ********************************************************************************
+  14          * This software is owned by Cypress Semiconductor Corporation (Cypress) and is 
+  15          * protected by and subject to worldwide patent protection (United States and 
+  16          * foreign), United States copyright laws and international treaty provisions. 
+  17          * Cypress hereby grants to licensee a personal, non-exclusive, non-transferable 
+  18          * license to copy, use, modify, create derivative works of, and compile the 
+  19          * Cypress Source Code and derivative works for the sole purpose of creating 
+  20          * custom software in support of licensee product to be used only in conjunction 
+  21          * with a Cypress integrated circuit as specified in the applicable agreement. 
+  22          * Any reproduction, modification, translation, compilation, or representation of 
+  23          * this software except as specified above is prohibited without the express 
+  24          * written permission of Cypress.
+  25          *
+  26          * Disclaimer: CYPRESS MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, WITH 
+  27          * REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  28          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  29          * Cypress reserves the right to make changes without further notice to the 
+  30          * materials described herein. Cypress does not assume any liability arising out 
+  31          * of the application or use of any product or circuit described herein. Cypress 
+  32          * does not authorize its products for use as critical components in life-support 
+  33          * systems where a malfunction or failure may reasonably be expected to result in 
+  34          * significant injury to the user. The inclusion of Cypress' product in a life-
+  35          * support systems application implies that the manufacturer assumes all risk of 
+  36          * such use and in doing so indemnifies Cypress against all charges. Use may be 
+  37          * limited by and subject to the applicable Cypress software license agreement. 
+  38          *******************************************************************************/
+  39          
+  40          #include <device.h>
+  41          #include "UART.h"
+  42          #include "bool.h"
+  43          #include "UI_paras.h"
+  44          #include "stepper.h"
+  45          #include "userinterface.h"
+  46          
+  47          uint8 RxFlag =0;
+  48          uint8 bData =0;
+  49          uint8 PkgInCnt =0;
+  50          
+  51          extern uint8   CtrlStatus;
+  52          extern uint16  TotalCnt;
+  53          extern uint16  SpeedFrq;
+C51 COMPILER V9.51   UART                                                                  05/22/2017 14:27:56 PAGE 2   
+
+  54          extern uint8   MenuState;
+  55          extern uint8 LineWaitFlag;
+  56          extern UI_CMD  UI_Cmd;
+  57          extern UI_DATA UI_Data;
+  58          
+  59          void RxData(void)
+  60          { 
+  61   1      
+  62   1          static uint8 index = 0;
+  63   1          static uint8 PkgInCnt = 0;
+  64   1          static uint8 pkgReadDone = 0;
+  65   1          static uint8 size = 0;
+  66   1          uint8 pkg_a[RX_BUF_SIZE];
+  67   1      
+  68   1          uint8 *pkg = pkg_a;
+  69   1      
+  70   1        
+  71   1          if(RxFlag)
+  72   1          {
+  73   2              bData = UART_1_ReadRxData();            /* read the data */
+  74   2        
+  75   2                  if(bData == 0xAA && PkgInCnt < 2)
+  76   2                  {
+  77   3                      /* sync header */
+  78   3                      PkgInCnt++;
+  79   3                  }
+  80   2                  else if(PkgInCnt == 2 || PkgInCnt == 3)
+  81   2                  {
+  82   3                      /* command and type */
+  83   3                      pkg[index++] = bData;
+  84   3                      PkgInCnt++;
+  85   3                  }
+  86   2                  else if(PkgInCnt == 4)
+  87   2                  {
+  88   3                      /* Data Length*/
+  89   3                      pkg[index++] = bData;
+  90   3                      PkgInCnt++;
+  91   3                      if(bData == 0)
+  92   3                      {
+  93   4                          pkgReadDone = 1;
+  94   4                          PkgInCnt = 0;
+  95   4                          index = 0;
+  96   4                      }
+  97   3                      else
+  98   3                      {
+  99   4                          size = bData;    
+ 100   4                      }
+ 101   3                  }
+ 102   2                  else if(PkgInCnt > 4 && ((PkgInCnt - 1) <= RX_BUF_SIZE))
+ 103   2                  {   
+ 104   3                      pkg[index++] = bData;
+ 105   3                      PkgInCnt++; 
+ 106   3                      size--;
+ 107   3                      if(size == 0)
+ 108   3                      {
+ 109   4                          pkgReadDone = 1;
+ 110   4                          PkgInCnt = 0;
+ 111   4                          index = 0;
+ 112   4                      }
+ 113   3                  }
+ 114   2                  else
+ 115   2                  {
+C51 COMPILER V9.51   UART                                                                  05/22/2017 14:27:56 PAGE 3   
+
+ 116   3                      
+ 117   3                      pkgReadDone = 0;
+ 118   3                      PkgInCnt = 0;
+ 119   3                      size = 0;
+ 120   3                      index = 0;
+ 121   3                  }           
+ 122   2                  
+ 123   2                  if(pkgReadDone)
+ 124   2                  {
+ 125   3                      switch(pkg[0])
+ 126   3                      {   
+ 127   4                          case SET_MICROSTEP:         /* L1 Start Speed in Period Value */
+ 128   4                              SEND_ACK();
+ 129   4                              UI_Data.MicroStepPace = pkg[3];
+ 130   4                              break;
+ 131   4                          case SET_LINE_START:        /* L1 Start Speed in Period Value */
+ 132   4                              SEND_ACK();
+ 133   4                              UI_Data.LineCmdIndex = pkg[3];
+ 134   4                              UI_Data.LineStart[UI_Data.LineCmdIndex] =  (uint16)pkg[4]<<8;
+ 135   4                              UI_Data.LineStart[UI_Data.LineCmdIndex] += (uint16)pkg[5];
+ 136   4                              break;
+ 137   4                          case SET_LINE_END:
+ 138   4                              SEND_ACK();
+ 139   4                              UI_Data.LineCmdIndex = pkg[3];
+ 140   4                              UI_Data.LineEnd[UI_Data.LineCmdIndex] =  (uint16)pkg[4]<<8;
+ 141   4                              UI_Data.LineEnd[UI_Data.LineCmdIndex] += (uint16)pkg[5];
+ 142   4                              break;
+ 143   4                          case SET_LINE_CNT:
+ 144   4                              SEND_ACK();
+ 145   4                              UI_Data.LineCmdIndex = pkg[3];
+ 146   4                              UI_Data.LineCnt[UI_Data.LineCmdIndex] =  (uint16)pkg[4]<<8;
+ 147   4                              UI_Data.LineCnt[UI_Data.LineCmdIndex] += (uint16)pkg[5];
+ 148   4                              break;
+ 149   4                          case SET_LINE_WAIT_CNT:
+ 150   4                              SEND_ACK();
+ 151   4                              UI_Data.LineCmdIndex = pkg[3];
+ 152   4                              UI_Data.LineWaitCnt[UI_Data.LineCmdIndex] =  (uint16)pkg[4]<<8;
+ 153   4                              UI_Data.LineWaitCnt[UI_Data.LineCmdIndex] += (uint16)pkg[5];
+ 154   4                              break;
+ 155   4                          case SET_LINE_TOTAL_CNT:
+ 156   4                              SEND_ACK();
+ 157   4                              UI_Data.TotalLineNumber = pkg[3];                        
+ 158   4                          case GET_TYPE:
+ 159   4                              UART_1_WriteTxData(SYNC_HEADER); 
+ 160   4                              UART_1_WriteTxData(SYNC_HEADER); 
+ 161   4                              UART_1_WriteTxData(ACK); 
+ 162   4                              UART_1_WriteTxData(pkg[1]); 
+ 163   4                              UART_1_WriteTxData(0x01); /* Size */
+ 164   4                              UART_1_WriteTxData(0x00); /* Stepper */
+ 165   4                              break;                        
+ 166   4                          case SET_DIR:
+ 167   4                              SEND_ACK();
+ 168   4                              UI_Data.Dir = pkg[3];
+ 169   4                              break;                        
+ 170   4                          case SET_CURR_GAIN:
+ 171   4                              SEND_ACK();
+ 172   4                              UI_Data.PhaseCurr = pkg[3]; 
+ 173   4                              if((UI_Data.PhaseCurr<=CURR_HIGH)&&(UI_Data.PhaseCurr>=CURR_LOW))
+ 174   4                              {
+ 175   5                                SetMaxCurr(UI_Data.PhaseCurr);
+ 176   5                              }
+ 177   4                              break;   
+C51 COMPILER V9.51   UART                                                                  05/22/2017 14:27:56 PAGE 4   
+
+ 178   4                          case GET_SPEED:
+ 179   4                              UART_1_WriteTxData(SYNC_HEADER); 
+ 180   4                              UART_1_WriteTxData(SYNC_HEADER); 
+ 181   4                              UART_1_WriteTxData(ACK); 
+ 182   4                              UART_1_WriteTxData(pkg[1]); 
+ 183   4                              UART_1_WriteTxData(0x02); 
+ 184   4                                                      UART_1_WriteTxData(0x00);
+ 185   4                              UART_1_WriteTxData(0x00);                    
+ 186   4                          case MOTOR_RUN:
+ 187   4                              SEND_ACK(); 
+ 188   4                              UI_Cmd.Run = TRUE;
+ 189   4                              UI_Data.LineIndex = 0; /* start from line1*/
+ 190   4                              SpeedFrq = UI_Data.LineStart[0];
+ 191   4                              TotalCnt = 0;
+ 192   4                              LineWaitFlag = FALSE;  /* Start with constant speed */ 
+ 193   4                              break;  
+ 194   4                          case MOTOR_STOP:
+ 195   4                              SEND_ACK();
+ 196   4                              UI_Cmd.Run = FALSE;
+ 197   4                              SpeedFrq = UI_Data.LineStart[0];
+ 198   4                              TotalCnt = 0;
+ 199   4                              break;                        
+ 200   4                          case CONN:
+ 201   4                              SEND_ACK(); 
+ 202   4                              CtrlStatus = GUI_CONTROL;
+ 203   4                              UI_Cmd.Run = FALSE;
+ 204   4                              break;                        
+ 205   4                          case DISCONN:
+ 206   4                              SEND_ACK(); 
+ 207   4                              CtrlStatus = UI_CONTROL;
+ 208   4                              UI_Cmd.Run = FALSE;
+ 209   4                              SpeedFrq = 150;
+ 210   4                              MenuState = MENU_READY;
+ 211   4                              break;
+ 212   4                          default:
+ 213   4                              SEND_NACK();
+ 214   4                              break;                    
+ 215   4                      }
+ 216   3                      pkgReadDone = 0;
+ 217   3                  }
+ 218   2          }    
+ 219   1      }
+ 220          
+ 221          
+ 222          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1634    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      7      19
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
